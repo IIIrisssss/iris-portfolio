@@ -100,6 +100,77 @@ export function getFeaturedBySlug(slug: string) {
   return featured.find((work) => work.slug === slug);
 }
 
+export type PortfolioSlide = {
+  nameA: string;
+  nameB: string;
+  tagA: string;
+  tagB: string;
+  year: string;
+  images: string[];
+  href: string;
+};
+
+const radianceImage = (prefix: string, frame: number) =>
+  `/radiance-works/${prefix}-0${frame}.avif`;
+
+/** Radiance-style portfolio showcase — https://radiance.family/ */
+export const portfolioSlides: PortfolioSlide[] = [
+  {
+    nameA: "BIDAPP",
+    nameB: "SDK",
+    tagA: "STRATEGY",
+    tagB: "DIGITAL",
+    year: "2024",
+    images: [1, 2, 3, 4, 5].map((n) => radianceImage("bdp", n)),
+    href: "https://www.behance.net/gallery/199373991/SDK-Platform-bidapp-UXUI-Brand-Identity",
+  },
+  {
+    nameA: "UNITS",
+    nameB: "COMMUNITY",
+    tagA: "BRANDING",
+    tagB: "DIGITAL",
+    year: "2023",
+    images: [1, 2, 3, 4, 5].map((n) => radianceImage("unnts", n)),
+    href: "https://www.behance.net/gallery/170376729/Units-Autonomous-Community",
+  },
+  {
+    nameA: "POLEMICA",
+    nameB: "PLATFORM",
+    tagA: "BRAND",
+    tagB: "IDENTITY",
+    year: "2021",
+    images: [1, 2, 3, 4, 5].map((n) => radianceImage("plmc", n)),
+    href: "https://www.behance.net/gallery/131077809/Polemica-online-gaming-platform-rebranding",
+  },
+  {
+    nameA: "URBAN",
+    nameB: "AMENITIES",
+    tagA: "STRATEGY",
+    tagB: "BRANDING",
+    year: "2022",
+    images: [1, 2, 3, 4, 5].map((n) => radianceImage("urb", n)),
+    href: "https://www.behance.net/gallery/145220925/Urban-Amenities-branding-for-modern-furniture-company",
+  },
+  {
+    nameA: "INDIEVID",
+    nameB: "LABEL",
+    tagA: "IDENTITY,",
+    tagB: "WEBSITE",
+    year: "2022",
+    images: [1, 2, 3, 4, 5].map((n) => radianceImage("indvd", n)),
+    href: "https://www.behance.net/gallery/147247443/Indievid-indie-music-label",
+  },
+  {
+    nameA: "SCREEN",
+    nameB: "BLASTERS",
+    tagA: "READYMAG",
+    tagB: "WEBSITE",
+    year: "2022",
+    images: [1, 2, 3, 4, 5].map((n) => radianceImage("scrn", n)),
+    href: "https://www.behance.net/gallery/176041679/ScreenBlasters-Design-website-made-via-Readymag",
+  },
+];
+
 export type BrandMarqueeItem = {
   title: string;
   image: string;
@@ -152,17 +223,129 @@ export const social = {
   email: "mailto:spencergabor9@gmail.com",
   instagram: "http://instagram.com/spencergab",
   linkedin: "https://www.linkedin.com/in/spencergabor",
+  wechat: "#wechat",
 };
 
 export const footer = {
-  title: "Contact",
-  email: "spencergabor9@gmail.com",
-  links: [
-    { label: "Instagram", href: social.instagram },
-    { label: "Dribbble", href: "http://dribbble.com/spencergabor" },
+  eyebrow: "That's a wrap? Maybe not.",
+  headline: "Great things start with 'Meet'!",
+  body:
+    "Open to conversations, collabs, creative challenges, puzzles—or just a friendly game of Chess.",
+  ctaLabel: "Let's Meet",
+  ctaHref: social.email,
+  connectLabel: "or connect through..",
+  credit:
+    "Created with curiosity, coffee, love, some peer pressure, and way too many open tabs. Thanks for stopping by—don't forget to blink and drink (water ofc)!",
+  copyright: "© Copyright & stuff...",
+  socialLinks: [
+    { id: "linkedin", href: social.linkedin, label: "LinkedIn" },
+    { id: "email", href: social.email, label: "Email" },
+    { id: "wechat", href: social.wechat, label: "WeChat" },
   ],
-  copyright: "All rights reserved 2026 inc Gabor",
 };
+
+export type CollectionLayout =
+  | "default"
+  | "media-before-title"
+  | "media-after-count"
+  | "media-first";
+
+export type CollectionItem = {
+  name: string;
+  count: number;
+  slug: string;
+  href: string;
+  images: string[];
+  layout: CollectionLayout;
+  mediaVariant?: "nature" | "details";
+  icon: "urban" | "nature" | "golf" | "replastic" | "details";
+};
+
+/** Floema "The Collections" section — https://www.floema.com/en */
+export const collectionsOverview: CollectionItem[] = [
+  {
+    name: "Urban",
+    count: 50,
+    slug: "urban",
+    href: "https://www.floema.com/en/products/urban",
+    icon: "urban",
+    layout: "default",
+    images: [
+      "/collections/urban/01.jpg",
+      "/collections/urban/02.jpg",
+      "/collections/urban/03.jpg",
+      "/collections/urban/04.jpg",
+      "/collections/urban/05.jpg",
+      "/collections/urban/06.jpg",
+    ],
+  },
+  {
+    name: "Nature",
+    count: 38,
+    slug: "nature",
+    href: "https://www.floema.com/en/products/nature",
+    icon: "nature",
+    layout: "media-before-title",
+    mediaVariant: "nature",
+    images: [
+      "/collections/nature/01.png",
+      "/collections/nature/02.png",
+      "/collections/nature/03.png",
+      "/collections/nature/04.png",
+      "/collections/nature/05.png",
+      "/collections/nature/06.png",
+    ],
+  },
+  {
+    name: "Golf",
+    count: 62,
+    slug: "golf",
+    href: "https://www.floema.com/en/products/golf",
+    icon: "golf",
+    layout: "media-after-count",
+    images: [
+      "/collections/golf/01.png",
+      "/collections/golf/02.jpg",
+      "/collections/golf/03.png",
+      "/collections/golf/04.png",
+      "/collections/golf/05.png",
+      "/collections/golf/06.png",
+    ],
+  },
+  {
+    name: "RePlastic",
+    count: 1,
+    slug: "replastic",
+    href: "https://www.floema.com/en/products/replastic",
+    icon: "replastic",
+    layout: "media-first",
+    images: [
+      "/collections/replastic/01.jpg",
+      "/collections/replastic/02.jpg",
+      "/collections/replastic/03.jpg",
+      "/collections/replastic/04.jpg",
+      "/collections/replastic/05.jpg",
+      "/collections/replastic/06.jpg",
+    ],
+  },
+  {
+    name: "Details",
+    count: 0,
+    slug: "details",
+    href: "https://www.floema.com/en/products/details",
+    icon: "details",
+    layout: "default",
+    mediaVariant: "details",
+    images: [
+      "/collections/details/01.jpg",
+      "/collections/details/02.jpg",
+      "/collections/details/03.jpg",
+      "/collections/details/04.jpg",
+      "/collections/details/05.jpg",
+      "/collections/details/06.jpg",
+    ],
+  },
+];
 
 /** Accent colors available in the color picker (bottom-right). */
 export const accentColors = [

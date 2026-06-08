@@ -3,22 +3,37 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { moreWork } from "@/lib/data";
-import { elastic } from "@/lib/motion";
-import { TextBlock } from "./TextBlock";
+import { elastic, easeOutExpo } from "@/lib/motion";
 
 export function MoreWork() {
   return (
-    <section className="flex flex-col gap-16">
-      <TextBlock title="More Work" description="Take a scroll, stay a while" />
+    <section
+      className="more-work relative z-0 flex flex-col gap-12 pt-4 md:gap-14 md:pt-8"
+      aria-label="More work"
+    >
+      <motion.header
+        className="flex w-full flex-col items-center gap-3 px-[var(--padding)] text-center"
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-10% 0px" }}
+        transition={{ duration: 0.8, ease: easeOutExpo }}
+      >
+        <h2 className="font-display w-fit text-[clamp(2.2rem,6vw,4rem)] leading-[0.85] text-[var(--color-on-primary)]">
+          MORE WORK
+        </h2>
+        <p className="max-w-[24em] text-[1rem] font-medium leading-[1.3] text-[var(--color-on-primary)]/70">
+          Take a scroll, stay a while
+        </p>
+      </motion.header>
 
-      <div className="flex w-full flex-wrap justify-center gap-6 px-[var(--padding)] pb-10 sm:gap-8 md:gap-10 lg:gap-12">
+      <div className="flex w-full flex-wrap justify-center gap-6 px-[var(--padding)] pb-6 sm:gap-8 md:gap-10 lg:gap-12">
         {moreWork.map((work, i) => (
           <motion.div
             key={`${work.title}-${i}`}
             className="group relative aspect-square w-40 cursor-pointer sm:w-44 md:w-52 lg:w-56 xl:w-60 2xl:w-64"
             initial={{ scale: 0.7, opacity: 0 }}
             whileInView={{ scale: 1, opacity: 1 }}
-            viewport={{ once: true, margin: "-12% 0px" }}
+            viewport={{ once: true, margin: "-8% 0px" }}
             transition={elastic}
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
