@@ -1,0 +1,60 @@
+/* Brand ticker — https://isadeburgh.com/ (section.carousel below hero) */
+
+.brand-marquee {
+  width: 100%;
+  overflow: hidden;
+  padding-bottom: 10px;
+  background: var(--color-primary);
+}
+
+.brand-marquee__row {
+  display: flex;
+  width: 100%;
+  height: clamp(40px, 12vw, 84px);
+  overflow: hidden;
+}
+
+.brand-marquee__row + .brand-marquee__row {
+  margin-top: clamp(8px, 2vw, 16px);
+}
+
+.brand-marquee__track {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  white-space: nowrap;
+  will-change: transform;
+}
+
+.brand-marquee__part {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+}
+
+.brand-marquee__image {
+  display: block;
+  flex-shrink: 0;
+  width: auto;
+  height: clamp(40px, 10vw, 81px);
+  margin-right: clamp(8px, 1.5vw, 8px);
+  margin-left: clamp(16px, 4vw, 32px);
+  object-fit: contain;
+}
+
+.brand-marquee__title {
+  margin: 0;
+  font-family: var(--font-headline), sans-serif;
+  font-size: clamp(3.5rem, 12vw, 8rem);
+  font-weight: 400;
+  line-height: 0.85;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  color: var(--color-on-primary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brand-marquee__track {
+    will-change: auto;
+  }
+}

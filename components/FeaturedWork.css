@@ -1,0 +1,312 @@
+/* IKEA Yearbook-style project carousel */
+
+.yearbook-showcase {
+  --yb-card-w: 25em;
+  --yb-card-h: 22em;
+  --yb-card-radius: 1rem;
+  --yb-card-scale: 0.95;
+  --yb-bg-scale-y: 1;
+  --yb-bg-lift: 0%;
+  --yb-visual-top: -52%;
+  --yb-visual-scale: 0.75;
+  --yb-visual-rotate: 0deg;
+  --yb-spacing-overflow: calc(var(--yb-card-h) * 0.2);
+  --yb-image-overflow: 10rem;
+  position: relative;
+  width: 100%;
+  padding-bottom: clamp(3rem, 8vw, 5rem);
+  background: var(--color-primary);
+  overflow: visible;
+}
+
+.yearbook-showcase__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: clamp(1.5rem, 4vw, 2.5rem) var(--padding) clamp(1rem, 3vw, 2rem);
+  text-align: center;
+}
+
+.yearbook-showcase__heading {
+  margin: 0;
+  width: 100%;
+}
+
+.yearbook-showcase__title-line {
+  display: block;
+  width: fit-content;
+  max-width: calc(100vw - var(--padding) * 2);
+  margin-inline: auto;
+  text-align: center;
+}
+
+.yearbook-showcase__title-line--small {
+  font-size: clamp(2.2rem, 6vw, 4rem);
+}
+
+.yearbook-showcase__title-line--large {
+  font-size: clamp(2.8rem, 12vw, 7.5rem);
+}
+
+.yearbook-showcase__heading .shuffle-parent {
+  display: block;
+  width: fit-content;
+  max-width: calc(100vw - var(--padding) * 2);
+  margin-inline: auto;
+  text-align: center;
+}
+
+.yearbook-showcase__carousel {
+  position: relative;
+  max-width: 100vw;
+  min-height: calc(var(--yb-card-h) + var(--yb-image-overflow) + 2rem);
+  padding-top: 1.5rem;
+  overflow: visible;
+}
+
+.yearbook-showcase__viewport {
+  overflow-x: hidden;
+  overflow-y: visible;
+  width: 100%;
+  padding-top: var(--yb-image-overflow);
+  margin-top: calc(var(--yb-image-overflow) * -1);
+  cursor: grab;
+}
+
+.yearbook-showcase__viewport.is-dragging {
+  cursor: grabbing;
+}
+
+.yearbook-showcase__track {
+  display: flex;
+  align-items: flex-end;
+  touch-action: pan-y;
+  user-select: none;
+}
+
+.yearbook-showcase__slide {
+  flex: 0 0 auto;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: var(--yb-card-h);
+  padding: calc(var(--yb-image-overflow) + var(--yb-spacing-overflow)) 0.5rem 1rem;
+  box-sizing: content-box;
+  overflow: visible;
+}
+
+.yearbook-showcase__slide:first-child {
+  margin-left: calc(50vw - var(--yb-card-w) / 2);
+}
+
+.yearbook-showcase__slide:last-child {
+  margin-right: calc(50vw - var(--yb-card-w) / 2);
+}
+
+.yearbook-card {
+  position: relative;
+  display: inline-block;
+  width: var(--yb-card-w);
+  height: var(--yb-card-h);
+  color: var(--card-text, #111);
+  transform-origin: bottom center;
+  overflow: visible;
+}
+
+.yearbook-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: var(--yb-card-radius);
+  background: var(--card-bg, #f4f4f4);
+  transform: scale(var(--yb-card-scale), var(--yb-bg-scale-y))
+    translateY(var(--yb-bg-lift));
+  transform-origin: bottom center;
+  transition: transform 0.35s ease;
+}
+
+.yearbook-showcase__slide.is-active .yearbook-card {
+  --yb-card-scale: 1;
+  --yb-bg-scale-y: 1.2;
+  --yb-bg-lift: -8%;
+  --yb-visual-top-active: calc(
+    var(--yb-visual-top) - (var(--yb-bg-scale-y) - 1) * 100%
+  );
+}
+
+.yearbook-card__inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.yearbook-card__visuals {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  z-index: 3;
+  width: var(--yb-card-w);
+  height: var(--yb-card-h);
+  transform: translateX(-50%);
+  overflow: visible;
+  pointer-events: none;
+}
+
+.yearbook-card__visual {
+  --yb-visual-y: var(--yb-visual-top);
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  transform: translate3d(0, var(--yb-visual-y), 0) scale(var(--yb-visual-scale))
+    rotate(var(--yb-visual-rotate));
+  transform-origin: bottom center;
+  transition: transform 0.5s cubic-bezier(0.34, 1.4, 0.64, 1);
+  will-change: transform;
+}
+
+.yearbook-showcase__slide.is-active .yearbook-card__visual {
+  --yb-visual-y: var(--yb-visual-top-active, var(--yb-visual-top));
+}
+
+.yearbook-card__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+}
+
+.yearbook-card__button {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  border-radius: var(--yb-card-radius);
+  background: transparent;
+  cursor: pointer;
+}
+
+.yearbook-card__button-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.yearbook-card__headlines {
+  position: absolute;
+  right: 0;
+  bottom: 3.25rem;
+  left: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.35rem;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+  text-align: center;
+  pointer-events: none;
+  transform: scale(var(--yb-card-scale));
+  transform-origin: bottom center;
+  transition: transform 0.35s ease;
+}
+
+.yearbook-showcase__slide.is-active .yearbook-card__headlines {
+  transform: scale(1);
+  width: 100%;
+}
+
+.yearbook-card__title {
+  margin: 0;
+  width: 100%;
+  max-width: 36ch;
+  font-family: var(--font-body), sans-serif;
+  font-size: 2.5em;
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  text-align: center;
+}
+
+.yearbook-card__subtitle {
+  margin: 0;
+  width: 100%;
+  max-width: 36ch;
+  font-family: var(--font-body), sans-serif;
+  font-size: 1em;
+  font-weight: 400;
+  line-height: 1.3;
+  text-align: center;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .yearbook-card:hover .yearbook-card__visual {
+    animation: yearbook-visual-bounce 0.65s cubic-bezier(0.34, 1.45, 0.64, 1)
+      forwards;
+  }
+}
+
+@keyframes yearbook-visual-bounce {
+  0% {
+    transform: translate3d(0, var(--yb-visual-y), 0) scale(var(--yb-visual-scale))
+      rotate(var(--yb-visual-rotate));
+  }
+  35% {
+    transform: translate3d(0, calc(var(--yb-visual-y) - 5%), 0)
+      scale(calc(var(--yb-visual-scale) * 1.06))
+      rotate(calc(var(--yb-visual-rotate) + 6deg));
+  }
+  65% {
+    transform: translate3d(0, calc(var(--yb-visual-y) + 2%), 0)
+      scale(calc(var(--yb-visual-scale) * 0.98))
+      rotate(calc(var(--yb-visual-rotate) - 2deg));
+  }
+  100% {
+    transform: translate3d(0, var(--yb-visual-y), 0) scale(var(--yb-visual-scale))
+      rotate(var(--yb-visual-rotate));
+  }
+}
+
+@media (max-width: 500px) {
+  .yearbook-showcase {
+    --yb-card-w: 80vw;
+    --yb-card-h: 80vw;
+    --yb-image-overflow: 7rem;
+  }
+
+  .yearbook-card__headlines {
+    bottom: 2.75rem;
+  }
+
+  .yearbook-card__title {
+    font-size: 2.3em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .yearbook-card::after,
+  .yearbook-card__visual,
+  .yearbook-card__headlines {
+    transition: none;
+  }
+
+  .yearbook-card:hover .yearbook-card__visual {
+    animation: none;
+  }
+}

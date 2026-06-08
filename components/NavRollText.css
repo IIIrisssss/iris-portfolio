@@ -1,0 +1,55 @@
+/* Vertical roll — https://madewithgsap.com/effects/ (.roll + btnAnimation2) */
+
+.nav-roll {
+  display: block;
+  overflow: hidden;
+}
+
+.nav-roll--text {
+  height: 12px;
+}
+
+.nav-roll--surface {
+  height: calc(var(--nav-height) - 8px);
+}
+
+.nav-roll__outer {
+  position: relative;
+  display: block;
+  line-height: 1;
+  height: 100%;
+}
+
+.nav-roll__translate {
+  display: inline-block;
+}
+
+.nav-roll__line {
+  display: flex;
+  align-items: center;
+  line-height: 1;
+}
+
+.nav-roll--surface .nav-roll__line {
+  height: calc(var(--nav-height) - 8px);
+}
+
+.nav-roll__line--dup {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+}
+
+.nav-roll.is-on .nav-roll__translate {
+  animation: nav-roll-slide 0.4s cubic-bezier(0.16, 0.03, 0.08, 1.55) infinite;
+}
+
+@keyframes nav-roll-slide {
+  from {
+    transform: translate(0, 0);
+  }
+
+  to {
+    transform: translate(0, 100%);
+  }
+}
