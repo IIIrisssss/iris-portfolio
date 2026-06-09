@@ -8,6 +8,7 @@
 }
 
 .meet-footer__cta {
+  scroll-margin-top: calc(var(--padding) + 4.5rem);
   display: flex;
   flex-direction: column;
   align-items: center;

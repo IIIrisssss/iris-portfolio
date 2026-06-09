@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect } from "react";
+import { RevealMask } from "./RevealMask";
 import { footer } from "@/lib/data";
 import { EmailIcon, LinkedInIcon, WeChatIcon } from "./FooterIcons";
 
@@ -20,24 +22,41 @@ function SocialIcon({ id }: { id: string }) {
 }
 
 export function Footer() {
+  useEffect(() => {
+    if (window.location.hash !== "#contact-cta") return;
+
+    const target = document.getElementById("contact-cta");
+    target?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, []);
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
     <footer id="contact" className="meet-footer" aria-label="Contact">
-      <div className="meet-footer__cta">
-        <p className="meet-footer__eyebrow">{footer.eyebrow}</p>
+      <div id="contact-cta" className="meet-footer__cta">
+        <RevealMask delay={0.95}>
+          <p className="meet-footer__eyebrow">{footer.eyebrow}</p>
+        </RevealMask>
 
-        <h2 className="meet-footer__headline">{footer.headline}</h2>
+        <RevealMask delay={1.02}>
+          <h2 className="meet-footer__headline">{footer.headline}</h2>
+        </RevealMask>
 
-        <p className="meet-footer__body">{footer.body}</p>
+        <RevealMask delay={1.08}>
+          <p className="meet-footer__body">{footer.body}</p>
+        </RevealMask>
 
-        <a href={footer.ctaHref} className="meet-footer__button">
-          {footer.ctaLabel} →
-        </a>
+        <RevealMask delay={1.14}>
+          <a href={footer.ctaHref} className="meet-footer__button">
+            {footer.ctaLabel} →
+          </a>
+        </RevealMask>
 
-        <p className="meet-footer__connect">{footer.connectLabel}</p>
+        <RevealMask delay={1.2}>
+          <p className="meet-footer__connect">{footer.connectLabel}</p>
+        </RevealMask>
 
         <div className="meet-footer__social">
           {footer.socialLinks.map((link) => (

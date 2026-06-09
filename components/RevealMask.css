@@ -1,0 +1,8 @@
+.reveal-mask {
+  overflow: hidden;
+  display: block;
+}
+
+.reveal-mask__inner {
+  will-change: transform;
+}

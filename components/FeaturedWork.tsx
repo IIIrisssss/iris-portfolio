@@ -1,25 +1,153 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useRef } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
+import { animate } from "framer-motion";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { portfolioSlides } from "@/lib/data";
+import { cardIntroSpring } from "@/lib/motion";
+import { featuredWorkTitle, getSlideLabels } from "@/lib/i18n";
+import { useLanguage } from "./LanguageProvider";
+import { RevealMask } from "./RevealMask";
+import {
+  PortfolioStackCursor,
+  type PortfolioStackCursorHandle,
+  type StackCursorMode,
+} from "./PortfolioStackCursor";
 
 import "./FeaturedWork.css";
 
-const CARD_PUSH = 20;
+const CARD_PUSH = 10;
+const STACK_X_STEP = 3;
+const STACK_ROT_STEP = 6;
+const VISIBLE_STACK = 4;
 const CARD_COUNT = portfolioSlides.length;
-const TILT_DEG = 40;
+const EXPAND_MAX_WIDTH = 720;
+const CARD_ASPECT = 480 / 580;
+function getExpandedCardSize() {
+  const maxW = window.innerWidth * 0.94;
+  const maxH = window.innerHeight * 0.88;
 
-const scaleForIndex = gsap.utils.mapRange(0, CARD_COUNT - 1, 1, 0.75);
-const alphaForIndex = gsap.utils.mapRange(0, CARD_COUNT - 1, 1, 0.25);
+  let width = Math.min(maxW, EXPAND_MAX_WIDTH);
+  let height = width / CARD_ASPECT;
+
+  if (height > maxH) {
+    height = maxH;
+    width = height * CARD_ASPECT;
+  }
+
+  return { width, height };
+}
+
+const TILT_DEG = 40;
+const DRAG_THRESHOLD = 30;
+const CLICK_MAX_MOVE = 10;
+const CLICK_MAX_MS = 400;
+const PULLBACK_ZONE = 120;
+
+const scaleForIndex = gsap.utils.mapRange(0, CARD_COUNT - 1, 1, 0.72);
+const alphaForIndex = gsap.utils.mapRange(0, VISIBLE_STACK - 1, 1, 0.2);
+
+function stackX(index: number) {
+  return (index % 2 === 0 ? -1 : 1) * index * STACK_X_STEP;
+}
+
+function stackRotation(index: number) {
+  if (index === 0) return STACK_ROT_STEP * 0.65;
+  const tier = Math.ceil(index / 2);
+  return (index % 2 === 1 ? -1 : 1) * tier * STACK_ROT_STEP;
+}
 
 function padCounter(index: number) {
   return `0${index + 1} / 0${CARD_COUNT}`;
 }
 
-export function FeaturedWork() {
+function getStackCursorState(
+  clientX: number,
+  clientY: number,
+  cardsArea: HTMLElement,
+  cards: HTMLElement[],
+  currentIndex: number,
+): { active: boolean; mode: StackCursorMode } {
+  const areaRect = cardsArea.getBoundingClientRect();
+  const topCard = cards[currentIndex];
+  if (!topCard) return { active: false, mode: "default" };
+
+  const cardRect = topCard.getBoundingClientRect();
+  const pullback = currentIndex > 0 ? PULLBACK_ZONE : 0;
+  const inHorizontal = clientX >= areaRect.left && clientX <= areaRect.right;
+  const inVertical =
+    clientY >= areaRect.top - pullback && clientY <= areaRect.bottom;
+
+  if (!inHorizontal || !inVertical) return { active: false, mode: "default" };
+
+  const inPullback =
+    currentIndex > 0 &&
+    clientY < cardRect.top &&
+    clientY >= cardRect.top - pullback &&
+    clientX >= cardRect.left - 28 &&
+    clientX <= cardRect.right + 28;
+
+  if (inPullback && currentIndex > 0) {
+    return { active: true, mode: "down" };
+  }
+
+  const onTopCard =
+    clientX >= cardRect.left &&
+    clientX <= cardRect.right &&
+    clientY >= cardRect.top &&
+    clientY <= cardRect.bottom;
+
+  if (
+    onTopCard &&
+    clientY <= cardRect.top + cardRect.height / 2 &&
+    currentIndex < CARD_COUNT - 1
+  ) {
+    return { active: true, mode: "up" };
+  }
+
+  return { active: true, mode: "default" };
+}
+
+function stackProps(index: number) {
+  return {
+    zIndex: -index,
+    y: index * CARD_PUSH,
+    x: stackX(index),
+    rotation: stackRotation(index),
+    scale: scaleForIndex(index),
+    autoAlpha: index < VISIBLE_STACK ? alphaForIndex(index) : 0,
+    yPercent: 0,
+  };
+}
+
+function buildInitialStackCss() {
+  const rules: string[] = [];
+
+  for (let i = 0; i < CARD_COUNT; i++) {
+    const selector = `.portfolio-slider-center:not(.is-stack-ready) .tilt-card-container:nth-child(${i + 1})`;
+
+    if (i >= VISIBLE_STACK) {
+      rules.push(`${selector}{visibility:hidden;opacity:0;pointer-events:none;}`);
+      continue;
+    }
+
+    rules.push(
+      `${selector}{z-index:${-i};opacity:${i === 0 ? 1 : 0};visibility:visible;transform:translate3d(0,50px,0) rotate(0deg) scale(0.8);transform-origin:center center;}`,
+    );
+  }
+
+  return rules.join("");
+}
+
+type FeaturedWorkProps = {
+  variant?: "hero" | "section";
+};
+
+export function FeaturedWork({ variant = "section" }: FeaturedWorkProps) {
+  const { locale } = useLanguage();
   const sectionRef = useRef<HTMLElement>(null);
   const cardsAreaRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<HTMLDivElement[]>([]);
@@ -29,40 +157,126 @@ export function FeaturedWork() {
   const nameBRef = useRef<HTMLHeadingElement>(null);
   const yearRef = useRef<HTMLDivElement>(null);
   const counterRef = useRef<HTMLDivElement>(null);
-  const cursorRef = useRef<HTMLDivElement>(null);
+  const heroTitleRef = useRef<HTMLHeadingElement>(null);
+  const backdropRef = useRef<HTMLDivElement>(null);
+  const portalLayerRef = useRef<HTMLDivElement>(null);
+  const originalCardParentRef = useRef<HTMLElement | null>(null);
+  const originalCardNextSiblingRef = useRef<ChildNode | null>(null);
+
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [isStackReady, setIsStackReady] = useState(false);
+  const [introComplete, setIntroComplete] = useState(false);
+  const isExpandedRef = useRef(false);
+  const introCompleteRef = useRef(false);
+  const expandedCardIndexRef = useRef<number | null>(null);
+  const expandFromRectRef = useRef<DOMRect | null>(null);
+  const expandFromRotationRef = useRef(0);
 
   const currentIndexRef = useRef(0);
   const isAnimatingRef = useRef(false);
   const changeCardsRef = useRef<
     (nextIndex: number, scrollingDown: boolean) => void
   >(() => {});
-  const isOverCardsRef = useRef(false);
-  const imageTimelinesRef = useRef<gsap.core.Timeline[]>([]);
+  const stackCursorRef = useRef<PortfolioStackCursorHandle>(null);
 
   const setCardRef = useCallback((el: HTMLDivElement | null, index: number) => {
     if (el) cardsRef.current[index] = el;
   }, []);
 
-  const updateLabels = useCallback((index: number) => {
-    const slide = portfolioSlides[index];
-    if (tagARef.current) tagARef.current.textContent = slide.tagA;
-    if (tagBRef.current) tagBRef.current.textContent = slide.tagB;
-    if (nameARef.current) nameARef.current.textContent = slide.nameA;
-    if (nameBRef.current) nameBRef.current.textContent = slide.nameB;
-    if (yearRef.current) yearRef.current.textContent = slide.year;
-    if (counterRef.current) counterRef.current.textContent = padCounter(index);
+  const updateLabels = useCallback(
+    (index: number) => {
+      const labels = getSlideLabels(portfolioSlides[index], locale);
+      if (tagARef.current) tagARef.current.textContent = labels.tagA;
+      if (tagBRef.current) tagBRef.current.textContent = labels.tagB;
+      if (nameARef.current) nameARef.current.textContent = labels.nameA;
+      if (nameBRef.current) nameBRef.current.textContent = labels.nameB;
+      if (yearRef.current) yearRef.current.textContent = labels.year;
+      if (counterRef.current) counterRef.current.textContent = padCounter(index);
+    },
+    [locale]
+  );
+
+  const finalizeStack = useCallback(
+    (cards: HTMLElement[], baseIndex: number) => {
+      cards.forEach((card, i) => {
+        if (i < baseIndex) {
+          gsap.set(card, {
+            yPercent: -300,
+            autoAlpha: 0,
+            zIndex: -20 - i,
+            x: 0,
+            y: 0,
+            rotation: 0,
+            scale: 1,
+          });
+          return;
+        }
+
+        const offset = i - baseIndex;
+        gsap.set(card, {
+          transformOrigin: "center center",
+          ...stackProps(offset),
+        });
+      });
+    },
+    []
+  );
+
+  const flattenExpandedCard = useCallback(
+    (card: HTMLElement, inner: HTMLElement | null) => {
+      gsap.killTweensOf([card, inner].filter(Boolean));
+
+      if (inner) {
+        gsap.set(inner, {
+          rotationX: 0,
+          rotationY: 0,
+          rotation: 0,
+          scale: 1,
+          transformPerspective: 0,
+        });
+        inner.style.transform = "none";
+        inner.style.transformStyle = "flat";
+      }
+
+      gsap.set(card, {
+        rotation: 0,
+        skewX: 0,
+        skewY: 0,
+        transformOrigin: "50% 50%",
+        transformPerspective: 0,
+      });
+    },
+    [],
+  );
+
+  const resetCardTilt = useCallback((inner: HTMLElement | null) => {
+    if (!inner) return;
+    inner.style.removeProperty("transform");
+    inner.style.removeProperty("transform-style");
+    gsap.set(inner, { transformStyle: "preserve-3d", transformPerspective: 800 });
   }, []);
 
-  const applyStackLayout = useCallback((cards: HTMLElement[]) => {
-    gsap.set(cards, {
-      transformOrigin: "center center",
-      zIndex: (i) => -i,
-      y: (i) => i * CARD_PUSH,
-      scale: (i) => scaleForIndex(i),
-      autoAlpha: (i) => (i < 3 ? alphaForIndex(i) : 0),
-      yPercent: 0,
-    });
+  const getDimTargets = useCallback(() => {
+    const section = sectionRef.current;
+    if (!section) return [];
+
+    return [
+      heroTitleRef.current,
+      section.querySelector<HTMLElement>(".portfolio-work-tag"),
+      section.querySelector<HTMLElement>(".portfolio-project-name"),
+      counterRef.current,
+    ].filter(Boolean) as HTMLElement[];
   }, []);
+
+  const restoreDimTargets = useCallback(() => {
+    getDimTargets().forEach((target) => {
+      if (target === heroTitleRef.current && currentIndexRef.current > 0) {
+        gsap.set(target, { autoAlpha: 0, y: -28 });
+        return;
+      }
+      gsap.to(target, { autoAlpha: 1, y: 0, duration: 0.35, ease: "power2.out" });
+    });
+  }, [getDimTargets]);
 
   const animateTextChange = useCallback(
     (index: number, scrollingDown: boolean) => {
@@ -92,6 +306,7 @@ export function FeaturedWork() {
       const cards = cardsRef.current.filter(Boolean);
       const section = sectionRef.current;
       if (!cards.length || !section || isAnimatingRef.current) return;
+      if (isExpandedRef.current) return;
 
       const clamped = Math.max(0, Math.min(CARD_COUNT - 1, nextIndex));
       if (clamped === currentIndexRef.current) return;
@@ -102,86 +317,352 @@ export function FeaturedWork() {
 
       const tl = gsap.timeline({
         onComplete: () => {
+          finalizeStack(cards, clamped);
           isAnimatingRef.current = false;
+          cardsAreaRef.current?.classList.toggle(
+            "is-pullback-ready",
+            clamped > 0,
+          );
         },
       });
 
       if (scrollingDown) {
-        for (let i = fromIndex + 1; i < cards.length; i++) {
-          const prev = cards[i - 1];
+        if (fromIndex === 0 && heroTitleRef.current) {
+          tl.to(heroTitleRef.current, {
+            autoAlpha: 0,
+            y: -28,
+            duration: 0.2,
+            ease: "power2.in",
+          });
+        }
+
+        gsap.set(cards[fromIndex], { zIndex: 50 });
+
+        tl.to(
+          cards[fromIndex],
+          {
+            yPercent: -300,
+            autoAlpha: 0,
+            zIndex: 50,
+            duration: 0.45,
+            ease: "power2.in",
+          },
+          fromIndex === 0 && heroTitleRef.current ? ">0.02" : 0
+        );
+
+        for (let i = clamped; i < cards.length; i++) {
+          const offset = i - clamped;
           tl.to(
             cards[i],
             {
-              autoAlpha: gsap.getProperty(prev, "opacity"),
-              y: gsap.getProperty(prev, "y"),
-              scale: gsap.getProperty(prev, "scale"),
-              zIndex: gsap.getProperty(prev, "zIndex"),
+              ...stackProps(offset),
+              yPercent: 0,
+              duration: 0.45,
+              ease: "power2.out",
+            },
+            i === clamped ? "<0.12" : "<0.04"
+          );
+        }
+      } else {
+        gsap.set(cards[clamped], { zIndex: 50 });
+
+        tl.to(cards[clamped], {
+          yPercent: 0,
+          autoAlpha: 1,
+          zIndex: 50,
+          duration: 0.35,
+          ease: "power2.out",
+        });
+
+        for (let i = clamped; i < cards.length; i++) {
+          const offset = i - clamped;
+          tl.to(
+            cards[i],
+            {
+              ...stackProps(offset),
+              yPercent: 0,
+              duration: 0.35,
+              ease: "power2.out",
             },
             "<"
           );
         }
-        tl.to(
-          cards[fromIndex],
-          { yPercent: -300, zIndex: 99, duration: 0.45, ease: "power2.in" },
-          "<"
-        );
-      } else {
-        tl.to(cards[clamped], { yPercent: 0, duration: 0.35, ease: "power2.out" });
-        tl.to(
-          cards.slice(clamped),
-          {
-            zIndex: (i) => -i,
-            y: (i) => i * CARD_PUSH,
-            scale: (i) => scaleForIndex(i),
-            autoAlpha: (i) => (i < 3 ? alphaForIndex(i) : 0),
-            duration: 0.35,
-            ease: "power2.out",
-          },
-          "<"
-        );
+
+        if (clamped === 0 && heroTitleRef.current) {
+          tl.to(
+            heroTitleRef.current,
+            { autoAlpha: 1, y: 0, duration: 0.4, ease: "power2.out" },
+            "<0.15"
+          );
+        }
       }
 
       animateTextChange(clamped, scrollingDown);
     },
-    [animateTextChange]
+    [animateTextChange, finalizeStack]
   );
 
-  changeCardsRef.current = changeCards;
+  useEffect(() => {
+    changeCardsRef.current = changeCards;
+  }, [changeCards]);
+
+  const expandCard = useCallback((cardIndex: number) => {
+    if (isExpandedRef.current || isAnimatingRef.current) return;
+
+    const card = cardsRef.current[cardIndex];
+    const inner = card?.querySelector<HTMLElement>(".tilt-card");
+    const backdrop = backdropRef.current;
+    const portalLayer = portalLayerRef.current;
+    if (!card || !backdrop || !portalLayer) return;
+
+    expandFromRotationRef.current = Number(gsap.getProperty(card, "rotation")) || 0;
+    flattenExpandedCard(card, inner ?? null);
+
+    const rect = card.getBoundingClientRect();
+    expandFromRectRef.current = rect;
+    originalCardParentRef.current = card.parentElement;
+    originalCardNextSiblingRef.current = card.nextSibling;
+
+    isExpandedRef.current = true;
+    expandedCardIndexRef.current = cardIndex;
+    setIsExpanded(true);
+    document.body.classList.remove("portfolio-stack-cursor-active");
+    stackCursorRef.current?.setTarget(0, 0, "default", false, false);
+    document.body.classList.add("portfolio-lightbox-open");
+
+    gsap.set(card, {
+      position: "fixed",
+      top: rect.top,
+      left: rect.left,
+      width: rect.width,
+      height: rect.height,
+      margin: 0,
+      x: 0,
+      y: 0,
+      xPercent: 0,
+      yPercent: 0,
+      rotation: 0,
+      scale: 1,
+      zIndex: 2,
+      transformOrigin: "center center",
+    });
+    card.classList.add("is-expanded");
+    portalLayer.appendChild(card);
+
+    const { width: targetWidth, height: targetHeight } = getExpandedCardSize();
+
+    gsap.to(getDimTargets(), {
+      autoAlpha: 0,
+      duration: 0.35,
+      ease: "power2.out",
+    });
+    gsap.to(backdrop, { autoAlpha: 1, duration: 0.4, ease: "power2.out" });
+    gsap.to(card, {
+      autoAlpha: 1,
+      top: "50%",
+      left: "50%",
+      xPercent: -50,
+      yPercent: -50,
+      x: 0,
+      y: 0,
+      width: targetWidth,
+      height: targetHeight,
+      rotation: 0,
+      duration: 0.55,
+      ease: "power3.out",
+    });
+
+    cardsRef.current.forEach((otherCard, index) => {
+      if (index !== cardIndex && otherCard) {
+        gsap.to(otherCard, { autoAlpha: 0, duration: 0.3 });
+      }
+    });
+  }, [flattenExpandedCard, getDimTargets]);
+
+  const closeExpanded = useCallback(() => {
+    if (!isExpandedRef.current) return;
+
+    const cardIndex = expandedCardIndexRef.current;
+    const card = cardIndex !== null ? cardsRef.current[cardIndex] : null;
+    const backdrop = backdropRef.current;
+    const fromRect = expandFromRectRef.current;
+    if (!card || !backdrop || !fromRect) return;
+
+    const inner = card.querySelector<HTMLElement>(".tilt-card");
+
+    gsap.to(backdrop, { autoAlpha: 0, duration: 0.3, ease: "power2.in" });
+    gsap.to(card, {
+      top: fromRect.top,
+      left: fromRect.left,
+      xPercent: 0,
+      yPercent: 0,
+      x: 0,
+      y: 0,
+      width: fromRect.width,
+      height: fromRect.height,
+      rotation: expandFromRotationRef.current,
+      duration: 0.45,
+      ease: "power3.inOut",
+      onComplete: () => {
+        const parent = originalCardParentRef.current ?? cardsAreaRef.current;
+        if (parent) {
+          if (originalCardNextSiblingRef.current) {
+            parent.insertBefore(card, originalCardNextSiblingRef.current);
+          } else {
+            parent.appendChild(card);
+          }
+        }
+        card.classList.remove("is-expanded");
+        resetCardTilt(inner);
+        gsap.set(card, {
+          clearProps:
+            "position,top,left,width,height,zIndex,margin,x,y,xPercent,yPercent,rotation,scale",
+        });
+        finalizeStack(cardsRef.current.filter(Boolean), currentIndexRef.current);
+        restoreDimTargets();
+        document.body.classList.remove("portfolio-lightbox-open");
+        isExpandedRef.current = false;
+        expandedCardIndexRef.current = null;
+        expandFromRectRef.current = null;
+        originalCardParentRef.current = null;
+        originalCardNextSiblingRef.current = null;
+        setIsExpanded(false);
+      },
+    });
+  }, [finalizeStack, resetCardTilt, restoreDimTargets]);
+
+  useEffect(() => {
+    if (!isExpanded) return;
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") closeExpanded();
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [isExpanded, closeExpanded]);
+
+  useEffect(() => {
+    updateLabels(currentIndexRef.current);
+  }, [locale, updateLabels]);
+
+  useLayoutEffect(() => {
+    const cards = cardsRef.current.filter(Boolean);
+    if (!cards.length) return;
+
+    let cancelled = false;
+    const introCards = cards.slice(0, VISIBLE_STACK);
+
+    const finishIntro = () => {
+      if (cancelled || introCompleteRef.current) return;
+      introCompleteRef.current = true;
+
+      introCards.forEach((card) => {
+        card.style.removeProperty("transform");
+        card.style.removeProperty("opacity");
+      });
+
+      finalizeStack(cards, currentIndexRef.current);
+      cardsAreaRef.current?.classList.add("is-stack-ready");
+      setIsStackReady(true);
+      setIntroComplete(true);
+
+      if (heroTitleRef.current) {
+        gsap.set(heroTitleRef.current, {
+          autoAlpha: currentIndexRef.current === 0 ? 1 : 0,
+          y: currentIndexRef.current === 0 ? 0 : -28,
+        });
+      }
+    };
+
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    if (prefersReducedMotion) {
+      finishIntro();
+      return () => {
+        cancelled = true;
+      };
+    }
+
+    cards.forEach((card, i) => {
+      if (i >= VISIBLE_STACK) {
+        gsap.set(card, { autoAlpha: 0, visibility: "hidden" });
+      }
+    });
+
+    introCards.forEach((card, i) => {
+      gsap.killTweensOf(card);
+      gsap.set(card, { clearProps: "transform,opacity,visibility" });
+
+      card.style.transformOrigin = "center center";
+      card.style.zIndex = String(stackProps(i).zIndex);
+      card.style.transform = "translate3d(0px, 50px, 0px) rotate(0deg) scale(0.8)";
+      card.style.opacity = i === 0 ? "1" : "0";
+    });
+
+    const animations = introCards.map((card, i) => {
+      const target = stackProps(i);
+
+      return animate(
+        card,
+        {
+          x: target.x,
+          y: target.y,
+          rotate: target.rotation,
+          scale: target.scale,
+          opacity: target.autoAlpha as number,
+        },
+        {
+          ...cardIntroSpring,
+          delay: 0.22 + i * 0.08,
+        },
+      );
+    });
+
+    Promise.all(animations.map((animation) => animation.finished))
+      .then(finishIntro)
+      .catch(() => finishIntro());
+
+    return () => {
+      cancelled = true;
+      animations.forEach((animation) => animation.stop());
+    };
+  }, [finalizeStack, locale]);
 
   useGSAP(
     () => {
+      if (!introCompleteRef.current) return;
+
       const section = sectionRef.current;
       const cards = cardsRef.current.filter(Boolean);
       if (!section || !cards.length) return;
 
-      updateLabels(0);
-      applyStackLayout(cards);
+      if (backdropRef.current) {
+        gsap.set(backdropRef.current, { autoAlpha: 0 });
+      }
 
-      imageTimelinesRef.current = [];
       const cardCleanups: Array<() => void> = [];
+      const cardsArea = cardsAreaRef.current;
 
-      cards.forEach((card, cardIndex) => {
+      let dragStartX = 0;
+      let dragStartY = 0;
+      let dragStartTime = 0;
+      let dragCardIndex: number | null = null;
+      let dragTriggered = false;
+      let activePointerId: number | null = null;
+      let cursorActive = false;
+      const canUseStackCursor = window.matchMedia("(hover: hover)").matches;
+
+      cards.forEach((card) => {
         const inner = card.querySelector<HTMLElement>(".tilt-card");
         if (!inner) return;
 
         gsap.set(inner, { transformStyle: "preserve-3d", transformPerspective: 800 });
 
-        const images = card.querySelectorAll<HTMLElement>(".tilt-card__image");
-        const cycle = gsap.timeline({ paused: true, repeat: -1 });
-        gsap.set(images, { autoAlpha: 0 });
-        gsap.set(images[0], { autoAlpha: 1 });
-        for (let i = 1; i < images.length; i++) {
-          cycle.add(() => gsap.set(images[i], { autoAlpha: 1 }));
-          cycle.add(() => gsap.set(images[i - 1], { autoAlpha: 0 }), "+=0");
-          cycle.to({}, { duration: 0.9 });
-        }
-        cycle.add(() => {
-          gsap.set(images, { autoAlpha: 0 });
-          gsap.set(images[0], { autoAlpha: 1 });
-        });
-        imageTimelinesRef.current[cardIndex] = cycle;
-
         const onMove = (event: MouseEvent) => {
+          if (isExpandedRef.current || activePointerId !== null) return;
           const rect = card.getBoundingClientRect();
           const xVal = event.clientX - rect.left;
           const yVal = event.clientY - rect.top;
@@ -191,22 +672,14 @@ export function FeaturedWork() {
           gsap.to(inner, {
             rotationX: xRotation,
             rotationY: yRotation,
-            scale: 1.08,
+            scale: 1.06,
             duration: 0.4,
             ease: "power2.out",
           });
-
-          if (cursorRef.current) {
-            gsap.to(cursorRef.current, {
-              x: event.clientX + 16,
-              y: event.clientY + 16,
-              autoAlpha: 1,
-              duration: 0.2,
-            });
-          }
         };
 
         const onLeave = () => {
+          if (isExpandedRef.current) return;
           gsap.to(inner, {
             rotationX: 0,
             rotationY: 0,
@@ -214,148 +687,286 @@ export function FeaturedWork() {
             duration: 0.45,
             ease: "power2.out",
           });
-          if (cursorRef.current) {
-            gsap.to(cursorRef.current, { autoAlpha: 0, duration: 0.2 });
-          }
-          cycle.pause(0);
         };
 
-        const onEnter = () => cycle.play();
-
-        const onDown = () => gsap.to(inner, { scale: 0.97, duration: 0.15 });
-        const onUp = () => gsap.to(inner, { scale: 1.08, duration: 0.15 });
-
-        card.addEventListener("mouseenter", onEnter);
         card.addEventListener("mouseleave", onLeave);
         card.addEventListener("mousemove", onMove);
-        card.addEventListener("mousedown", onDown);
-        card.addEventListener("mouseup", onUp);
 
         cardCleanups.push(() => {
-          card.removeEventListener("mouseenter", onEnter);
           card.removeEventListener("mouseleave", onLeave);
           card.removeEventListener("mousemove", onMove);
-          card.removeEventListener("mousedown", onDown);
-          card.removeEventListener("mouseup", onUp);
         });
       });
 
-      const cardsArea = cardsAreaRef.current;
-      let wheelAccumulator = 0;
-      let pinnedScrollY = 0;
-      const WHEEL_THRESHOLD = 40;
+      if (!cardsArea) return;
 
-      const onCardsEnter = () => {
-        isOverCardsRef.current = true;
-        pinnedScrollY = window.scrollY;
+      const setCursorActive = (active: boolean) => {
+        if (cursorActive === active) return;
+        cursorActive = active;
+        document.body.classList.toggle("portfolio-stack-cursor-active", active);
       };
 
-      const onCardsLeave = () => {
-        isOverCardsRef.current = false;
-        wheelAccumulator = 0;
+      const hideCursor = () => {
+        setCursorActive(false);
+        stackCursorRef.current?.setTarget(0, 0, "default", false, false);
       };
 
-      cardsArea?.addEventListener("mouseenter", onCardsEnter);
-      cardsArea?.addEventListener("mouseleave", onCardsLeave);
-
-      const onScrollWhileHovering = () => {
-        if (!isOverCardsRef.current) return;
-        if (window.scrollY !== pinnedScrollY) {
-          window.scrollTo(0, pinnedScrollY);
+      const updateCursor = (
+        clientX: number,
+        clientY: number,
+        dragging = false,
+      ) => {
+        if (!canUseStackCursor || isExpandedRef.current) {
+          hideCursor();
+          return;
         }
-      };
 
-      const onWheel = (event: WheelEvent) => {
-        if (!isOverCardsRef.current) return;
+        const { active, mode } = getStackCursorState(
+          clientX,
+          clientY,
+          cardsArea,
+          cards,
+          currentIndexRef.current,
+        );
 
-        event.preventDefault();
-        event.stopImmediatePropagation();
-
-        if (isAnimatingRef.current) return;
-
-        wheelAccumulator += event.deltaY;
-        if (Math.abs(wheelAccumulator) < WHEEL_THRESHOLD) return;
-
-        const delta = wheelAccumulator;
-        wheelAccumulator = 0;
-        const index = currentIndexRef.current;
-
-        if (delta > 0 && index < CARD_COUNT - 1) {
-          changeCardsRef.current(index + 1, true);
-        } else if (delta < 0 && index > 0) {
-          changeCardsRef.current(index - 1, false);
+        if (!active) {
+          hideCursor();
+          return;
         }
+
+        setCursorActive(true);
+        stackCursorRef.current?.setTarget(
+          clientX,
+          clientY,
+          mode,
+          true,
+          dragging,
+        );
       };
 
-      window.addEventListener("wheel", onWheel, {
-        passive: false,
-        capture: true,
-      });
-      window.addEventListener("scroll", onScrollWhileHovering, {
-        passive: true,
-      });
+      const finishPointer = (event: PointerEvent) => {
+        if (activePointerId !== event.pointerId) return;
+
+        const elapsed = performance.now() - dragStartTime;
+        const movedX = Math.abs(event.clientX - dragStartX);
+        const movedY = Math.abs(event.clientY - dragStartY);
+        const moved = Math.max(movedX, movedY);
+
+        if (
+          !dragTriggered &&
+          dragCardIndex !== null &&
+          moved <= CLICK_MAX_MOVE &&
+          elapsed <= CLICK_MAX_MS
+        ) {
+          expandCard(dragCardIndex);
+        }
+
+        if (cardsArea.hasPointerCapture(event.pointerId)) {
+          cardsArea.releasePointerCapture(event.pointerId);
+        }
+
+        activePointerId = null;
+        dragCardIndex = null;
+        dragTriggered = false;
+        updateCursor(event.clientX, event.clientY, false);
+      };
+
+      const onPointerDown = (event: PointerEvent) => {
+        if (isExpandedRef.current || isAnimatingRef.current) return;
+        if (event.button !== 0) return;
+
+        const { active } = getStackCursorState(
+          event.clientX,
+          event.clientY,
+          cardsArea,
+          cards,
+          currentIndexRef.current,
+        );
+        if (!active) return;
+
+        const cardEl = (event.target as HTMLElement | null)?.closest(
+          ".tilt-card-container",
+        ) as HTMLDivElement | null;
+        dragCardIndex = cardEl
+          ? Number(cardEl.dataset.slideIndex ?? NaN)
+          : null;
+        if (dragCardIndex !== null && Number.isNaN(dragCardIndex)) {
+          dragCardIndex = null;
+        }
+
+        dragStartX = event.clientX;
+        dragStartY = event.clientY;
+        dragStartTime = performance.now();
+        dragTriggered = false;
+        activePointerId = event.pointerId;
+
+        cardsArea.setPointerCapture(event.pointerId);
+        updateCursor(event.clientX, event.clientY, true);
+      };
+
+      const onPointerMove = (event: PointerEvent) => {
+        if (activePointerId === event.pointerId) {
+          if (isExpandedRef.current || isAnimatingRef.current) {
+            finishPointer(event);
+            return;
+          }
+
+          const deltaY = event.clientY - dragStartY;
+
+          if (!dragTriggered && Math.abs(deltaY) >= DRAG_THRESHOLD) {
+            const index = currentIndexRef.current;
+
+            if (deltaY < 0 && index < CARD_COUNT - 1) {
+              changeCardsRef.current(index + 1, true);
+              dragTriggered = true;
+            } else if (deltaY > 0 && index > 0) {
+              changeCardsRef.current(index - 1, false);
+              dragTriggered = true;
+            }
+          }
+
+          if (canUseStackCursor) {
+            const index = currentIndexRef.current;
+            let dragMode: StackCursorMode = "default";
+            if (Math.abs(deltaY) > 8) {
+              if (deltaY < 0 && index < CARD_COUNT - 1) dragMode = "up";
+              if (deltaY > 0 && index > 0) dragMode = "down";
+            }
+            setCursorActive(true);
+            stackCursorRef.current?.setTarget(
+              event.clientX,
+              event.clientY,
+              dragMode,
+              true,
+              true,
+            );
+          }
+          return;
+        }
+
+        updateCursor(event.clientX, event.clientY, false);
+      };
+
+      const onPointerUp = (event: PointerEvent) => {
+        finishPointer(event);
+      };
+
+      const onPointerCancel = (event: PointerEvent) => {
+        finishPointer(event);
+      };
+
+      const onPointerLeave = (event: PointerEvent) => {
+        if (activePointerId === event.pointerId) return;
+        hideCursor();
+      };
+
+      cardsArea.addEventListener("pointerdown", onPointerDown);
+      cardsArea.addEventListener("pointermove", onPointerMove);
+      cardsArea.addEventListener("pointerup", onPointerUp);
+      cardsArea.addEventListener("pointercancel", onPointerCancel);
+      cardsArea.addEventListener("pointerleave", onPointerLeave);
 
       return () => {
-        window.removeEventListener("wheel", onWheel, { capture: true });
-        window.removeEventListener("scroll", onScrollWhileHovering);
-        cardsArea?.removeEventListener("mouseenter", onCardsEnter);
-        cardsArea?.removeEventListener("mouseleave", onCardsLeave);
-        imageTimelinesRef.current.forEach((tl) => tl.kill());
+        hideCursor();
+        cardsArea.removeEventListener("pointerdown", onPointerDown);
+        cardsArea.removeEventListener("pointermove", onPointerMove);
+        cardsArea.removeEventListener("pointerup", onPointerUp);
+        cardsArea.removeEventListener("pointercancel", onPointerCancel);
+        cardsArea.removeEventListener("pointerleave", onPointerLeave);
         cardCleanups.forEach((cleanup) => cleanup());
       };
     },
-    { scope: sectionRef }
+    { scope: sectionRef, dependencies: [locale, expandCard, introComplete] },
   );
 
+  const initialLabels = getSlideLabels(portfolioSlides[0], locale);
+  const isHero = variant === "hero";
+
   return (
-    <section
+    <>
+      <PortfolioStackCursor ref={stackCursorRef} />
+      {typeof document !== "undefined" &&
+        createPortal(
+          <div
+            ref={portalLayerRef}
+            className={`portfolio-lightbox-layer${isExpanded ? " is-active" : ""}`}
+            aria-hidden={!isExpanded}
+          >
+            <div
+              ref={backdropRef}
+              className="portfolio-lightbox-backdrop"
+              onClick={closeExpanded}
+            />
+            <button
+              type="button"
+              className="portfolio-lightbox-close"
+              aria-label="Close"
+              onClick={closeExpanded}
+            >
+              ×
+            </button>
+          </div>,
+          document.body
+        )}
+
+      <section
       ref={sectionRef}
       id="portfolio-section"
-      className="portfolio-section"
+      className={`portfolio-section${isHero ? " portfolio-section--hero" : ""}${isExpanded ? " is-card-expanded" : ""}`}
       aria-label="Featured work"
     >
+      <style dangerouslySetInnerHTML={{ __html: buildInitialStackCss() }} />
+
+      {isHero && (
+        <RevealMask className="portfolio-hero-title-wrap" delay={0.1}>
+          <h2 ref={heroTitleRef} className="portfolio-hero-title">
+            {featuredWorkTitle[locale]}
+          </h2>
+        </RevealMask>
+      )}
+
       <div className="portfolio-slider-layout">
         <div className="portfolio-work-tag">
           <div className="project-tag-heading">
-            <h1 ref={tagARef} className="project-tag-a">
-              {portfolioSlides[0].tagA}
-            </h1>
+            <RevealMask delay={0.18}>
+              <h1 ref={tagARef} className="project-tag-a">
+                {initialLabels.tagA}
+              </h1>
+            </RevealMask>
           </div>
           <div className="project-tag-heading">
-            <h1 ref={tagBRef} className="project-tag-b">
-              {portfolioSlides[0].tagB}
-            </h1>
+            <RevealMask delay={0.24}>
+              <h1 ref={tagBRef} className="project-tag-b">
+                {initialLabels.tagB}
+              </h1>
+            </RevealMask>
           </div>
         </div>
 
-        <div ref={cardsAreaRef} className="portfolio-slider-center">
+        <div
+          ref={cardsAreaRef}
+          className={`portfolio-slider-center${isStackReady ? " is-stack-ready" : ""}`}
+        >
           {portfolioSlides.map((slide, index) => (
             <div
-              key={slide.href}
+              key={`${slide.nameA}-${slide.nameB}-${index}`}
               ref={(el) => setCardRef(el, index)}
               className="tilt-card-container"
+              data-slide-index={index}
             >
               <div className="tilt-card">
-                <a
-                  href={slide.href}
-                  className="tilt-card__link"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={`View ${slide.nameA} ${slide.nameB}`}
-                >
-                  {slide.images.map((src, imageIndex) => (
-                    <Image
-                      key={src}
-                      src={src}
-                      alt=""
-                      width={480}
-                      height={580}
-                      className="tilt-card__image"
-                      priority={index === 0 && imageIndex === 0}
-                      draggable={false}
-                    />
-                  ))}
-                </a>
+                <div className="tilt-card__media">
+                  <Image
+                    key={slide.images[0]}
+                    src={slide.images[0]}
+                    alt=""
+                    width={480}
+                    height={580}
+                    className="tilt-card__image"
+                    priority={index === 0}
+                    draggable={false}
+                  />
+                </div>
               </div>
             </div>
           ))}
@@ -363,28 +974,33 @@ export function FeaturedWork() {
 
         <div className="portfolio-project-name">
           <div className="project-name-heading">
-            <h1 ref={nameARef} className="project-name-a">
-              {portfolioSlides[0].nameA}
-            </h1>
-            <div ref={yearRef} className="project-year">
-              {portfolioSlides[0].year}
-            </div>
+            <RevealMask delay={0.3}>
+              <h1 ref={nameARef} className="project-name-a">
+                {initialLabels.nameA}
+              </h1>
+            </RevealMask>
+            <RevealMask delay={0.34}>
+              <div ref={yearRef} className="project-year">
+                {initialLabels.year}
+              </div>
+            </RevealMask>
           </div>
           <div className="project-name-heading">
-            <h1 ref={nameBRef} className="project-name-b">
-              {portfolioSlides[0].nameB}
-            </h1>
+            <RevealMask delay={0.38}>
+              <h1 ref={nameBRef} className="project-name-b">
+                {initialLabels.nameB}
+              </h1>
+            </RevealMask>
           </div>
         </div>
 
-        <div ref={counterRef} className="portfolio-counter" aria-live="polite">
-          {padCounter(0)}
-        </div>
-      </div>
-
-      <div ref={cursorRef} className="portfolio-cursor" aria-hidden>
-        SHOW
+        <RevealMask className="portfolio-counter-wrap" delay={0.44}>
+          <div ref={counterRef} className="portfolio-counter" aria-live="polite">
+            {padCounter(0)}
+          </div>
+        </RevealMask>
       </div>
     </section>
+    </>
   );
 }

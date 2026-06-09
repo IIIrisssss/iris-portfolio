@@ -1,5 +1,12 @@
 import type { Transition } from "framer-motion";
 
+/** Card stack intro — physical settle on first load. */
+export const cardIntroSpring: Transition = {
+  type: "spring",
+  stiffness: 100,
+  damping: 15,
+};
+
 /** Signature bouncy "pop-in" used across the site (mimics ease-out-elastic). */
 export const elastic: Transition = {
   type: "spring",

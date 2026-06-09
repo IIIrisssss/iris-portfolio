@@ -16,10 +16,12 @@ function NavRollLink({
   href,
   label,
   active,
+  onClick,
 }: {
   href: string;
   label: string;
   active: boolean;
+  onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void;
 }) {
   const { rollRef, onMouseEnter } = useRollHover();
 
@@ -29,6 +31,7 @@ function NavRollLink({
       aria-current={active ? "page" : undefined}
       aria-label={label}
       onMouseEnter={onMouseEnter}
+      onClick={onClick}
       className={`floema-meta-row__link ${active ? "is-active" : ""}`}
     >
       <NavRollText text={label} rollRef={rollRef} />
@@ -37,20 +40,23 @@ function NavRollLink({
   );
 }
 
+function scrollToContact() {
+  const target = document.getElementById("contact-cta");
+  target?.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
 export function NavMetaRow() {
   const pathname = usePathname();
 
+  const handleContactClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    if (pathname !== "/") return;
+
+    event.preventDefault();
+    scrollToContact();
+  };
+
   return (
     <nav aria-label="Primary" className="floema-meta-row">
-      <svg
-        aria-hidden
-        className="floema-meta-row__bg"
-        viewBox="0 0 100 100"
-        preserveAspectRatio="none"
-      >
-        <rect width="100" height="100" rx="12" />
-      </svg>
-
       <div className="floema-meta-row__items">
         {links.map((link) => (
           <NavRollLink
@@ -60,6 +66,13 @@ export function NavMetaRow() {
             active={link.match(pathname)}
           />
         ))}
+
+        <NavRollLink
+          href="/#contact-cta"
+          label="Contact"
+          active={false}
+          onClick={handleContactClick}
+        />
       </div>
     </nav>
   );

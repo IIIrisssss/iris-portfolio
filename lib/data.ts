@@ -107,7 +107,15 @@ export type PortfolioSlide = {
   tagB: string;
   year: string;
   images: string[];
-  href: string;
+  href?: string;
+  i18n?: {
+    zh: {
+      tagA: string;
+      tagB: string;
+      nameA?: string;
+      nameB?: string;
+    };
+  };
 };
 
 const radianceImage = (prefix: string, frame: number) =>
@@ -122,7 +130,9 @@ export const portfolioSlides: PortfolioSlide[] = [
     tagB: "DIGITAL",
     year: "2024",
     images: [1, 2, 3, 4, 5].map((n) => radianceImage("bdp", n)),
-    href: "https://www.behance.net/gallery/199373991/SDK-Platform-bidapp-UXUI-Brand-Identity",
+    i18n: {
+      zh: { tagA: "策略", tagB: "数字", nameB: "软件开发包" },
+    },
   },
   {
     nameA: "UNITS",
@@ -131,7 +141,9 @@ export const portfolioSlides: PortfolioSlide[] = [
     tagB: "DIGITAL",
     year: "2023",
     images: [1, 2, 3, 4, 5].map((n) => radianceImage("unnts", n)),
-    href: "https://www.behance.net/gallery/170376729/Units-Autonomous-Community",
+    i18n: {
+      zh: { tagA: "品牌", tagB: "数字", nameB: "社区" },
+    },
   },
   {
     nameA: "POLEMICA",
@@ -140,7 +152,9 @@ export const portfolioSlides: PortfolioSlide[] = [
     tagB: "IDENTITY",
     year: "2021",
     images: [1, 2, 3, 4, 5].map((n) => radianceImage("plmc", n)),
-    href: "https://www.behance.net/gallery/131077809/Polemica-online-gaming-platform-rebranding",
+    i18n: {
+      zh: { tagA: "品牌", tagB: "形象", nameB: "平台" },
+    },
   },
   {
     nameA: "URBAN",
@@ -149,7 +163,9 @@ export const portfolioSlides: PortfolioSlide[] = [
     tagB: "BRANDING",
     year: "2022",
     images: [1, 2, 3, 4, 5].map((n) => radianceImage("urb", n)),
-    href: "https://www.behance.net/gallery/145220925/Urban-Amenities-branding-for-modern-furniture-company",
+    i18n: {
+      zh: { tagA: "策略", tagB: "品牌", nameA: "都市", nameB: "设施" },
+    },
   },
   {
     nameA: "INDIEVID",
@@ -158,7 +174,9 @@ export const portfolioSlides: PortfolioSlide[] = [
     tagB: "WEBSITE",
     year: "2022",
     images: [1, 2, 3, 4, 5].map((n) => radianceImage("indvd", n)),
-    href: "https://www.behance.net/gallery/147247443/Indievid-indie-music-label",
+    i18n: {
+      zh: { tagA: "形象", tagB: "网站", nameB: "厂牌" },
+    },
   },
   {
     nameA: "SCREEN",
@@ -167,7 +185,9 @@ export const portfolioSlides: PortfolioSlide[] = [
     tagB: "WEBSITE",
     year: "2022",
     images: [1, 2, 3, 4, 5].map((n) => radianceImage("scrn", n)),
-    href: "https://www.behance.net/gallery/176041679/ScreenBlasters-Design-website-made-via-Readymag",
+    i18n: {
+      zh: { tagA: "网站", tagB: "建站", nameA: "屏幕", nameB: "爆破手" },
+    },
   },
 ];
 
@@ -208,6 +228,25 @@ export const moreWork: Work[] = [
   { title: "Shred", image: "/works/shred.png", bg: "#ede6d3" },
   { title: "Caulfield Cup", image: "/works/caulfield-cup.png", bg: "#ede6d3" },
   { title: "DreamVault", image: "/works/dreamvault.jpg", bg: "#ede6d3" },
+];
+
+export type ProjectListItem = {
+  title: string;
+  slug: string;
+  image: string;
+};
+
+/** Spencer Gabor–style projects list (about page module). */
+export const projectsList: ProjectListItem[] = [
+  { title: "Brompton", slug: "brompton", image: "/works/brompton.jpg" },
+  { title: "260 Collins", slug: "260-collins", image: "/works/collins.jpg" },
+  { title: "ShakeShack", slug: "shakeshack", image: "/works/shakeshack.png" },
+  {
+    title: "Caulfield Cup",
+    slug: "caulfield-cup",
+    image: "/works/caulfield-cup.png",
+  },
+  { title: "Jaffa", slug: "jaffa", image: "/works/jaffa.jpg" },
 ];
 
 export const about = {
