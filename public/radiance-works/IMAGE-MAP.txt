@@ -1,0 +1,28 @@
+radiance-works 图片对照表
+========================
+
+把 JPG 拖进此文件夹，改成对应文件名即可覆盖，刷新网站后生效。
+
+首页 Featured Work 卡片（MY WORKS 区块，滚轮切换 6 张）
+
+  01/06  BIDAPP · SDK          → bdp-01.jpg
+  02/06  UNITS · COMMUNITY    → spring-sakura-shiratama.jpg
+  03/06  POLEMICA · PLATFORM  → plmc-01.jpg
+  04/06  URBAN · AMENITIES    → urb-01.jpg
+  05/06  INDIVID · LABEL      → indvd-01.jpg
+  06/06  SCREEN · BLASTERS    → scrn-01.jpg
+
+说明：每张作品目前只显示该组的 01 号图。02–05 为同系列备用图，改文件名后暂不在首页展示。
+
+同系列备用（可替换备用，或留作以后扩展）
+
+  bdp-02.jpg … bdp-05.jpg     — BIDAPP 系列
+  plmc-02.jpg … plmc-05.jpg   — POLEMICA 系列
+  urb-02.jpg … urb-05.jpg     — URBAN 系列
+  indvd-02.jpg … indvd-05.jpg — INDIVID 系列
+  scrn-02.jpg … scrn-05.jpg   — SCREEN 系列
+  unnts-01.jpg … unnts-05.jpg — 未在首页使用，可自由替换
+
+重新从 AVIF 批量转 JPG（若以后又加回了 .avif）：
+
+  npm run convert:radiance-jpg

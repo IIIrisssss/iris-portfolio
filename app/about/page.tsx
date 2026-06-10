@@ -1,4 +1,5 @@
 import { CollectionsOverview } from "@/components/CollectionsOverview";
+import { ProjectsList } from "@/components/ProjectsList";
 import { about } from "@/lib/data";
 
 export default function AboutPage() {
@@ -24,6 +25,7 @@ export default function AboutPage() {
       </section>
 
       <CollectionsOverview />
+      <ProjectsList />
     </main>
   );
 }

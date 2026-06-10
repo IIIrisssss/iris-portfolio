@@ -107,6 +107,9 @@ export type PortfolioSlide = {
   tagB: string;
   year: string;
   images: string[];
+  imageWidth?: number;
+  imageHeight?: number;
+  unoptimizedImage?: boolean;
   href?: string;
   i18n?: {
     zh: {
@@ -119,7 +122,7 @@ export type PortfolioSlide = {
 };
 
 const radianceImage = (prefix: string, frame: number) =>
-  `/radiance-works/${prefix}-0${frame}.avif`;
+  `/radiance-works/${prefix}-0${frame}.jpg`;
 
 /** Radiance-style portfolio showcase — https://radiance.family/ */
 export const portfolioSlides: PortfolioSlide[] = [
@@ -140,7 +143,10 @@ export const portfolioSlides: PortfolioSlide[] = [
     tagA: "BRANDING",
     tagB: "DIGITAL",
     year: "2023",
-    images: [1, 2, 3, 4, 5].map((n) => radianceImage("unnts", n)),
+    images: ["/radiance-works/spring-sakura-shiratama.jpg"],
+    imageWidth: 3240,
+    imageHeight: 3915,
+    unoptimizedImage: true,
     i18n: {
       zh: { tagA: "品牌", tagB: "数字", nameB: "社区" },
     },

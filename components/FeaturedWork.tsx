@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { animate } from "framer-motion";
@@ -11,11 +10,6 @@ import { cardIntroSpring } from "@/lib/motion";
 import { featuredWorkTitle, getSlideLabels } from "@/lib/i18n";
 import { useLanguage } from "./LanguageProvider";
 import { RevealMask } from "./RevealMask";
-import {
-  PortfolioStackCursor,
-  type PortfolioStackCursorHandle,
-  type StackCursorMode,
-} from "./PortfolioStackCursor";
 
 import "./FeaturedWork.css";
 
@@ -25,7 +19,9 @@ const STACK_ROT_STEP = 6;
 const VISIBLE_STACK = 4;
 const CARD_COUNT = portfolioSlides.length;
 const EXPAND_MAX_WIDTH = 720;
-const CARD_ASPECT = 480 / 580;
+const RADIANCE_CARD_WIDTH = 700;
+const RADIANCE_CARD_HEIGHT = 836;
+const CARD_ASPECT = RADIANCE_CARD_WIDTH / RADIANCE_CARD_HEIGHT;
 function getExpandedCardSize() {
   const maxW = window.innerWidth * 0.94;
   const maxH = window.innerHeight * 0.88;
@@ -42,10 +38,7 @@ function getExpandedCardSize() {
 }
 
 const TILT_DEG = 40;
-const DRAG_THRESHOLD = 30;
-const CLICK_MAX_MOVE = 10;
-const CLICK_MAX_MS = 400;
-const PULLBACK_ZONE = 120;
+const WHEEL_THRESHOLD = 40;
 
 const scaleForIndex = gsap.utils.mapRange(0, CARD_COUNT - 1, 1, 0.72);
 const alphaForIndex = gsap.utils.mapRange(0, VISIBLE_STACK - 1, 1, 0.2);
@@ -64,51 +57,11 @@ function padCounter(index: number) {
   return `0${index + 1} / 0${CARD_COUNT}`;
 }
 
-function getStackCursorState(
-  clientX: number,
-  clientY: number,
-  cardsArea: HTMLElement,
-  cards: HTMLElement[],
-  currentIndex: number,
-): { active: boolean; mode: StackCursorMode } {
-  const areaRect = cardsArea.getBoundingClientRect();
-  const topCard = cards[currentIndex];
-  if (!topCard) return { active: false, mode: "default" };
-
-  const cardRect = topCard.getBoundingClientRect();
-  const pullback = currentIndex > 0 ? PULLBACK_ZONE : 0;
-  const inHorizontal = clientX >= areaRect.left && clientX <= areaRect.right;
-  const inVertical =
-    clientY >= areaRect.top - pullback && clientY <= areaRect.bottom;
-
-  if (!inHorizontal || !inVertical) return { active: false, mode: "default" };
-
-  const inPullback =
-    currentIndex > 0 &&
-    clientY < cardRect.top &&
-    clientY >= cardRect.top - pullback &&
-    clientX >= cardRect.left - 28 &&
-    clientX <= cardRect.right + 28;
-
-  if (inPullback && currentIndex > 0) {
-    return { active: true, mode: "down" };
+function getStackSlot(cardIndex: number, baseIndex: number) {
+  for (let offset = 0; offset < VISIBLE_STACK; offset++) {
+    if ((baseIndex + offset) % CARD_COUNT === cardIndex) return offset;
   }
-
-  const onTopCard =
-    clientX >= cardRect.left &&
-    clientX <= cardRect.right &&
-    clientY >= cardRect.top &&
-    clientY <= cardRect.bottom;
-
-  if (
-    onTopCard &&
-    clientY <= cardRect.top + cardRect.height / 2 &&
-    currentIndex < CARD_COUNT - 1
-  ) {
-    return { active: true, mode: "up" };
-  }
-
-  return { active: true, mode: "default" };
+  return -1;
 }
 
 function stackProps(index: number) {
@@ -177,7 +130,7 @@ export function FeaturedWork({ variant = "section" }: FeaturedWorkProps) {
   const changeCardsRef = useRef<
     (nextIndex: number, scrollingDown: boolean) => void
   >(() => {});
-  const stackCursorRef = useRef<PortfolioStackCursorHandle>(null);
+  const isOverCardsRef = useRef(false);
 
   const setCardRef = useCallback((el: HTMLDivElement | null, index: number) => {
     if (el) cardsRef.current[index] = el;
@@ -199,7 +152,9 @@ export function FeaturedWork({ variant = "section" }: FeaturedWorkProps) {
   const finalizeStack = useCallback(
     (cards: HTMLElement[], baseIndex: number) => {
       cards.forEach((card, i) => {
-        if (i < baseIndex) {
+        const slot = getStackSlot(i, baseIndex);
+
+        if (slot === -1) {
           gsap.set(card, {
             yPercent: -300,
             autoAlpha: 0,
@@ -212,10 +167,9 @@ export function FeaturedWork({ variant = "section" }: FeaturedWorkProps) {
           return;
         }
 
-        const offset = i - baseIndex;
         gsap.set(card, {
           transformOrigin: "center center",
-          ...stackProps(offset),
+          ...stackProps(slot),
         });
       });
     },
@@ -308,26 +262,24 @@ export function FeaturedWork({ variant = "section" }: FeaturedWorkProps) {
       if (!cards.length || !section || isAnimatingRef.current) return;
       if (isExpandedRef.current) return;
 
-      const clamped = Math.max(0, Math.min(CARD_COUNT - 1, nextIndex));
-      if (clamped === currentIndexRef.current) return;
+      const fromIndex = currentIndexRef.current;
+      const clamped =
+        ((nextIndex % CARD_COUNT) + CARD_COUNT) % CARD_COUNT;
+      if (clamped === fromIndex) return;
 
       isAnimatingRef.current = true;
-      const fromIndex = currentIndexRef.current;
       currentIndexRef.current = clamped;
 
       const tl = gsap.timeline({
         onComplete: () => {
           finalizeStack(cards, clamped);
           isAnimatingRef.current = false;
-          cardsAreaRef.current?.classList.toggle(
-            "is-pullback-ready",
-            clamped > 0,
-          );
+          cardsAreaRef.current?.classList.add("is-pullback-ready");
         },
       });
 
       if (scrollingDown) {
-        if (fromIndex === 0 && heroTitleRef.current) {
+        if (fromIndex === 0 && clamped !== 0 && heroTitleRef.current) {
           tl.to(heroTitleRef.current, {
             autoAlpha: 0,
             y: -28,
@@ -347,20 +299,28 @@ export function FeaturedWork({ variant = "section" }: FeaturedWorkProps) {
             duration: 0.45,
             ease: "power2.in",
           },
-          fromIndex === 0 && heroTitleRef.current ? ">0.02" : 0
+          fromIndex === 0 && clamped !== 0 && heroTitleRef.current ? ">0.02" : 0,
         );
 
-        for (let i = clamped; i < cards.length; i++) {
-          const offset = i - clamped;
+        for (let offset = 0; offset < VISIBLE_STACK; offset++) {
+          const cardIndex = (clamped + offset) % CARD_COUNT;
           tl.to(
-            cards[i],
+            cards[cardIndex],
             {
               ...stackProps(offset),
               yPercent: 0,
               duration: 0.45,
               ease: "power2.out",
             },
-            i === clamped ? "<0.12" : "<0.04"
+            offset === 0 ? "<0.12" : "<0.04",
+          );
+        }
+
+        if (clamped === 0 && heroTitleRef.current) {
+          tl.to(
+            heroTitleRef.current,
+            { autoAlpha: 1, y: 0, duration: 0.4, ease: "power2.out" },
+            "<0.15",
           );
         }
       } else {
@@ -374,17 +334,17 @@ export function FeaturedWork({ variant = "section" }: FeaturedWorkProps) {
           ease: "power2.out",
         });
 
-        for (let i = clamped; i < cards.length; i++) {
-          const offset = i - clamped;
+        for (let offset = 0; offset < VISIBLE_STACK; offset++) {
+          const cardIndex = (clamped + offset) % CARD_COUNT;
           tl.to(
-            cards[i],
+            cards[cardIndex],
             {
               ...stackProps(offset),
               yPercent: 0,
               duration: 0.35,
               ease: "power2.out",
             },
-            "<"
+            "<",
           );
         }
 
@@ -392,8 +352,15 @@ export function FeaturedWork({ variant = "section" }: FeaturedWorkProps) {
           tl.to(
             heroTitleRef.current,
             { autoAlpha: 1, y: 0, duration: 0.4, ease: "power2.out" },
-            "<0.15"
+            "<0.15",
           );
+        } else if (fromIndex === 0 && clamped !== 0 && heroTitleRef.current) {
+          tl.to(heroTitleRef.current, {
+            autoAlpha: 0,
+            y: -28,
+            duration: 0.2,
+            ease: "power2.in",
+          });
         }
       }
 
@@ -427,7 +394,6 @@ export function FeaturedWork({ variant = "section" }: FeaturedWorkProps) {
     expandedCardIndexRef.current = cardIndex;
     setIsExpanded(true);
     document.body.classList.remove("portfolio-stack-cursor-active");
-    stackCursorRef.current?.setTarget(0, 0, "default", false, false);
     document.body.classList.add("portfolio-lightbox-open");
 
     gsap.set(card, {
@@ -448,6 +414,18 @@ export function FeaturedWork({ variant = "section" }: FeaturedWorkProps) {
     });
     card.classList.add("is-expanded");
     portalLayer.appendChild(card);
+
+    const slide = portfolioSlides[cardIndex];
+    const img = card.querySelector<HTMLImageElement>(".tilt-card__image");
+    if (img && slide?.unoptimizedImage) {
+      gsap.set(card, { force3D: false, transformPerspective: 0 });
+      img.loading = "eager";
+      img.decoding = "sync";
+      img.sizes = "94vw";
+      if (slide.imageWidth) {
+        img.srcset = `${slide.images[0]} ${slide.imageWidth}w`;
+      }
+    }
 
     const { width: targetWidth, height: targetHeight } = getExpandedCardSize();
 
@@ -564,6 +542,7 @@ export function FeaturedWork({ variant = "section" }: FeaturedWorkProps) {
 
       finalizeStack(cards, currentIndexRef.current);
       cardsAreaRef.current?.classList.add("is-stack-ready");
+      cardsAreaRef.current?.classList.add("is-pullback-ready");
       setIsStackReady(true);
       setIntroComplete(true);
 
@@ -645,234 +624,129 @@ export function FeaturedWork({ variant = "section" }: FeaturedWorkProps) {
 
       const cardCleanups: Array<() => void> = [];
       const cardsArea = cardsAreaRef.current;
+      let wheelAccumulator = 0;
+      let pinnedScrollY = 0;
 
-      let dragStartX = 0;
-      let dragStartY = 0;
-      let dragStartTime = 0;
-      let dragCardIndex: number | null = null;
-      let dragTriggered = false;
-      let activePointerId: number | null = null;
-      let cursorActive = false;
-      const canUseStackCursor = window.matchMedia("(hover: hover)").matches;
-
-      cards.forEach((card) => {
+      cards.forEach((card, cardIndex) => {
         const inner = card.querySelector<HTMLElement>(".tilt-card");
         if (!inner) return;
 
-        gsap.set(inner, { transformStyle: "preserve-3d", transformPerspective: 800 });
+        const slide = portfolioSlides[cardIndex];
+        const isSharpImage = Boolean(slide?.unoptimizedImage);
 
-        const onMove = (event: MouseEvent) => {
-          if (isExpandedRef.current || activePointerId !== null) return;
-          const rect = card.getBoundingClientRect();
-          const xVal = event.clientX - rect.left;
-          const yVal = event.clientY - rect.top;
-          const yRotation = TILT_DEG * ((xVal - rect.width / 2) / rect.width);
-          const xRotation = -TILT_DEG * ((yVal - rect.height / 2) / rect.height);
+        if (isSharpImage) {
+          gsap.set(inner, { transformStyle: "flat", scale: 1 });
+        } else {
+          gsap.set(inner, { transformStyle: "preserve-3d", transformPerspective: 800 });
 
-          gsap.to(inner, {
-            rotationX: xRotation,
-            rotationY: yRotation,
-            scale: 1.06,
-            duration: 0.4,
-            ease: "power2.out",
+          const onMove = (event: MouseEvent) => {
+            if (isExpandedRef.current) return;
+            const rect = card.getBoundingClientRect();
+            const xVal = event.clientX - rect.left;
+            const yVal = event.clientY - rect.top;
+            const yRotation = TILT_DEG * ((xVal - rect.width / 2) / rect.width);
+            const xRotation = -TILT_DEG * ((yVal - rect.height / 2) / rect.height);
+
+            gsap.to(inner, {
+              rotationX: xRotation,
+              rotationY: yRotation,
+              scale: 1.06,
+              duration: 0.4,
+              ease: "power2.out",
+            });
+          };
+
+          const onLeave = () => {
+            if (isExpandedRef.current) return;
+            gsap.to(inner, {
+              rotationX: 0,
+              rotationY: 0,
+              scale: 1,
+              duration: 0.45,
+              ease: "power2.out",
+            });
+          };
+
+          card.addEventListener("mouseleave", onLeave);
+          card.addEventListener("mousemove", onMove);
+
+          cardCleanups.push(() => {
+            card.removeEventListener("mouseleave", onLeave);
+            card.removeEventListener("mousemove", onMove);
           });
+        }
+
+        const onClick = () => {
+          expandCard(cardIndex);
         };
 
-        const onLeave = () => {
-          if (isExpandedRef.current) return;
-          gsap.to(inner, {
-            rotationX: 0,
-            rotationY: 0,
-            scale: 1,
-            duration: 0.45,
-            ease: "power2.out",
-          });
-        };
-
-        card.addEventListener("mouseleave", onLeave);
-        card.addEventListener("mousemove", onMove);
-
+        card.addEventListener("click", onClick);
         cardCleanups.push(() => {
-          card.removeEventListener("mouseleave", onLeave);
-          card.removeEventListener("mousemove", onMove);
+          card.removeEventListener("click", onClick);
         });
       });
 
       if (!cardsArea) return;
 
-      const setCursorActive = (active: boolean) => {
-        if (cursorActive === active) return;
-        cursorActive = active;
-        document.body.classList.toggle("portfolio-stack-cursor-active", active);
+      const onCardsEnter = () => {
+        isOverCardsRef.current = true;
+        pinnedScrollY = window.scrollY;
       };
 
-      const hideCursor = () => {
-        setCursorActive(false);
-        stackCursorRef.current?.setTarget(0, 0, "default", false, false);
+      const onCardsLeave = () => {
+        isOverCardsRef.current = false;
+        wheelAccumulator = 0;
       };
 
-      const updateCursor = (
-        clientX: number,
-        clientY: number,
-        dragging = false,
-      ) => {
-        if (!canUseStackCursor || isExpandedRef.current) {
-          hideCursor();
-          return;
+      cardsArea.addEventListener("mouseenter", onCardsEnter);
+      cardsArea.addEventListener("mouseleave", onCardsLeave);
+
+      const onScrollWhileHovering = () => {
+        if (!isOverCardsRef.current) return;
+        if (window.scrollY !== pinnedScrollY) {
+          window.scrollTo(0, pinnedScrollY);
         }
+      };
 
-        const { active, mode } = getStackCursorState(
-          clientX,
-          clientY,
-          cardsArea,
-          cards,
-          currentIndexRef.current,
-        );
+      const onWheel = (event: WheelEvent) => {
+        if (!isOverCardsRef.current) return;
+        if (isExpandedRef.current) return;
 
-        if (!active) {
-          hideCursor();
-          return;
+        event.preventDefault();
+        event.stopImmediatePropagation();
+
+        if (isAnimatingRef.current) return;
+
+        wheelAccumulator += event.deltaY;
+        if (Math.abs(wheelAccumulator) < WHEEL_THRESHOLD) return;
+
+        const delta = wheelAccumulator;
+        wheelAccumulator = 0;
+        const index = currentIndexRef.current;
+
+        if (delta > 0) {
+          changeCardsRef.current((index + 1) % CARD_COUNT, true);
+        } else if (delta < 0) {
+          changeCardsRef.current(
+            (index - 1 + CARD_COUNT) % CARD_COUNT,
+            false,
+          );
         }
-
-        setCursorActive(true);
-        stackCursorRef.current?.setTarget(
-          clientX,
-          clientY,
-          mode,
-          true,
-          dragging,
-        );
       };
 
-      const finishPointer = (event: PointerEvent) => {
-        if (activePointerId !== event.pointerId) return;
-
-        const elapsed = performance.now() - dragStartTime;
-        const movedX = Math.abs(event.clientX - dragStartX);
-        const movedY = Math.abs(event.clientY - dragStartY);
-        const moved = Math.max(movedX, movedY);
-
-        if (
-          !dragTriggered &&
-          dragCardIndex !== null &&
-          moved <= CLICK_MAX_MOVE &&
-          elapsed <= CLICK_MAX_MS
-        ) {
-          expandCard(dragCardIndex);
-        }
-
-        if (cardsArea.hasPointerCapture(event.pointerId)) {
-          cardsArea.releasePointerCapture(event.pointerId);
-        }
-
-        activePointerId = null;
-        dragCardIndex = null;
-        dragTriggered = false;
-        updateCursor(event.clientX, event.clientY, false);
-      };
-
-      const onPointerDown = (event: PointerEvent) => {
-        if (isExpandedRef.current || isAnimatingRef.current) return;
-        if (event.button !== 0) return;
-
-        const { active } = getStackCursorState(
-          event.clientX,
-          event.clientY,
-          cardsArea,
-          cards,
-          currentIndexRef.current,
-        );
-        if (!active) return;
-
-        const cardEl = (event.target as HTMLElement | null)?.closest(
-          ".tilt-card-container",
-        ) as HTMLDivElement | null;
-        dragCardIndex = cardEl
-          ? Number(cardEl.dataset.slideIndex ?? NaN)
-          : null;
-        if (dragCardIndex !== null && Number.isNaN(dragCardIndex)) {
-          dragCardIndex = null;
-        }
-
-        dragStartX = event.clientX;
-        dragStartY = event.clientY;
-        dragStartTime = performance.now();
-        dragTriggered = false;
-        activePointerId = event.pointerId;
-
-        cardsArea.setPointerCapture(event.pointerId);
-        updateCursor(event.clientX, event.clientY, true);
-      };
-
-      const onPointerMove = (event: PointerEvent) => {
-        if (activePointerId === event.pointerId) {
-          if (isExpandedRef.current || isAnimatingRef.current) {
-            finishPointer(event);
-            return;
-          }
-
-          const deltaY = event.clientY - dragStartY;
-
-          if (!dragTriggered && Math.abs(deltaY) >= DRAG_THRESHOLD) {
-            const index = currentIndexRef.current;
-
-            if (deltaY < 0 && index < CARD_COUNT - 1) {
-              changeCardsRef.current(index + 1, true);
-              dragTriggered = true;
-            } else if (deltaY > 0 && index > 0) {
-              changeCardsRef.current(index - 1, false);
-              dragTriggered = true;
-            }
-          }
-
-          if (canUseStackCursor) {
-            const index = currentIndexRef.current;
-            let dragMode: StackCursorMode = "default";
-            if (Math.abs(deltaY) > 8) {
-              if (deltaY < 0 && index < CARD_COUNT - 1) dragMode = "up";
-              if (deltaY > 0 && index > 0) dragMode = "down";
-            }
-            setCursorActive(true);
-            stackCursorRef.current?.setTarget(
-              event.clientX,
-              event.clientY,
-              dragMode,
-              true,
-              true,
-            );
-          }
-          return;
-        }
-
-        updateCursor(event.clientX, event.clientY, false);
-      };
-
-      const onPointerUp = (event: PointerEvent) => {
-        finishPointer(event);
-      };
-
-      const onPointerCancel = (event: PointerEvent) => {
-        finishPointer(event);
-      };
-
-      const onPointerLeave = (event: PointerEvent) => {
-        if (activePointerId === event.pointerId) return;
-        hideCursor();
-      };
-
-      cardsArea.addEventListener("pointerdown", onPointerDown);
-      cardsArea.addEventListener("pointermove", onPointerMove);
-      cardsArea.addEventListener("pointerup", onPointerUp);
-      cardsArea.addEventListener("pointercancel", onPointerCancel);
-      cardsArea.addEventListener("pointerleave", onPointerLeave);
+      window.addEventListener("wheel", onWheel, {
+        passive: false,
+        capture: true,
+      });
+      window.addEventListener("scroll", onScrollWhileHovering, {
+        passive: true,
+      });
 
       return () => {
-        hideCursor();
-        cardsArea.removeEventListener("pointerdown", onPointerDown);
-        cardsArea.removeEventListener("pointermove", onPointerMove);
-        cardsArea.removeEventListener("pointerup", onPointerUp);
-        cardsArea.removeEventListener("pointercancel", onPointerCancel);
-        cardsArea.removeEventListener("pointerleave", onPointerLeave);
+        window.removeEventListener("wheel", onWheel, { capture: true });
+        window.removeEventListener("scroll", onScrollWhileHovering);
+        cardsArea.removeEventListener("mouseenter", onCardsEnter);
+        cardsArea.removeEventListener("mouseleave", onCardsLeave);
         cardCleanups.forEach((cleanup) => cleanup());
       };
     },
@@ -884,7 +758,6 @@ export function FeaturedWork({ variant = "section" }: FeaturedWorkProps) {
 
   return (
     <>
-      <PortfolioStackCursor ref={stackCursorRef} />
       {typeof document !== "undefined" &&
         createPortal(
           <div
@@ -951,20 +824,28 @@ export function FeaturedWork({ variant = "section" }: FeaturedWorkProps) {
             <div
               key={`${slide.nameA}-${slide.nameB}-${index}`}
               ref={(el) => setCardRef(el, index)}
-              className="tilt-card-container"
+              className={`tilt-card-container${slide.unoptimizedImage ? " tilt-card-container--sharp" : ""}`}
               data-slide-index={index}
             >
               <div className="tilt-card">
                 <div className="tilt-card__media">
-                  <Image
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
                     key={slide.images[0]}
                     src={slide.images[0]}
                     alt=""
-                    width={480}
-                    height={580}
+                    width={slide.imageWidth ?? RADIANCE_CARD_WIDTH}
+                    height={slide.imageHeight ?? RADIANCE_CARD_HEIGHT}
                     className="tilt-card__image"
-                    priority={index === 0}
                     draggable={false}
+                    decoding="sync"
+                    fetchPriority={index <= 1 ? "high" : "auto"}
+                    sizes="(max-width: 767px) 78vw, min(720px, 42vw)"
+                    srcSet={
+                      slide.imageWidth
+                        ? `${slide.images[0]} ${slide.imageWidth}w`
+                        : undefined
+                    }
                   />
                 </div>
               </div>

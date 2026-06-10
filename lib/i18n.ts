@@ -2,8 +2,8 @@ import type { Locale } from "@/components/LanguageProvider";
 import type { PortfolioSlide } from "@/lib/data";
 
 export const featuredWorkTitle: Record<Locale, string> = {
-  en: "OUR WORKS",
-  zh: "精选作品",
+  en: "MY WORKS",
+  zh: "我的作品",
 };
 
 export type SlideLabels = {
