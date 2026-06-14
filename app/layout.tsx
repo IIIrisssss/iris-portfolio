@@ -16,7 +16,7 @@ const anton = Anton({
 
 const inter = Inter({
   variable: "--font-body",
-  weight: ["400", "500", "600"],
+  weight: ["400", "500", "600", "700", "800"],
   subsets: ["latin"],
   display: "swap",
 });

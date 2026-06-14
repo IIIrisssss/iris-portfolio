@@ -932,7 +932,7 @@ export function FeaturedWork({ variant = "section" }: FeaturedWorkProps) {
 
       {isHero && (
         <RevealMask className="portfolio-hero-title-wrap" delay={0.1}>
-          <h2 ref={heroTitleRef} className="portfolio-hero-title">
+          <h2 ref={heroTitleRef} className="portfolio-hero-title section-title">
             {featuredWorkTitle[locale]}
           </h2>
         </RevealMask>

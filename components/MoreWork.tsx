@@ -14,7 +14,7 @@ export function MoreWork() {
     >
       <RevealMask delay={0.82}>
         <header className="flex w-full flex-col items-center gap-3 px-[var(--padding)] text-center">
-          <h2 className="font-display w-fit text-[clamp(2.2rem,6vw,4rem)] leading-[0.85] text-[var(--color-on-primary)]">
+          <h2 className="section-title w-fit text-[var(--color-on-primary)]">
             MORE WORK
           </h2>
           <p className="max-w-[24em] text-[1rem] font-medium leading-[1.3] text-[var(--color-on-primary)]/70">

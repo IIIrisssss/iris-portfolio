@@ -183,7 +183,9 @@ export function CollageBoard() {
     <section className="creative-collage" aria-label="Creative projects">
       <header className="creative-collage__header">
         <RevealMask delay={0.12}>
-          <h2 className="creative-collage__title">Creative Projects</h2>
+          <h2 className="creative-collage__title section-title">
+            Creative Projects
+          </h2>
         </RevealMask>
         <RevealMask delay={0.18}>
           <p className="creative-collage__subtitle">
@@ -198,7 +200,9 @@ export function CollageBoard() {
         </div>
         <div className="mobile-collage">
           <div className="mobile-collage__canvas">
-            <CollageLayout layout="mobile" />
+            <div className="mobile-collage__viewport">
+              <CollageLayout layout="mobile" />
+            </div>
           </div>
         </div>
       </div>

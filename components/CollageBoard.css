@@ -18,10 +18,11 @@
 
 .creative-collage__title {
   font-family: var(--font-headline), sans-serif;
-  font-size: clamp(1.75rem, 5vw, 2.5rem);
+  font-size: var(--section-title-size);
   font-weight: 400;
   text-transform: uppercase;
   letter-spacing: -0.02em;
+  line-height: 0.95;
   color: #2c2c2c;
 }
 
@@ -69,9 +70,14 @@
 }
 
 .mobile-collage__canvas {
+  width: 100%;
+}
+
+.mobile-collage__viewport {
   position: relative;
   width: 100%;
   aspect-ratio: 525 / 1112;
+  container-type: inline-size;
   --frame-pad: 2.476cqw; /* ~13px @525 */
   --radius-outer: var(--card-radius-outer);
   --radius-inner: var(--card-radius-inner);
@@ -87,12 +93,21 @@
   }
   .mobile-collage {
     display: block;
+    padding-bottom: 8%;
     --date-size: 0.40625rem;
     --title-size: 0.4375rem;
     --title-leading: 0.5rem;
   }
 
-  .mobile-collage__canvas .collage-label {
+  .creative-collage {
+    margin-bottom: -1rem;
+  }
+
+  .mobile-collage__canvas {
+    padding-bottom: 140px;
+  }
+
+  .mobile-collage__viewport .collage-label {
     width: var(--w);
     max-width: var(--w);
   }
@@ -116,7 +131,7 @@
     hyphens: none;
   }
 
-  .mobile-collage__canvas .collage-clip {
+  .mobile-collage__viewport .collage-clip {
     width: 8.571cqw;
   }
 }
@@ -255,6 +270,14 @@
   text-transform: uppercase;
   letter-spacing: 0.01em;
   color: #000000;
+}
+
+.desktop-collage .collage-label__date {
+  font-weight: 700;
+}
+
+.desktop-collage .collage-label__title {
+  font-weight: 800;
 }
 
 /* ---- paperclip -------------------------------------------------------- */

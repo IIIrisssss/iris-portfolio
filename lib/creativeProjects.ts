@@ -150,7 +150,7 @@ export type CreativeClip = {
 
 const FIGMA_DESKTOP = {
   worldcupVideo: { x: 692.775, y: 608.395, w: 304, h: 216, rot: -7 },
-  mava: { x: 1100.124, y: 175.401, w: 249.055, h: 309.254, rot: -12 },
+  mava: { x: 1135.425, y: 151.857, w: 249.055, h: 309.254, rot: -12 },
   springdango: { x: 114.601, y: 139.751, w: 288.901, h: 315.458, rot: 10 },
   worldcup: { x: 437.693, y: 529.958, w: 387.359, h: 387.359, rot: 9 },
   meme: { x: 79.759, y: 580.748, w: 226.928, h: 264.04, rot: 3 },
@@ -293,6 +293,16 @@ const springdangoDesktopBase = {
   width: springdangoDesktopW,
 };
 const earlyClipDesktop = clipDesktop(FIGMA_CLIPS_DESKTOP.early);
+const worldcupVideoMobileBase = cardFromFigmaMobile(FIGMA_MOBILE.worldcupVideo);
+const mavaMobileBase = cardFromFigmaMobile(FIGMA_MOBILE.mava);
+const memeMobileBase = cardFromFigmaMobile(FIGMA_MOBILE.meme);
+const osechiMobileBase = cardFromFigmaMobile(FIGMA_MOBILE.osechi, {
+  hPx: (FIGMA_MOBILE.osechi.w * 212) / 288,
+});
+const earlyBackMobileBase = cardFromFigmaMobile(FIGMA_MOBILE.earlyBack);
+const earlyFrontMobileBase = cardFromFigmaMobile(FIGMA_MOBILE.earlyFront, {
+  hPx: (FIGMA_MOBILE.earlyFront.w * 165) / 268,
+});
 
 export const creativeCards: CreativeCard[] = [
   {
@@ -304,7 +314,10 @@ export const creativeCards: CreativeCard[] = [
     innerAspect: 278 / 156,
     caption: "熱狂キックオフ⚽️",
     desktop: cardFromFigmaDesktop(FIGMA_DESKTOP.worldcupVideo),
-    mobile: cardFromFigmaMobile(FIGMA_MOBILE.worldcupVideo),
+    mobile: {
+      ...worldcupVideoMobileBase,
+      cy: nudgeCy(worldcupVideoMobileBase.cy, 64, M.height),
+    },
   },
   {
     id: "mava",
@@ -314,7 +327,11 @@ export const creativeCards: CreativeCard[] = [
     placeholderColor: "#d4d4d4",
     innerAspect: 220.37 / 280.57,
     desktop: cardFromFigmaDesktop(FIGMA_DESKTOP.mava),
-    mobile: cardFromFigmaMobile(FIGMA_MOBILE.mava),
+    mobile: {
+      ...mavaMobileBase,
+      cx: nudgeCx(mavaMobileBase.cx, 30, M.width),
+      cy: nudgeCy(mavaMobileBase.cy, 136, M.height),
+    },
   },
   {
     id: "springdango",
@@ -347,7 +364,7 @@ export const creativeCards: CreativeCard[] = [
     },
     mobile: {
       ...worldcupMobile,
-      cy: nudgeCy(worldcupMobile.cy, 33, M.height),
+      cy: nudgeCy(worldcupMobile.cy, 97, M.height),
     },
   },
   {
@@ -358,7 +375,10 @@ export const creativeCards: CreativeCard[] = [
     placeholderColor: "#ffe8d6",
     innerAspect: 200.17 / 236.36,
     desktop: cardFromFigmaDesktop(FIGMA_DESKTOP.meme),
-    mobile: cardFromFigmaMobile(FIGMA_MOBILE.meme),
+    mobile: {
+      ...memeMobileBase,
+      cy: nudgeCy(memeMobileBase.cy, 60, M.height),
+    },
   },
   {
     id: "osechi",
@@ -374,10 +394,9 @@ export const creativeCards: CreativeCard[] = [
       height: osechiDesktopH,
     },
     mobile: {
-      ...cardFromFigmaMobile(FIGMA_MOBILE.osechi, {
-        hPx: (FIGMA_MOBILE.osechi.w * 212) / 288,
-      }),
+      ...osechiMobileBase,
       height: osechiMobileH,
+      cy: nudgeCy(osechiMobileBase.cy, 30, M.height),
     },
   },
   {
@@ -388,7 +407,11 @@ export const creativeCards: CreativeCard[] = [
     placeholderColor: "#1c1c1c",
     innerAspect: 255.2 / 163.53,
     desktop: cardFromFigmaDesktop(FIGMA_DESKTOP.earlyBack),
-    mobile: cardFromFigmaMobile(FIGMA_MOBILE.earlyBack),
+    mobile: {
+      ...earlyBackMobileBase,
+      cx: nudgeCx(earlyBackMobileBase.cx, 120, M.width),
+      cy: nudgeCy(earlyBackMobileBase.cy, 99, M.height),
+    },
   },
   {
     id: "springdango-video",
@@ -439,10 +462,10 @@ export const creativeCards: CreativeCard[] = [
       height: earlyFrontDesktopH,
     },
     mobile: {
-      ...cardFromFigmaMobile(FIGMA_MOBILE.earlyFront, {
-        hPx: (FIGMA_MOBILE.earlyFront.w * 165) / 268,
-      }),
+      ...earlyFrontMobileBase,
       height: earlyFrontMobileH,
+      cx: nudgeCx(earlyFrontMobileBase.cx, 40, M.width),
+      cy: nudgeCy(earlyFrontMobileBase.cy, 124, M.height),
     },
   },
 ];
@@ -463,6 +486,12 @@ function labelMobile(f: (typeof FIGMA_LABELS_MOBILE)[keyof typeof FIGMA_LABELS_M
   };
 }
 
+const osechiLabelMobile = labelMobile(FIGMA_LABELS_MOBILE.osechi);
+const worldcupLabelMobile = labelMobile(FIGMA_LABELS_MOBILE.worldcup);
+const memeLabelMobile = labelMobile(FIGMA_LABELS_MOBILE.meme);
+const mavaLabelMobile = labelMobile(FIGMA_LABELS_MOBILE.mava);
+const earlyLabelMobile = labelMobile(FIGMA_LABELS_MOBILE.early);
+
 export const creativeLabels: CreativeLabel[] = [
   {
     id: "springdango",
@@ -480,7 +509,10 @@ export const creativeLabels: CreativeLabel[] = [
     color: "#a8741d",
     zIndex: 20,
     desktop: labelDesktop(FIGMA_LABELS_DESKTOP.osechi),
-    mobile: labelMobile(FIGMA_LABELS_MOBILE.osechi),
+    mobile: {
+      ...osechiLabelMobile,
+      top: nudgeCy(osechiLabelMobile.top, 30, M.height),
+    },
   },
   {
     id: "mava",
@@ -489,7 +521,11 @@ export const creativeLabels: CreativeLabel[] = [
     color: "#909090",
     zIndex: 20,
     desktop: labelDesktop(FIGMA_LABELS_DESKTOP.mava),
-    mobile: labelMobile(FIGMA_LABELS_MOBILE.mava),
+    mobile: {
+      ...mavaLabelMobile,
+      cx: nudgeCx(mavaLabelMobile.cx, -10, M.width),
+      top: nudgeCy(mavaLabelMobile.top, 126, M.height),
+    },
   },
   {
     id: "worldcup",
@@ -498,7 +534,10 @@ export const creativeLabels: CreativeLabel[] = [
     color: "#2068ff",
     zIndex: 20,
     desktop: labelDesktop(FIGMA_LABELS_DESKTOP.worldcup),
-    mobile: labelMobile(FIGMA_LABELS_MOBILE.worldcup),
+    mobile: {
+      ...worldcupLabelMobile,
+      top: nudgeCy(worldcupLabelMobile.top, 64, M.height),
+    },
   },
   {
     id: "meme",
@@ -507,7 +546,10 @@ export const creativeLabels: CreativeLabel[] = [
     color: "#f23012",
     zIndex: 20,
     desktop: labelDesktop(FIGMA_LABELS_DESKTOP.meme),
-    mobile: labelMobile(FIGMA_LABELS_MOBILE.meme),
+    mobile: {
+      ...memeLabelMobile,
+      top: nudgeCy(memeLabelMobile.top, 60, M.height),
+    },
   },
   {
     id: "early",
@@ -516,7 +558,11 @@ export const creativeLabels: CreativeLabel[] = [
     color: "#00d6d2",
     zIndex: 20,
     desktop: labelDesktop(FIGMA_LABELS_DESKTOP.early),
-    mobile: labelMobile(FIGMA_LABELS_MOBILE.early),
+    mobile: {
+      ...earlyLabelMobile,
+      cx: nudgeCx(earlyLabelMobile.cx, 93, M.width),
+      top: nudgeCy(earlyLabelMobile.top, 116, M.height),
+    },
   },
 ];
 
@@ -538,6 +584,8 @@ function clipMobile(f: (typeof FIGMA_CLIPS_MOBILE)[keyof typeof FIGMA_CLIPS_MOBI
   };
 }
 
+const earlyClipMobile = clipMobile(FIGMA_CLIPS_MOBILE.early);
+
 export const creativeClips: CreativeClip[] = [
   {
     id: "springdango",
@@ -555,7 +603,7 @@ export const creativeClips: CreativeClip[] = [
     mobile: {
       ...worldcupClipMobile,
       cx: nudgeCx(worldcupClipMobile.cx, -20, M.width),
-      cy: nudgeCy(worldcupClipMobile.cy, 10, M.height),
+      cy: nudgeCy(worldcupClipMobile.cy, 74, M.height),
       rotate: worldcupClipMobile.rotate - 85,
     },
   },
@@ -567,6 +615,11 @@ export const creativeClips: CreativeClip[] = [
       cy: nudgeCy(earlyClipDesktop.cy, 8, D.height),
       rotate: earlyClipDesktop.rotate - 49,
     },
-    mobile: clipMobile(FIGMA_CLIPS_MOBILE.early),
+    mobile: {
+      ...earlyClipMobile,
+      cx: nudgeCx(earlyClipMobile.cx, 135, M.width),
+      cy: nudgeCy(earlyClipMobile.cy, 110, M.height),
+      rotate: earlyClipMobile.rotate + 21,
+    },
   },
 ];

@@ -33,7 +33,7 @@
   margin: 0;
   padding: 0 var(--padding) 0.25rem;
   font-family: var(--font-headline), sans-serif;
-  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-size: var(--section-title-size);
   font-weight: 400;
   line-height: 0.95;
   letter-spacing: -0.02em;
@@ -362,37 +362,50 @@
     max-height: none;
     overflow: visible;
     padding-top: calc(max(3.5rem, calc(var(--padding) + 2rem)) + 30px);
-    padding-bottom: 2rem;
-  }
-
-  .portfolio-section--hero .portfolio-work-tag,
-  .portfolio-section--hero .portfolio-slider-center,
-  .portfolio-section--hero .portfolio-project-name {
-    grid-row: auto;
+    padding-bottom: 3rem;
   }
 
   .portfolio-section--hero .portfolio-slider-layout {
     grid-template-columns: 1fr;
     grid-template-rows: auto auto auto auto;
-    gap: 0.75rem;
-    padding: 0.75rem 0 2rem;
+    gap: var(--hero-mobile-stack-gap);
+    padding: 0.75rem 0 1rem;
   }
 
   .portfolio-hero-title {
-    font-size: clamp(1.75rem, 9vw, 2.75rem);
     padding-bottom: 0.125rem;
   }
 
+  .portfolio-section--hero .portfolio-work-tag {
+    position: relative;
+    z-index: 1;
+    padding-bottom: 0.25rem;
+  }
+
   .portfolio-section--hero .portfolio-slider-center {
-    height: min(68vw, 19rem);
-    min-height: 14.5rem;
-    padding-bottom: 2rem;
+    height: min(72vw, 20rem);
+    min-height: 16.5rem;
+    margin-top: 1rem;
+    padding-top: 1.25rem;
+    padding-bottom: 3.5rem;
   }
 
   .portfolio-section--hero .portfolio-counter-wrap {
     grid-column: 1 / -1;
     grid-row: auto;
     margin-top: 0;
+    padding-top: 0.125rem;
+  }
+
+  .portfolio-section--hero .portfolio-project-name {
+    margin-top: 0;
+    padding-top: 0;
+  }
+
+  .portfolio-section--hero .portfolio-work-tag,
+  .portfolio-section--hero .portfolio-slider-center,
+  .portfolio-section--hero .portfolio-project-name {
+    grid-row: auto;
   }
 
   .portfolio-slider-layout {
@@ -414,7 +427,7 @@
   .portfolio-work-tag h1,
   .portfolio-project-name h1 {
     max-width: 100%;
-    font-size: clamp(1.125rem, 6.5vw, 1.5rem);
+    font-size: clamp(0.875rem, 5vw, 1.125rem);
     text-align: center;
   }
 
@@ -453,8 +466,8 @@
   .portfolio-project-name {
     justify-content: flex-end;
     align-items: center;
-    margin-top: 1.75rem;
-    padding-top: 0.75rem;
+    margin-top: 0;
+    padding-top: 0;
     position: relative;
     z-index: 1;
   }
