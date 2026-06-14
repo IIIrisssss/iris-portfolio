@@ -1,146 +1,275 @@
-.collage-board {
-  position: relative;
+/* Creative Projects — Figma 15:648 (desktop) / 18:2004 (mobile)
+   Positions are % of each viewport. Rotation is on .polaroid-card ONLY. */
+
+.creative-collage {
   width: 100%;
-  padding: clamp(2rem, 5vw, 3.5rem) 0 clamp(2.5rem, 6vw, 4rem);
-  background-color: #ffffff;
-  color: #2c2c2c;
-  overflow: hidden;
 }
 
-.collage-board__header {
+.creative-collage__header {
+  margin: 0 auto 2rem;
   display: flex;
+  max-width: 1440px;
   flex-direction: column;
   align-items: center;
-  gap: 0.75rem;
-  padding: 0 var(--padding) clamp(1.5rem, 4vw, 2.5rem);
+  gap: 0.5rem;
+  padding-inline: var(--padding);
   text-align: center;
 }
 
-.collage-board__title {
-  margin: 0;
+.creative-collage__title {
   font-family: var(--font-headline), sans-serif;
-  font-size: clamp(2rem, 5.5vw, 3.75rem);
+  font-size: clamp(1.75rem, 5vw, 2.5rem);
   font-weight: 400;
-  line-height: 0.92;
-  letter-spacing: -0.02em;
   text-transform: uppercase;
+  letter-spacing: -0.02em;
   color: #2c2c2c;
 }
 
-.collage-board__subtitle {
-  margin: 0;
-  max-width: 28em;
+.creative-collage__subtitle {
   font-family: var(--font-body), sans-serif;
-  font-size: clamp(0.9rem, 2.2vw, 1rem);
+  font-size: 0.875rem;
   font-weight: 500;
-  line-height: 1.35;
-  color: rgba(44, 44, 44, 0.72);
+  letter-spacing: -0.01em;
+  color: rgba(44, 44, 44, 0.62);
 }
 
-.collage-board__viewport {
+.creative-collage__stage {
+  position: relative;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1440px;
+  padding-inline: var(--padding);
+}
+
+/* ---- viewports -------------------------------------------------------- */
+.desktop-collage,
+.mobile-collage {
   position: relative;
   width: 100%;
-  height: var(
-    --collage-viewport-height,
-    calc(100vw * 1500 / 1920)
-  );
-  overflow: hidden;
-  touch-action: none;
+  container-type: inline-size;
 }
 
-.collage-board__canvas {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 1920px;
-  height: 1500px;
-  transform: translate(-50%, -50%) scale(var(--collage-scale, 1));
-  transform-origin: center center;
+.desktop-collage {
+  aspect-ratio: 1440 / 911;
+  --frame-pad: 0.903cqw; /* 13px @1440 */
+  --radius-outer: var(--card-radius-outer);
+  --radius-inner: var(--card-radius-inner);
+  --date-size: 0.625cqw; /* 9px @1440 */
+  --title-size: 1.111cqw; /* 16px @1440 */
+  --title-leading: 1.308cqw; /* 18.84px @1440 */
+  --caption-size: 0.792cqw; /* 11.4px @1440 */
 }
 
-.collage-board__item {
-  position: absolute;
-  margin: 0;
-  padding: 0;
-  border: none;
-  background: transparent;
-  cursor: grab;
-  touch-action: none;
-  user-select: none;
-  -webkit-user-select: none;
-  transform-origin: center center;
-}
-
-.collage-board__item--polaroid {
-  filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.14));
-}
-
-.collage-board__item.is-dragging {
-  cursor: grabbing;
-  z-index: 100 !important;
-}
-
-.collage-board__float {
-  display: block;
+.mobile-collage {
+  display: none;
   width: 100%;
-  height: 100%;
+  /* +75px frame height @450px wide — content canvas keeps 525/1112 below */
+  padding-bottom: 16.667%;
+  container-type: inline-size;
 }
 
-.collage-board__float.collage-board__item--floating {
-  animation: collage-float 4s linear infinite;
-}
-
-.collage-board__item.is-dragging .collage-board__float {
-  animation: none;
-}
-
-.collage-board__media {
-  display: block;
+.mobile-collage__canvas {
+  position: relative;
   width: 100%;
-  height: 100%;
-  object-fit: contain;
-  pointer-events: none;
-  user-select: none;
-  -webkit-user-drag: none;
+  aspect-ratio: 525 / 1112;
+  --frame-pad: 2.476cqw; /* ~13px @525 */
+  --radius-outer: var(--card-radius-outer);
+  --radius-inner: var(--card-radius-inner);
+  --date-size: 1.333cqw;
+  --title-size: 2.476cqw;
+  --title-leading: 2.895cqw;
+  --caption-size: 1.524cqw;
 }
 
-.collage-board__item--text .collage-board__media {
-  object-fit: fill;
-  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.08));
+@media (max-width: 768px) {
+  .desktop-collage {
+    display: none;
+  }
+  .mobile-collage {
+    display: block;
+    --date-size: 0.40625rem;
+    --title-size: 0.4375rem;
+    --title-leading: 0.5rem;
+  }
+
+  .mobile-collage__canvas .collage-label {
+    width: var(--w);
+    max-width: var(--w);
+  }
+
+  .collage-label__date {
+    margin-bottom: 0.1em;
+    white-space: nowrap;
+    overflow: visible;
+    text-overflow: clip;
+  }
+
+  .collage-label__title {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    max-height: calc(var(--title-leading) * 2);
+    word-break: normal;
+    overflow-wrap: normal;
+    hyphens: none;
+  }
+
+  .mobile-collage__canvas .collage-clip {
+    width: 8.571cqw;
+  }
 }
 
-.collage-board__item--sticker {
-  padding: 8px;
-  border: 2px solid #2c2c2c;
-  background: #ffffff;
-  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.14);
+/* ---- card anchor (NO rotation here) ----------------------------------- */
+.collage-card {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: var(--w);
+  height: var(--h);
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  transition: filter 0.3s ease;
 }
 
-.collage-board__item--sticker .collage-board__media {
-  object-fit: cover;
+.collage-card:hover {
+  z-index: 60 !important;
 }
 
-@keyframes collage-float {
-  0% {
-    transform: translate(0, 0);
-  }
-  25% {
-    transform: translate(-8px, 8px);
-  }
-  50% {
-    transform: translate(0, 0);
-  }
-  75% {
-    transform: translate(8px, -8px);
-  }
+.collage-card:hover .polaroid-card {
+  filter: brightness(1.03);
+  transform: rotate(var(--card-rot, 0deg)) scale(1.045);
+}
+
+.collage-card:hover .polaroid-card__sway,
+.collage-card:focus-visible .polaroid-card__sway {
+  animation-play-state: paused;
+}
+
+.collage-card:focus-visible {
+  outline: none;
+  z-index: 60 !important;
+}
+
+.collage-card:focus-visible .polaroid-card {
+  box-shadow: 0 0 0 2px #2068ff, 0 3.17px 1.585px rgba(0, 0, 0, 0.25);
+}
+
+/* ---- polaroid frame (base rotation + breeze sway) --------------------- */
+@keyframes polaroid-sway {
+  0%,
   100% {
-    transform: translate(0, 0);
+    transform: rotate(-2deg);
   }
+
+  50% {
+    transform: rotate(2deg);
+  }
+}
+
+.polaroid-card {
+  width: 100%;
+  height: 100%;
+  transform: rotate(var(--card-rot, 0deg));
+  transform-origin: var(--sway-origin, 50% 50%);
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), filter 0.3s ease;
+}
+
+.polaroid-card__sway {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+  border: 1.5px solid #969696;
+  border-radius: var(--radius-outer);
+  padding: var(--frame-pad);
+  box-shadow: 0 3.17px 1.585px rgba(0, 0, 0, 0.25);
+  transform-origin: var(--sway-origin, 50% 50%);
+  animation: polaroid-sway var(--sway-duration, 4.8s) ease-in-out infinite;
+  animation-delay: var(--sway-delay, 0s);
+  will-change: transform;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .collage-board__float.collage-board__item--floating {
+  .polaroid-card__sway {
     animation: none;
   }
 }
 
+.polaroid-image {
+  flex: 0 0 auto;
+  width: 100%;
+  min-height: 0;
+  overflow: hidden;
+  border-radius: var(--radius-inner);
+}
+
+.polaroid-card:not(:has(.polaroid-caption)) .polaroid-image {
+  flex: 1 1 auto;
+}
+
+.polaroid-placeholder {
+  width: 100%;
+  height: 100%;
+}
+
+.polaroid-caption {
+  flex: 0 0 auto;
+  margin-top: calc(var(--frame-pad) * 0.55);
+  text-align: right;
+  font-family: var(--font-body), sans-serif;
+  font-size: var(--caption-size);
+  line-height: 1.25;
+  color: #2c2c2c;
+}
+
+/* ---- label ------------------------------------------------------------ */
+.collage-label {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  max-width: var(--w);
+  transform: translateX(-50%);
+  pointer-events: none;
+  text-align: center;
+}
+
+.collage-label__date {
+  margin-bottom: 0.15em;
+  font-family: var(--font-body), sans-serif;
+  font-size: var(--date-size);
+  font-weight: 600;
+  line-height: 1.1;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  color: var(--date-color);
+}
+
+.collage-label__title {
+  font-family: var(--font-body), sans-serif;
+  font-size: var(--title-size);
+  font-weight: 700;
+  line-height: var(--title-leading);
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  color: #000000;
+}
+
+/* ---- paperclip -------------------------------------------------------- */
+.collage-clip {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: var(--w);
+  transform: translate(-50%, -50%) rotate(var(--rot));
+  transform-origin: center center;
+  pointer-events: none;
+}
+
+.collage-clip svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}

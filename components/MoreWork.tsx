@@ -36,7 +36,7 @@ export function MoreWork() {
             whileTap={{ scale: 0.97 }}
           >
             <div
-              className="relative h-full w-full overflow-hidden rounded-2xl shadow-[var(--shadow-soft)]"
+              className="relative h-full w-full overflow-hidden rounded-[var(--card-radius-outer)] shadow-[var(--shadow-soft)]"
               style={{ backgroundColor: work.bg }}
             >
               <Image

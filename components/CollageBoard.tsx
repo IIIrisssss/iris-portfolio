@@ -1,290 +1,205 @@
 "use client";
 
-import { useCallback, useEffect, useRef } from "react";
+import Link from "next/link";
+import type { CSSProperties } from "react";
+
 import {
-  COLLAGE_DESIGN_HEIGHT,
-  COLLAGE_DESIGN_WIDTH,
-  COLLAGE_MIN_CARD_SCREEN,
-  COLLAGE_MIN_SQUARE_DESIGN,
-  clampCollagePosition,
-  collageBoardItems,
-  getVisibleDragBounds,
-  type CollageItem,
-} from "@/lib/collageBoard";
+  creativeCards,
+  creativeClips,
+  creativeLabels,
+  type CardPlacement,
+  type ClipPlacement,
+  type CreativeCard,
+  type CreativeClip,
+  type CreativeLabel,
+} from "@/lib/creativeProjects";
+import { PolaroidCard } from "./PolaroidCard";
 import { RevealMask } from "./RevealMask";
+
 import "./CollageBoard.css";
 
-type DragContext = {
-  viewport: HTMLDivElement;
-  scale: number;
+type Layout = "desktop" | "mobile";
+
+/** Cards pinned by a decorative paperclip in the collage */
+const CLIP_ID_BY_CARD: Partial<Record<string, string>> = {
+  springdango: "springdango",
+  worldcup: "worldcup",
+  "early-back": "early",
+  "early-front": "early",
 };
 
-function getClientXY(event: MouseEvent | TouchEvent) {
-  if ("touches" in event && event.touches.length > 0) {
-    return { x: event.touches[0].clientX, y: event.touches[0].clientY };
-  }
-  if ("changedTouches" in event && event.changedTouches.length > 0) {
-    return {
-      x: event.changedTouches[0].clientX,
-      y: event.changedTouches[0].clientY,
-    };
-  }
-  return { x: (event as MouseEvent).clientX, y: (event as MouseEvent).clientY };
+function clipById(id: string) {
+  return creativeClips.find((clip) => clip.id === id);
 }
 
-function attachDrag(
-  element: HTMLElement,
-  getContext: () => DragContext | null,
-  rotate: number,
-  onDragChange: (dragging: boolean) => void,
-) {
-  let startX = 0;
-  let startY = 0;
+function swayOrigin(card: CardPlacement, clip?: ClipPlacement): string {
+  if (!clip) return "50% 50%";
 
-  const clampPosition = (left: number, top: number) => {
-    const context = getContext();
-    if (!context) return { left, top };
+  const left = card.cx - card.width / 2;
+  const top = card.cy - card.height / 2;
+  const x = ((clip.cx - left) / card.width) * 100;
+  const y = ((clip.cy - top) / card.height) * 100;
 
-    const { width, height } = context.viewport.getBoundingClientRect();
-    const bounds = getVisibleDragBounds(
-      width,
-      height,
-      context.scale,
-      element.offsetWidth,
-      element.offsetHeight,
-      rotate,
-    );
+  return `${x.toFixed(3)}% ${y.toFixed(3)}%`;
+}
 
-    return clampCollagePosition(left, top, bounds);
-  };
+function swayTiming(id: string) {
+  let hash = 0;
+  for (let i = 0; i < id.length; i += 1) {
+    hash = (hash + id.charCodeAt(i) * (i + 3)) % 997;
+  }
 
-  const moveDrag = (event: MouseEvent | TouchEvent) => {
-    event.preventDefault();
-
-    const context = getContext();
-    if (!context) return;
-
-    const pos = getClientXY(event);
-    const deltaX = startX - pos.x;
-    const deltaY = startY - pos.y;
-    startX = pos.x;
-    startY = pos.y;
-
-    const nextLeft = element.offsetLeft - deltaX / context.scale;
-    const nextTop = element.offsetTop - deltaY / context.scale;
-    const clamped = clampPosition(nextLeft, nextTop);
-
-    element.style.left = `${clamped.left}px`;
-    element.style.top = `${clamped.top}px`;
-  };
-
-  const stopDrag = () => {
-    onDragChange(false);
-    document.removeEventListener("mousemove", moveDrag);
-    document.removeEventListener("mouseup", stopDrag);
-    document.removeEventListener("touchmove", moveDrag);
-    document.removeEventListener("touchend", stopDrag);
-  };
-
-  const startDrag = (event: MouseEvent | TouchEvent) => {
-    event.preventDefault();
-    onDragChange(true);
-
-    const pos = getClientXY(event);
-    startX = pos.x;
-    startY = pos.y;
-
-    document.addEventListener("mousemove", moveDrag);
-    document.addEventListener("mouseup", stopDrag);
-    document.addEventListener("touchmove", moveDrag, { passive: false });
-    document.addEventListener("touchend", stopDrag);
-  };
-
-  element.addEventListener("mousedown", startDrag);
-  element.addEventListener("touchstart", startDrag, { passive: false });
-
-  return () => {
-    stopDrag();
-    element.removeEventListener("mousedown", startDrag);
-    element.removeEventListener("touchstart", startDrag);
+  return {
+    duration: `${(3.6 + (hash % 31) / 10).toFixed(2)}s`,
+    delay: `${-((hash % 36) / 10).toFixed(2)}s`,
   };
 }
 
-function CollageItemView({ item }: { item: CollageItem }) {
-  const itemClassName = [
-    "collage-board__item",
-    item.kind === "polaroid" ? "collage-board__item--polaroid" : "",
-    item.kind === "text" ? "collage-board__item--text" : "",
-    item.kind === "sticker" ? "collage-board__item--sticker" : "",
-  ]
-    .filter(Boolean)
-    .join(" ");
+function Paperclip() {
+  return (
+    <svg
+      viewBox="0 0 54 45"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden
+      focusable="false"
+    >
+      <path
+        d="M42.8892 15.4839L22.6661 31.5093C22.6661 31.5093 17.8654 36.0791 13.9522 31.1409C10.2254 26.4379 15.5851 22.5735 15.5851 22.5735L41.6871 1.88956C41.6871 1.88956 45.9198 -1.46459 50.392 4.17908C54.6231 9.51851 50.6315 13.1769 50.6315 13.1769L15.3585 41.1282C15.3585 41.1282 8.72544 46.7672 3.04202 39.5951C-2.45506 32.6581 4.36437 27.2541 4.36437 27.2541L33.7585 3.96142"
+        stroke="#626262"
+        strokeWidth="1.8002"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
+function CardItem({ card, layout }: { card: CreativeCard; layout: Layout }) {
+  const p = card[layout];
+  const clipId = CLIP_ID_BY_CARD[card.id];
+  const clip = clipId ? clipById(clipId)?.[layout] : undefined;
+  const { duration, delay } = swayTiming(card.id);
 
   return (
-    <button
-      type="button"
-      className={itemClassName}
-      data-collage-item={item.id}
-      data-collage-rotate={item.rotate}
-      aria-label={item.alt}
-      style={{
-        left: item.left,
-        top: item.top,
-        width: item.width,
-        height: item.height,
-        zIndex: item.zIndex,
-        transform: `rotate(${item.rotate}deg)`,
-      }}
+    <Link
+      href={card.href}
+      className="collage-card"
+      aria-label={`Open ${card.alt}`}
+      style={
+        {
+          "--x": `${p.cx}%`,
+          "--y": `${p.cy}%`,
+          "--w": `${p.width}%`,
+          "--h": `${p.height}%`,
+          zIndex: card.zIndex,
+        } as CSSProperties
+      }
     >
-      <span className="collage-board__float collage-board__item--floating">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={item.src}
-          alt=""
-          className="collage-board__media"
-          draggable={false}
-          loading="eager"
-          decoding="sync"
-          fetchPriority="high"
-        />
-      </span>
-    </button>
+      <PolaroidCard
+        alt={card.alt}
+        placeholderColor={card.placeholderColor}
+        innerAspect={card.caption ? card.innerAspect : undefined}
+        caption={card.caption}
+        style={
+          {
+            "--card-rot": `${p.rotate}deg`,
+            "--sway-origin": swayOrigin(p, clip),
+            "--sway-duration": duration,
+            "--sway-delay": delay,
+          } as CSSProperties
+        }
+      />
+    </Link>
+  );
+}
+
+function LabelItem({
+  label,
+  layout,
+}: {
+  label: CreativeLabel;
+  layout: Layout;
+}) {
+  const p = label[layout];
+
+  return (
+    <div
+      className="collage-label"
+      style={
+        {
+          "--x": `${p.cx}%`,
+          "--y": `${p.top}%`,
+          "--w": `${p.width}%`,
+          "--date-color": label.color,
+          zIndex: label.zIndex,
+        } as CSSProperties
+      }
+    >
+      <p className="collage-label__date">{label.date}</p>
+      <p className="collage-label__title">{label.title}</p>
+    </div>
+  );
+}
+
+function ClipItem({ clip, layout }: { clip: CreativeClip; layout: Layout }) {
+  const p = clip[layout];
+
+  return (
+    <div
+      className="collage-clip"
+      style={
+        {
+          "--x": `${p.cx}%`,
+          "--y": `${p.cy}%`,
+          "--w": `${p.width}%`,
+          "--rot": `${p.rotate}deg`,
+          zIndex: layout === "mobile" ? 50 : clip.zIndex,
+        } as CSSProperties
+      }
+    >
+      <Paperclip />
+    </div>
+  );
+}
+
+function CollageLayout({ layout }: { layout: Layout }) {
+  return (
+    <>
+      {creativeCards.map((card) => (
+        <CardItem key={card.id} card={card} layout={layout} />
+      ))}
+      {creativeLabels.map((label) => (
+        <LabelItem key={label.id} label={label} layout={layout} />
+      ))}
+      {creativeClips.map((clip) => (
+        <ClipItem key={clip.id} clip={clip} layout={layout} />
+      ))}
+    </>
   );
 }
 
 export function CollageBoard() {
-  const viewportRef = useRef<HTMLDivElement>(null);
-  const canvasRef = useRef<HTMLDivElement>(null);
-  const scaleRef = useRef(1);
-
-  const getDragContext = useCallback((): DragContext | null => {
-    const viewport = viewportRef.current;
-    if (!viewport) return null;
-
-    return {
-      viewport,
-      scale: scaleRef.current,
-    };
-  }, []);
-
-  const updateScale = useCallback(() => {
-    const viewport = viewportRef.current;
-    const canvas = canvasRef.current;
-    if (!viewport || !canvas) return;
-
-    const { width } = viewport.getBoundingClientRect();
-    const widthScale = width / COLLAGE_DESIGN_WIDTH;
-    const minCardScale =
-      COLLAGE_MIN_CARD_SCREEN / COLLAGE_MIN_SQUARE_DESIGN;
-    const scale = Math.max(widthScale, minCardScale);
-
-    scaleRef.current = scale;
-    canvas.style.setProperty("--collage-scale", String(scale));
-    viewport.style.setProperty(
-      "--collage-viewport-height",
-      `${COLLAGE_DESIGN_HEIGHT * scale}px`,
-    );
-  }, []);
-
-  const clampAllItems = useCallback(() => {
-    const viewport = viewportRef.current;
-    const canvas = canvasRef.current;
-    if (!viewport || !canvas) return;
-
-    const { width, height } = viewport.getBoundingClientRect();
-    const scale = scaleRef.current;
-
-    canvas.querySelectorAll<HTMLElement>("[data-collage-item]").forEach((element) => {
-      const rotate = Number.parseFloat(
-        element.dataset.collageRotate ?? "0",
-      );
-      const bounds = getVisibleDragBounds(
-        width,
-        height,
-        scale,
-        element.offsetWidth,
-        element.offsetHeight,
-        rotate,
-      );
-      const clamped = clampCollagePosition(
-        element.offsetLeft,
-        element.offsetTop,
-        bounds,
-      );
-
-      element.style.left = `${clamped.left}px`;
-      element.style.top = `${clamped.top}px`;
-    });
-  }, []);
-
-  useEffect(() => {
-    updateScale();
-    clampAllItems();
-
-    const onResize = () => {
-      updateScale();
-      clampAllItems();
-    };
-
-    window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
-  }, [clampAllItems, updateScale]);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const items = canvas.querySelectorAll<HTMLElement>("[data-collage-item]");
-    const cleanups: Array<() => void> = [];
-
-    items.forEach((element) => {
-      element
-        .querySelector(".collage-board__float")
-        ?.classList.add("collage-board__item--floating");
-
-      const rotate = Number.parseFloat(element.dataset.collageRotate ?? "0");
-
-      cleanups.push(
-        attachDrag(element, getDragContext, rotate, (dragging) => {
-          element.classList.toggle("is-dragging", dragging);
-          element
-            .querySelector(".collage-board__float")
-            ?.classList.toggle("collage-board__item--floating", !dragging);
-        }),
-      );
-    });
-
-    return () => {
-      cleanups.forEach((cleanup) => cleanup());
-    };
-  }, [getDragContext]);
-
   return (
-    <section className="collage-board" aria-label="Creative collage">
-      <header className="collage-board__header">
+    <section className="creative-collage" aria-label="Creative projects">
+      <header className="creative-collage__header">
         <RevealMask delay={0.12}>
-          <h2 className="collage-board__title">Beloved Brands</h2>
+          <h2 className="creative-collage__title">Creative Projects</h2>
         </RevealMask>
         <RevealMask delay={0.18}>
-          <p className="collage-board__subtitle">
-            Drag the polaroids — inspired by{" "}
-            <a
-              href="https://isadeburgh.com/?ref=land-book.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline decoration-[rgba(44,44,44,0.35)] underline-offset-4"
-            >
-              Isa de Burgh
-            </a>
+          <p className="creative-collage__subtitle">
+            Click to explore the visual archives.
           </p>
         </RevealMask>
       </header>
 
-      <div ref={viewportRef} className="collage-board__viewport">
-        <div ref={canvasRef} className="collage-board__canvas">
-          {collageBoardItems.map((item) => (
-            <CollageItemView key={item.id} item={item} />
-          ))}
+      <div className="creative-collage__stage">
+        <div className="desktop-collage">
+          <CollageLayout layout="desktop" />
+        </div>
+        <div className="mobile-collage">
+          <div className="mobile-collage__canvas">
+            <CollageLayout layout="mobile" />
+          </div>
         </div>
       </div>
     </section>

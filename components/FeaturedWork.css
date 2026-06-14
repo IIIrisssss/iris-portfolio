@@ -249,7 +249,7 @@
   max-width: 28em;
   height: min(34em, 78vh);
   max-height: 34em;
-  border-radius: 1rem;
+  border-radius: var(--card-radius-outer);
   box-shadow: rgba(0, 0, 0, 0.25) 0 25px 50px -12px;
   cursor: pointer;
   touch-action: none;
@@ -276,8 +276,8 @@
   position: absolute;
   inset: 0;
   background-color: var(--portfolio-canvas);
-  border-radius: 1rem;
-  clip-path: inset(0 0 0 0 round 1rem);
+  border-radius: var(--card-radius-outer);
+  clip-path: inset(0 0 0 0 round var(--card-radius-outer));
   transform-style: preserve-3d;
 }
 
@@ -365,52 +365,98 @@
     padding-bottom: 2rem;
   }
 
+  .portfolio-section--hero .portfolio-work-tag,
+  .portfolio-section--hero .portfolio-slider-center,
+  .portfolio-section--hero .portfolio-project-name {
+    grid-row: auto;
+  }
+
+  .portfolio-section--hero .portfolio-slider-layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto auto;
+    gap: 0.75rem;
+    padding: 0.75rem 0 2rem;
+  }
+
   .portfolio-hero-title {
     font-size: clamp(1.75rem, 9vw, 2.75rem);
     padding-bottom: 0.125rem;
   }
 
   .portfolio-section--hero .portfolio-slider-center {
-    height: min(94vw, 26rem);
-    min-height: 22rem;
+    height: min(68vw, 19rem);
+    min-height: 14.5rem;
+    padding-bottom: 2rem;
   }
 
   .portfolio-section--hero .portfolio-counter-wrap {
     grid-column: 1 / -1;
-    margin-top: calc(0.5rem + 20px);
+    grid-row: auto;
+    margin-top: 0;
   }
 
   .portfolio-slider-layout {
     grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr auto;
-    gap: 1rem;
-    padding: 1rem 0 4rem;
+    grid-template-rows: auto auto auto auto;
+    gap: 0.5rem;
+    padding: 0.75rem 0 2rem;
   }
 
   .portfolio-work-tag,
   .portfolio-project-name {
     padding: 0 var(--padding);
+  }
+
+  .portfolio-work-tag {
     align-items: center;
   }
 
   .portfolio-work-tag h1,
   .portfolio-project-name h1 {
     max-width: 100%;
-    font-size: clamp(1.75rem, 10vw, 2.5rem);
+    font-size: clamp(1.125rem, 6.5vw, 1.5rem);
     text-align: center;
   }
 
-  .portfolio-work-tag {
-    order: 1;
+  .portfolio-work-tag h1 {
+    text-align: center;
+  }
+
+  .portfolio-project-name h1 {
+    text-align: center;
   }
 
   .portfolio-slider-center {
-    order: 2;
-    min-height: 24rem;
+    min-height: 14.5rem;
+    padding-bottom: 2rem;
+    touch-action: pan-y;
+    overflow: visible;
+  }
+
+  .portfolio-counter-wrap {
+    grid-column: 1 / -1;
+    grid-row: auto;
+    margin-top: 0;
+    position: relative;
+    z-index: 3;
+  }
+
+  .portfolio-counter {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    left: auto;
+    padding-bottom: 0;
+    font-size: 0.875rem;
   }
 
   .portfolio-project-name {
-    order: 3;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 1.75rem;
+    padding-top: 0.75rem;
+    position: relative;
+    z-index: 1;
   }
 
   .project-name-heading {
@@ -422,10 +468,10 @@
   }
 
   .tilt-card-container {
-    width: min(78vw, 20rem);
-    max-width: min(78vw, 20rem);
-    height: min(94vw, 24rem);
-    max-height: min(94vw, 24rem);
+    width: min(60vw, 14.5rem);
+    max-width: min(60vw, 14.5rem);
+    height: min(72vw, 17.5rem);
+    max-height: min(72vw, 17.5rem);
   }
 }
 

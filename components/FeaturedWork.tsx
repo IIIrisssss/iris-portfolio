@@ -39,6 +39,21 @@ function getExpandedCardSize() {
 
 const TILT_DEG = 40;
 const WHEEL_THRESHOLD = 40;
+const TOUCH_SWIPE_THRESHOLD = 36;
+const MOBILE_NAV_MQ = "(max-width: 767px)";
+
+function isMobilePortfolioNav() {
+  return (
+    typeof window !== "undefined" && window.matchMedia(MOBILE_NAV_MQ).matches
+  );
+}
+
+function cardExitOffset(forward: boolean) {
+  if (isMobilePortfolioNav()) {
+    return { xPercent: forward ? -300 : 300, yPercent: 0 };
+  }
+  return { xPercent: 0, yPercent: forward ? -300 : 300 };
+}
 
 const scaleForIndex = gsap.utils.mapRange(0, CARD_COUNT - 1, 1, 0.72);
 const alphaForIndex = gsap.utils.mapRange(0, VISIBLE_STACK - 1, 1, 0.2);
@@ -119,6 +134,7 @@ export function FeaturedWork({ variant = "section" }: FeaturedWorkProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isStackReady, setIsStackReady] = useState(false);
   const [introComplete, setIntroComplete] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
   const isExpandedRef = useRef(false);
   const introCompleteRef = useRef(false);
   const expandedCardIndexRef = useRef<number | null>(null);
@@ -131,6 +147,15 @@ export function FeaturedWork({ variant = "section" }: FeaturedWorkProps) {
     (nextIndex: number, scrollingDown: boolean) => void
   >(() => {});
   const isOverCardsRef = useRef(false);
+  const touchGestureRef = useRef({
+    active: false,
+    didSwipe: false,
+    lastX: 0,
+    lastY: 0,
+    accum: 0,
+    totalMove: 0,
+    lockedAxis: null as "x" | "y" | null,
+  });
 
   const setCardRef = useCallback((el: HTMLDivElement | null, index: number) => {
     if (el) cardsRef.current[index] = el;
@@ -156,7 +181,7 @@ export function FeaturedWork({ variant = "section" }: FeaturedWorkProps) {
 
         if (slot === -1) {
           gsap.set(card, {
-            yPercent: -300,
+            ...cardExitOffset(true),
             autoAlpha: 0,
             zIndex: -20 - i,
             x: 0,
@@ -170,6 +195,8 @@ export function FeaturedWork({ variant = "section" }: FeaturedWorkProps) {
         gsap.set(card, {
           transformOrigin: "center center",
           ...stackProps(slot),
+          xPercent: 0,
+          yPercent: 0,
         });
       });
     },
@@ -293,7 +320,7 @@ export function FeaturedWork({ variant = "section" }: FeaturedWorkProps) {
         tl.to(
           cards[fromIndex],
           {
-            yPercent: -300,
+            ...cardExitOffset(true),
             autoAlpha: 0,
             zIndex: 50,
             duration: 0.45,
@@ -308,6 +335,7 @@ export function FeaturedWork({ variant = "section" }: FeaturedWorkProps) {
             cards[cardIndex],
             {
               ...stackProps(offset),
+              xPercent: 0,
               yPercent: 0,
               duration: 0.45,
               ease: "power2.out",
@@ -324,9 +352,18 @@ export function FeaturedWork({ variant = "section" }: FeaturedWorkProps) {
           );
         }
       } else {
-        gsap.set(cards[clamped], { zIndex: 50 });
+        if (isMobilePortfolioNav()) {
+          gsap.set(cards[clamped], {
+            zIndex: 50,
+            ...cardExitOffset(false),
+            autoAlpha: 1,
+          });
+        } else {
+          gsap.set(cards[clamped], { zIndex: 50 });
+        }
 
         tl.to(cards[clamped], {
+          xPercent: 0,
           yPercent: 0,
           autoAlpha: 1,
           zIndex: 50,
@@ -340,6 +377,7 @@ export function FeaturedWork({ variant = "section" }: FeaturedWorkProps) {
             cards[cardIndex],
             {
               ...stackProps(offset),
+              xPercent: 0,
               yPercent: 0,
               duration: 0.35,
               ease: "power2.out",
@@ -510,6 +548,10 @@ export function FeaturedWork({ variant = "section" }: FeaturedWorkProps) {
   }, [finalizeStack, resetCardTilt, restoreDimTargets]);
 
   useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
     if (!isExpanded) return;
 
     const onKeyDown = (event: KeyboardEvent) => {
@@ -677,6 +719,7 @@ export function FeaturedWork({ variant = "section" }: FeaturedWorkProps) {
         }
 
         const onClick = () => {
+          if (touchGestureRef.current.didSwipe) return;
           expandCard(cardIndex);
         };
 
@@ -702,7 +745,7 @@ export function FeaturedWork({ variant = "section" }: FeaturedWorkProps) {
       cardsArea.addEventListener("mouseleave", onCardsLeave);
 
       const onScrollWhileHovering = () => {
-        if (!isOverCardsRef.current) return;
+        if (!isOverCardsRef.current || isMobilePortfolioNav()) return;
         if (window.scrollY !== pinnedScrollY) {
           window.scrollTo(0, pinnedScrollY);
         }
@@ -734,6 +777,95 @@ export function FeaturedWork({ variant = "section" }: FeaturedWorkProps) {
         }
       };
 
+      const resetTouchGesture = () => {
+        touchGestureRef.current.active = false;
+        touchGestureRef.current.accum = 0;
+        touchGestureRef.current.totalMove = 0;
+        touchGestureRef.current.lockedAxis = null;
+        isOverCardsRef.current = false;
+        window.setTimeout(() => {
+          touchGestureRef.current.didSwipe = false;
+        }, 80);
+      };
+
+      const onTouchStart = (event: TouchEvent) => {
+        if (isExpandedRef.current) return;
+        if (event.touches.length !== 1) return;
+
+        touchGestureRef.current.active = true;
+        touchGestureRef.current.didSwipe = false;
+        touchGestureRef.current.lastX = event.touches[0].clientX;
+        touchGestureRef.current.lastY = event.touches[0].clientY;
+        touchGestureRef.current.accum = 0;
+        touchGestureRef.current.totalMove = 0;
+        touchGestureRef.current.lockedAxis = null;
+        isOverCardsRef.current = !isMobilePortfolioNav();
+        pinnedScrollY = window.scrollY;
+      };
+
+      const onTouchMove = (event: TouchEvent) => {
+        const touch = touchGestureRef.current;
+        if (!touch.active || isExpandedRef.current) return;
+        if (event.touches.length !== 1) return;
+
+        const currentX = event.touches[0].clientX;
+        const currentY = event.touches[0].clientY;
+        const deltaX = touch.lastX - currentX;
+        const deltaY = touch.lastY - currentY;
+        touch.lastX = currentX;
+        touch.lastY = currentY;
+
+        if (Math.abs(deltaX) < 2 && Math.abs(deltaY) < 2) return;
+
+        const mobileNav = isMobilePortfolioNav();
+
+        if (mobileNav && !touch.lockedAxis) {
+          if (
+            Math.abs(deltaX) > 8 ||
+            Math.abs(deltaY) > 8
+          ) {
+            touch.lockedAxis =
+              Math.abs(deltaX) >= Math.abs(deltaY) ? "x" : "y";
+          } else {
+            return;
+          }
+        }
+
+        if (mobileNav && touch.lockedAxis === "y") {
+          return;
+        }
+
+        touch.totalMove += mobileNav
+          ? Math.abs(deltaX)
+          : Math.abs(deltaY);
+        event.preventDefault();
+
+        if (isAnimatingRef.current) return;
+
+        const delta = mobileNav ? deltaX : deltaY;
+        touch.accum += delta;
+        if (Math.abs(touch.accum) < TOUCH_SWIPE_THRESHOLD) return;
+
+        touch.didSwipe = true;
+        const index = currentIndexRef.current;
+        if (touch.accum > 0) {
+          changeCardsRef.current((index + 1) % CARD_COUNT, true);
+        } else {
+          changeCardsRef.current(
+            (index - 1 + CARD_COUNT) % CARD_COUNT,
+            false,
+          );
+        }
+        touch.accum = 0;
+      };
+
+      const onTouchEnd = () => {
+        if (touchGestureRef.current.totalMove > TOUCH_SWIPE_THRESHOLD) {
+          touchGestureRef.current.didSwipe = true;
+        }
+        resetTouchGesture();
+      };
+
       window.addEventListener("wheel", onWheel, {
         passive: false,
         capture: true,
@@ -741,12 +873,20 @@ export function FeaturedWork({ variant = "section" }: FeaturedWorkProps) {
       window.addEventListener("scroll", onScrollWhileHovering, {
         passive: true,
       });
+      cardsArea.addEventListener("touchstart", onTouchStart, { passive: true });
+      cardsArea.addEventListener("touchmove", onTouchMove, { passive: false });
+      cardsArea.addEventListener("touchend", onTouchEnd, { passive: true });
+      cardsArea.addEventListener("touchcancel", onTouchEnd, { passive: true });
 
       return () => {
         window.removeEventListener("wheel", onWheel, { capture: true });
         window.removeEventListener("scroll", onScrollWhileHovering);
         cardsArea.removeEventListener("mouseenter", onCardsEnter);
         cardsArea.removeEventListener("mouseleave", onCardsLeave);
+        cardsArea.removeEventListener("touchstart", onTouchStart);
+        cardsArea.removeEventListener("touchmove", onTouchMove);
+        cardsArea.removeEventListener("touchend", onTouchEnd);
+        cardsArea.removeEventListener("touchcancel", onTouchEnd);
         cardCleanups.forEach((cleanup) => cleanup());
       };
     },
@@ -758,7 +898,7 @@ export function FeaturedWork({ variant = "section" }: FeaturedWorkProps) {
 
   return (
     <>
-      {typeof document !== "undefined" &&
+      {isMounted &&
         createPortal(
           <div
             ref={portalLayerRef}
@@ -840,7 +980,7 @@ export function FeaturedWork({ variant = "section" }: FeaturedWorkProps) {
                     draggable={false}
                     decoding="sync"
                     fetchPriority={index <= 1 ? "high" : "auto"}
-                    sizes="(max-width: 767px) 78vw, min(720px, 42vw)"
+                    sizes="(max-width: 767px) 60vw, min(720px, 42vw)"
                     srcSet={
                       slide.imageWidth
                         ? `${slide.images[0]} ${slide.imageWidth}w`
@@ -852,6 +992,12 @@ export function FeaturedWork({ variant = "section" }: FeaturedWorkProps) {
             </div>
           ))}
         </div>
+
+        <RevealMask className="portfolio-counter-wrap" delay={0.44}>
+          <div ref={counterRef} className="portfolio-counter" aria-live="polite">
+            {padCounter(0)}
+          </div>
+        </RevealMask>
 
         <div className="portfolio-project-name">
           <div className="project-name-heading">
@@ -874,12 +1020,6 @@ export function FeaturedWork({ variant = "section" }: FeaturedWorkProps) {
             </RevealMask>
           </div>
         </div>
-
-        <RevealMask className="portfolio-counter-wrap" delay={0.44}>
-          <div ref={counterRef} className="portfolio-counter" aria-live="polite">
-            {padCounter(0)}
-          </div>
-        </RevealMask>
       </div>
     </section>
     </>
