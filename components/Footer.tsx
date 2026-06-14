@@ -3,6 +3,8 @@
 import { useEffect } from "react";
 import { RevealMask } from "./RevealMask";
 import { footer } from "@/lib/data";
+import { getFooterCopy } from "@/lib/i18n";
+import { useLanguage } from "./LanguageProvider";
 import { EmailIcon, LinkedInIcon, WeChatIcon } from "./FooterIcons";
 
 import "./Footer.css";
@@ -22,6 +24,9 @@ function SocialIcon({ id }: { id: string }) {
 }
 
 export function Footer() {
+  const { locale } = useLanguage();
+  const copy = getFooterCopy(locale);
+
   useEffect(() => {
     if (window.location.hash !== "#contact-cta") return;
 
@@ -34,28 +39,53 @@ export function Footer() {
   };
 
   return (
-    <footer id="contact" className="meet-footer" aria-label="Contact">
+    <footer
+      id="contact"
+      className={`meet-footer meet-footer--${locale}`}
+      aria-label="Contact"
+    >
       <div id="contact-cta" className="meet-footer__cta">
         <RevealMask delay={0.95}>
-          <p className="meet-footer__eyebrow">{footer.eyebrow}</p>
+          <p className="meet-footer__eyebrow">{copy.eyebrow}</p>
         </RevealMask>
 
-        <RevealMask delay={1.02}>
-          <h2 className="meet-footer__headline">{footer.headline}</h2>
+        <RevealMask
+          delay={1.02}
+          className="meet-footer__reveal meet-footer__reveal--headline"
+        >
+          <h2 className="meet-footer__headline">
+            {copy.headline}
+            {copy.headlineLineBreakAfter ? (
+              <>
+                <br />
+                {copy.headlineLineBreakAfter}
+              </>
+            ) : null}
+          </h2>
         </RevealMask>
 
-        <RevealMask delay={1.08}>
-          <p className="meet-footer__body">{footer.body}</p>
+        <RevealMask
+          delay={1.08}
+          className="meet-footer__reveal meet-footer__reveal--body"
+        >
+          <p className="meet-footer__body">
+            <span className="meet-footer__body-line">{copy.body}</span>
+            {copy.bodyLineBreakAfter ? (
+              <span className="meet-footer__body-line">
+                {copy.bodyLineBreakAfter}
+              </span>
+            ) : null}
+          </p>
         </RevealMask>
 
         <RevealMask delay={1.14}>
           <a href={footer.ctaHref} className="meet-footer__button">
-            {footer.ctaLabel} →
+            {copy.ctaLabel}
           </a>
         </RevealMask>
 
         <RevealMask delay={1.2}>
-          <p className="meet-footer__connect">{footer.connectLabel}</p>
+          <p className="meet-footer__connect">{copy.connectLabel}</p>
         </RevealMask>
 
         <div className="meet-footer__social">
@@ -75,7 +105,7 @@ export function Footer() {
       </div>
 
       <div className="meet-footer__bottom">
-        <p className="meet-footer__credit">{footer.credit}</p>
+        <p className="meet-footer__credit">{copy.credit}</p>
 
         <div className="meet-footer__bar">
           <span>{footer.copyright}</span>

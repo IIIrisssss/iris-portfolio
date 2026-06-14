@@ -272,15 +272,7 @@ export const social = {
 };
 
 export const footer = {
-  eyebrow: "That's a wrap? Maybe not.",
-  headline: "Great things start with 'Meet'!",
-  body:
-    "Open to conversations, collabs, creative challenges, puzzles—or just a friendly game of Chess.",
-  ctaLabel: "Let's Meet",
   ctaHref: social.email,
-  connectLabel: "or connect through..",
-  credit:
-    "Created with curiosity, coffee, love, some peer pressure, and way too many open tabs. Thanks for stopping by—don't forget to blink and drink (water ofc)!",
   copyright: "© Copyright & stuff...",
   socialLinks: [
     { id: "linkedin", href: social.linkedin, label: "LinkedIn" },
