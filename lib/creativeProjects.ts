@@ -11,7 +11,8 @@ const D = CREATIVE_DESKTOP_VIEWPORT;
 const M = CREATIVE_MOBILE_VIEWPORT;
 const MO = CREATIVE_MOBILE_COLLAGE_OFFSET;
 
-const FRAME_PAD = 13;
+const FRAME_PAD_DESKTOP = 13;
+const FRAME_PAD_MOBILE = 8;
 const FRAME_BORDER = 1.5;
 const CAPTION_BLOCK_DESKTOP = 21.4;
 const CAPTION_BLOCK_MOBILE = 15;
@@ -74,17 +75,38 @@ function widthFromHeightPx(
   return (((hPx * ratioW) / ratioH) / vw) * 100;
 }
 
+function heightFromInnerAspectPx(
+  wPx: number,
+  ratioW: number,
+  ratioH: number,
+  hasCaption: boolean,
+  vh: number,
+  captionBlock: number,
+  pad: number,
+) {
+  const innerW = wPx - 2 * FRAME_BORDER - 2 * pad;
+  const innerH = (innerW * ratioH) / ratioW;
+  const hPx =
+    innerH + 2 * pad + 2 * FRAME_BORDER + (hasCaption ? captionBlock : 0);
+  return (hPx / vh) * 100;
+}
+
 function heightFrom16x9InnerPx(
   wPx: number,
   hasCaption: boolean,
   vh: number,
   captionBlock: number,
+  pad: number,
 ) {
-  const innerW = wPx - 2 * FRAME_BORDER - 2 * FRAME_PAD;
-  const innerH = innerW * (1080 / 1920);
-  const hPx =
-    innerH + 2 * FRAME_PAD + 2 * FRAME_BORDER + (hasCaption ? captionBlock : 0);
-  return (hPx / vh) * 100;
+  return heightFromInnerAspectPx(
+    wPx,
+    1920,
+    1080,
+    hasCaption,
+    vh,
+    captionBlock,
+    pad,
+  );
 }
 
 function cyFromTopAndHeightPx(y: number, hPx: number, vh: number) {
@@ -111,6 +133,7 @@ export type CreativeCard = {
   id: string;
   href: string;
   alt: string;
+  image?: string;
   zIndex: number;
   placeholderColor: string;
   innerAspect?: number;
@@ -174,7 +197,7 @@ const FIGMA_MOBILE = {
 
 const FIGMA_LABELS_DESKTOP = {
   springdango: { x: 277.056, y: 69, w: 188 },
-  worldcup: { x: 663.223, y: 482.136, w: 188 },
+  worldcup: { x: 663.223, y: 482.136, w: 240 },
   early: { x: 1151.152, y: 525.799, w: 188 },
   meme: { x: 99.223, y: 521.889, w: 188 },
   osechi: { x: 751.431, y: 98, w: 188 },
@@ -183,7 +206,7 @@ const FIGMA_LABELS_DESKTOP = {
 
 const FIGMA_LABELS_MOBILE = {
   springdango: { x: 644.514, y: 9, w: 145 },
-  worldcup: { x: 596.545, y: 371.019, w: 145 },
+  worldcup: { x: 596.545, y: 371.019, w: 200 },
   early: { x: 650.333, y: 957.833, w: 145 },
   meme: { x: 803.167, y: 663.891, w: 145 },
   osechi: { x: 815.739, y: 240, w: 145 },
@@ -238,22 +261,123 @@ const springdangoDesktopWPx =
 const springdangoDesktopW = dW(springdangoDesktopWPx);
 const springdangoMobileW = widthFromHeightPx(
   FIGMA_MOBILE.springdango.h,
-  222,
-  262,
+  196,
+  236,
   M.width,
 );
 
-const osechiDesktopH = heightFromWidthPx(
-  FIGMA_DESKTOP.osechi.w,
-  288,
-  212,
+const mavaDesktopH = heightFromInnerAspectPx(
+  FIGMA_DESKTOP.mava.w,
+  188,
+  266,
+  false,
   D.height,
+  CAPTION_BLOCK_DESKTOP,
+  FRAME_PAD_DESKTOP,
 );
-const osechiMobileH = heightFromWidthPx(
-  FIGMA_MOBILE.osechi.w,
-  288,
-  212,
+const mavaMobileH = heightFromInnerAspectPx(
+  FIGMA_MOBILE.mava.w,
+  188,
+  266,
+  false,
   M.height,
+  CAPTION_BLOCK_MOBILE,
+  FRAME_PAD_MOBILE,
+);
+
+const springdangoDesktopH = heightFromInnerAspectPx(
+  springdangoDesktopWPx,
+  196,
+  236,
+  false,
+  D.height,
+  CAPTION_BLOCK_DESKTOP,
+  FRAME_PAD_DESKTOP,
+);
+const springdangoMobileH = heightFromInnerAspectPx(
+  FIGMA_MOBILE.springdango.w,
+  196,
+  236,
+  false,
+  M.height,
+  CAPTION_BLOCK_MOBILE,
+  FRAME_PAD_MOBILE,
+);
+
+const memeDesktopH = heightFromInnerAspectPx(
+  FIGMA_DESKTOP.meme.w,
+  185,
+  224,
+  false,
+  D.height,
+  CAPTION_BLOCK_DESKTOP,
+  FRAME_PAD_DESKTOP,
+);
+const memeMobileH = heightFromInnerAspectPx(
+  FIGMA_MOBILE.meme.w,
+  185,
+  224,
+  false,
+  M.height,
+  CAPTION_BLOCK_MOBILE,
+  FRAME_PAD_MOBILE,
+);
+
+const osechiDesktopH = heightFromInnerAspectPx(
+  FIGMA_DESKTOP.osechi.w,
+  262,
+  186,
+  false,
+  D.height,
+  CAPTION_BLOCK_DESKTOP,
+  FRAME_PAD_DESKTOP,
+);
+const osechiMobileH = heightFromInnerAspectPx(
+  FIGMA_MOBILE.osechi.w,
+  262,
+  186,
+  false,
+  M.height,
+  CAPTION_BLOCK_MOBILE,
+  FRAME_PAD_MOBILE,
+);
+
+const earlyBackDesktopH = heightFromInnerAspectPx(
+  FIGMA_DESKTOP.earlyBack.w,
+  242,
+  139,
+  false,
+  D.height,
+  CAPTION_BLOCK_DESKTOP,
+  FRAME_PAD_DESKTOP,
+);
+const earlyBackMobileH = heightFromInnerAspectPx(
+  FIGMA_MOBILE.earlyBack.w,
+  242,
+  139,
+  false,
+  M.height,
+  CAPTION_BLOCK_MOBILE,
+  FRAME_PAD_MOBILE,
+);
+
+const earlyFrontDesktopH = heightFromInnerAspectPx(
+  FIGMA_DESKTOP.earlyFront.w,
+  242,
+  139,
+  false,
+  D.height,
+  CAPTION_BLOCK_DESKTOP,
+  FRAME_PAD_DESKTOP,
+);
+const earlyFrontMobileH = heightFromInnerAspectPx(
+  FIGMA_MOBILE.earlyFront.w,
+  242,
+  139,
+  false,
+  M.height,
+  CAPTION_BLOCK_MOBILE,
+  FRAME_PAD_MOBILE,
 );
 
 const springVideoDesktopH = heightFrom16x9InnerPx(
@@ -261,25 +385,14 @@ const springVideoDesktopH = heightFrom16x9InnerPx(
   true,
   D.height,
   CAPTION_BLOCK_DESKTOP,
+  FRAME_PAD_DESKTOP,
 );
 const springVideoMobileH = heightFrom16x9InnerPx(
   FIGMA_MOBILE.springdangoVideo.w,
   true,
   M.height,
   CAPTION_BLOCK_MOBILE,
-);
-
-const earlyFrontDesktopH = heightFromWidthPx(
-  FIGMA_DESKTOP.earlyFront.w,
-  268,
-  165,
-  D.height,
-);
-const earlyFrontMobileH = heightFromWidthPx(
-  FIGMA_MOBILE.earlyFront.w,
-  268,
-  165,
-  M.height,
+  FRAME_PAD_MOBILE,
 );
 
 const worldcupDesktop = cardFromFigmaDesktop(FIGMA_DESKTOP.worldcup);
@@ -296,26 +409,40 @@ const earlyClipDesktop = clipDesktop(FIGMA_CLIPS_DESKTOP.early);
 const worldcupVideoMobileBase = cardFromFigmaMobile(FIGMA_MOBILE.worldcupVideo);
 const mavaMobileBase = cardFromFigmaMobile(FIGMA_MOBILE.mava);
 const memeMobileBase = cardFromFigmaMobile(FIGMA_MOBILE.meme);
-const osechiMobileBase = cardFromFigmaMobile(FIGMA_MOBILE.osechi, {
-  hPx: (FIGMA_MOBILE.osechi.w * 212) / 288,
-});
+const osechiMobileBase = cardFromFigmaMobile(FIGMA_MOBILE.osechi);
 const earlyBackMobileBase = cardFromFigmaMobile(FIGMA_MOBILE.earlyBack);
-const earlyFrontMobileBase = cardFromFigmaMobile(FIGMA_MOBILE.earlyFront, {
-  hPx: (FIGMA_MOBILE.earlyFront.w * 165) / 268,
-});
+const earlyFrontDesktopBase = cardFromFigmaDesktop(FIGMA_DESKTOP.earlyFront);
+const earlyFrontMobileBase = cardFromFigmaMobile(FIGMA_MOBILE.earlyFront);
 
 export const creativeCards: CreativeCard[] = [
   {
     id: "worldcup-video",
     href: "/creative/worldcup-campaign",
     alt: "World Cup campaign — stadium kick-off render",
+    image: "/creative-projects/worldcup-video.png?v=1",
     zIndex: 21,
     placeholderColor: "#1a3a6e",
     innerAspect: 278 / 156,
     caption: "熱狂キックオフ⚽️",
-    desktop: cardFromFigmaDesktop(FIGMA_DESKTOP.worldcupVideo),
+    desktop: {
+      ...cardFromFigmaDesktop(FIGMA_DESKTOP.worldcupVideo),
+      height: heightFrom16x9InnerPx(
+        FIGMA_DESKTOP.worldcupVideo.w,
+        true,
+        D.height,
+        CAPTION_BLOCK_DESKTOP,
+        FRAME_PAD_DESKTOP,
+      ),
+    },
     mobile: {
       ...worldcupVideoMobileBase,
+      height: heightFrom16x9InnerPx(
+        FIGMA_MOBILE.worldcupVideo.w,
+        true,
+        M.height,
+        CAPTION_BLOCK_MOBILE,
+        FRAME_PAD_MOBILE,
+      ),
       cy: nudgeCy(worldcupVideoMobileBase.cy, 64, M.height),
     },
   },
@@ -323,12 +450,17 @@ export const creativeCards: CreativeCard[] = [
     id: "mava",
     href: "/creative/mava-social-media",
     alt: "Mava social media templates",
+    image: "/creative-projects/mava.png?v=1",
     zIndex: 2,
     placeholderColor: "#d4d4d4",
-    innerAspect: 220.37 / 280.57,
-    desktop: cardFromFigmaDesktop(FIGMA_DESKTOP.mava),
+    innerAspect: 188 / 266,
+    desktop: {
+      ...cardFromFigmaDesktop(FIGMA_DESKTOP.mava),
+      height: mavaDesktopH,
+    },
     mobile: {
       ...mavaMobileBase,
+      height: mavaMobileH,
       cx: nudgeCx(mavaMobileBase.cx, 30, M.width),
       cy: nudgeCy(mavaMobileBase.cy, 136, M.height),
     },
@@ -337,24 +469,26 @@ export const creativeCards: CreativeCard[] = [
     id: "springdango",
     href: "/creative/spring-dango-points",
     alt: "Spring Sakura × Shiratama collection board",
+    image: "/creative-projects/spring-collection.png?v=1",
     zIndex: 3,
     placeholderColor: "#84dcff",
-    innerAspect: 222 / 262,
+    innerAspect: 196 / 236,
     desktop: {
       ...springdangoDesktopBase,
+      height: springdangoDesktopH,
       cy: nudgeCy(springdangoDesktopBase.cy, 12, D.height),
     },
     mobile: {
-      ...cardFromFigmaMobile(FIGMA_MOBILE.springdango, {
-        wPx: (FIGMA_MOBILE.springdango.h * 222) / 262,
-      }),
+      ...cardFromFigmaMobile(FIGMA_MOBILE.springdango),
       width: springdangoMobileW,
+      height: springdangoMobileH,
     },
   },
   {
     id: "worldcup",
     href: "/creative/worldcup-campaign",
     alt: "World Cup campaign character set",
+    image: "/creative-projects/worldcup.png?v=1",
     zIndex: 4,
     placeholderColor: "#2068ff",
     innerAspect: 1,
@@ -364,19 +498,33 @@ export const creativeCards: CreativeCard[] = [
     },
     mobile: {
       ...worldcupMobile,
-      cy: nudgeCy(worldcupMobile.cy, 97, M.height),
+      height: heightFromInnerAspectPx(
+        FIGMA_MOBILE.worldcup.w,
+        1,
+        1,
+        false,
+        M.height,
+        CAPTION_BLOCK_MOBILE,
+        FRAME_PAD_MOBILE,
+      ),
+      cy: nudgeCy(worldcupMobile.cy, 114, M.height),
     },
   },
   {
     id: "meme",
     href: "/creative/manekineko-meme",
     alt: "Manekineko meme sticker set",
+    image: "/creative-projects/manekineko-meme.png?v=1",
     zIndex: 5,
     placeholderColor: "#ffe8d6",
-    innerAspect: 200.17 / 236.36,
-    desktop: cardFromFigmaDesktop(FIGMA_DESKTOP.meme),
+    innerAspect: 185 / 224,
+    desktop: {
+      ...cardFromFigmaDesktop(FIGMA_DESKTOP.meme),
+      height: memeDesktopH,
+    },
     mobile: {
       ...memeMobileBase,
+      height: memeMobileH,
       cy: nudgeCy(memeMobileBase.cy, 60, M.height),
     },
   },
@@ -384,13 +532,12 @@ export const creativeCards: CreativeCard[] = [
     id: "osechi",
     href: "/creative/new-year-osechi",
     alt: "New Year Osechi collection",
+    image: "/creative-projects/new-year-osechi.png?v=1",
     zIndex: 6,
     placeholderColor: "#ffd92f",
-    innerAspect: 288 / 212,
+    innerAspect: 262 / 186,
     desktop: {
-      ...cardFromFigmaDesktop(FIGMA_DESKTOP.osechi, {
-        hPx: (FIGMA_DESKTOP.osechi.w * 212) / 288,
-      }),
+      ...cardFromFigmaDesktop(FIGMA_DESKTOP.osechi),
       height: osechiDesktopH,
     },
     mobile: {
@@ -403,20 +550,26 @@ export const creativeCards: CreativeCard[] = [
     id: "early-back",
     href: "/creative/early-creations",
     alt: "Early creations — dusk fear cover",
+    image: "/creative-projects/early-creations-back.png?v=1",
     zIndex: 7,
     placeholderColor: "#1c1c1c",
-    innerAspect: 255.2 / 163.53,
-    desktop: cardFromFigmaDesktop(FIGMA_DESKTOP.earlyBack),
+    innerAspect: 242 / 139,
+    desktop: {
+      ...cardFromFigmaDesktop(FIGMA_DESKTOP.earlyBack),
+      height: earlyBackDesktopH,
+    },
     mobile: {
       ...earlyBackMobileBase,
+      height: earlyBackMobileH,
       cx: nudgeCx(earlyBackMobileBase.cx, 120, M.width),
-      cy: nudgeCy(earlyBackMobileBase.cy, 99, M.height),
+      cy: nudgeCy(earlyBackMobileBase.cy, 112, M.height),
     },
   },
   {
     id: "springdango-video",
     href: "/creative/spring-dango-points",
     alt: "Spring dango points — cat render",
+    image: "/creative-projects/spring-dango-video.png?v=1",
     zIndex: 9,
     placeholderColor: "#f5f0eb",
     innerAspect: 1920 / 1080,
@@ -426,9 +579,9 @@ export const creativeCards: CreativeCard[] = [
         hPx:
           (FIGMA_DESKTOP.springdangoVideo.w -
             2 * FRAME_BORDER -
-            2 * FRAME_PAD) *
+            2 * FRAME_PAD_DESKTOP) *
             (1080 / 1920) +
-          2 * FRAME_PAD +
+          2 * FRAME_PAD_DESKTOP +
           2 * FRAME_BORDER +
           CAPTION_BLOCK_DESKTOP,
       }),
@@ -439,9 +592,9 @@ export const creativeCards: CreativeCard[] = [
         hPx:
           (FIGMA_MOBILE.springdangoVideo.w -
             2 * FRAME_BORDER -
-            2 * FRAME_PAD) *
+            2 * FRAME_PAD_MOBILE) *
             (1080 / 1920) +
-          2 * FRAME_PAD +
+          2 * FRAME_PAD_MOBILE +
           2 * FRAME_BORDER +
           CAPTION_BLOCK_MOBILE,
       }),
@@ -452,20 +605,20 @@ export const creativeCards: CreativeCard[] = [
     id: "early-front",
     href: "/creative/early-creations",
     alt: "Early creations — plastic layout",
+    image: "/creative-projects/early-creations-front.png?v=1",
     zIndex: 12,
     placeholderColor: "#e8e4df",
-    innerAspect: 268 / 165,
+    innerAspect: 242 / 139,
     desktop: {
-      ...cardFromFigmaDesktop(FIGMA_DESKTOP.earlyFront, {
-        hPx: (FIGMA_DESKTOP.earlyFront.w * 165) / 268,
-      }),
+      ...earlyFrontDesktopBase,
       height: earlyFrontDesktopH,
+      cy: nudgeCy(earlyFrontDesktopBase.cy, -53, D.height),
     },
     mobile: {
       ...earlyFrontMobileBase,
       height: earlyFrontMobileH,
       cx: nudgeCx(earlyFrontMobileBase.cx, 40, M.width),
-      cy: nudgeCy(earlyFrontMobileBase.cy, 124, M.height),
+      cy: nudgeCy(earlyFrontMobileBase.cy, 93, M.height),
     },
   },
 ];
@@ -536,7 +689,8 @@ export const creativeLabels: CreativeLabel[] = [
     desktop: labelDesktop(FIGMA_LABELS_DESKTOP.worldcup),
     mobile: {
       ...worldcupLabelMobile,
-      top: nudgeCy(worldcupLabelMobile.top, 64, M.height),
+      cx: nudgeCx(worldcupLabelMobile.cx, -36, M.width),
+      top: nudgeCy(worldcupLabelMobile.top, 106, M.height),
     },
   },
   {
@@ -603,7 +757,7 @@ export const creativeClips: CreativeClip[] = [
     mobile: {
       ...worldcupClipMobile,
       cx: nudgeCx(worldcupClipMobile.cx, -20, M.width),
-      cy: nudgeCy(worldcupClipMobile.cy, 74, M.height),
+      cy: nudgeCy(worldcupClipMobile.cy, 85, M.height),
       rotate: worldcupClipMobile.rotate - 85,
     },
   },
@@ -612,7 +766,8 @@ export const creativeClips: CreativeClip[] = [
     zIndex: 70,
     desktop: {
       ...earlyClipDesktop,
-      cy: nudgeCy(earlyClipDesktop.cy, 8, D.height),
+      cx: nudgeCx(earlyClipDesktop.cx, 4, D.width),
+      cy: nudgeCy(earlyClipDesktop.cy, 8 - 24, D.height),
       rotate: earlyClipDesktop.rotate - 49,
     },
     mobile: {

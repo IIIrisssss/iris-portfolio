@@ -97,6 +97,7 @@ function CardItem({ card, layout }: { card: CreativeCard; layout: Layout }) {
     >
       <PolaroidCard
         alt={card.alt}
+        image={card.image}
         placeholderColor={card.placeholderColor}
         innerAspect={card.caption ? card.innerAspect : undefined}
         caption={card.caption}

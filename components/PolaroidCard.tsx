@@ -4,6 +4,7 @@ import type { CSSProperties } from "react";
 
 type PolaroidCardProps = {
   alt: string;
+  image?: string;
   placeholderColor: string;
   /** Inner image w / h — placeholder keeps this ratio inside the frame */
   innerAspect?: number;
@@ -20,6 +21,7 @@ type PolaroidCardProps = {
  */
 export function PolaroidCard({
   alt,
+  image,
   placeholderColor,
   innerAspect,
   caption,
@@ -34,10 +36,27 @@ export function PolaroidCard({
           aria-label={alt}
           style={innerAspect ? { aspectRatio: `${innerAspect}` } : undefined}
         >
-          <div
-            className="polaroid-placeholder"
-            style={{ backgroundColor: placeholderColor }}
-          />
+          {image ? (
+            /* eslint-disable-next-line @next/next/no-img-element */
+            <img
+              src={image}
+              alt={alt}
+              className="polaroid-image__img"
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+              }}
+            />
+          ) : (
+            <div
+              className="polaroid-placeholder"
+              style={{ backgroundColor: placeholderColor }}
+            />
+          )}
         </div>
 
         {caption ? <p className="polaroid-caption">{caption}</p> : null}

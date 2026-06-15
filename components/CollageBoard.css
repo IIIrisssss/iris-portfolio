@@ -78,7 +78,7 @@
   width: 100%;
   aspect-ratio: 525 / 1112;
   container-type: inline-size;
-  --frame-pad: 2.476cqw; /* ~13px @525 */
+  --frame-pad: 1.524cqw; /* 8px @525 */
   --radius-outer: var(--card-radius-outer);
   --radius-inner: var(--card-radius-inner);
   --date-size: 1.333cqw;
@@ -121,12 +121,13 @@
 
   .collage-label__title {
     display: -webkit-box;
-    overflow: hidden;
+    overflow: visible;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
     max-height: calc(var(--title-leading) * 2);
-    word-break: normal;
+    word-break: keep-all;
+    white-space: nowrap;
     overflow-wrap: normal;
     hyphens: none;
   }
@@ -228,6 +229,14 @@
 .polaroid-placeholder {
   width: 100%;
   height: 100%;
+}
+
+.polaroid-image {
+  position: relative;
+}
+
+.polaroid-image__img {
+  object-fit: cover;
 }
 
 .polaroid-caption {
