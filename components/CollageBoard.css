@@ -123,11 +123,11 @@
     display: -webkit-box;
     overflow: visible;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 1;
-    line-clamp: 1;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
     max-height: calc(var(--title-leading) * 2);
     word-break: keep-all;
-    white-space: nowrap;
+    white-space: pre-line;
     overflow-wrap: normal;
     hyphens: none;
   }

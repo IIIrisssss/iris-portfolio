@@ -433,6 +433,7 @@ export const creativeCards: CreativeCard[] = [
         CAPTION_BLOCK_DESKTOP,
         FRAME_PAD_DESKTOP,
       ),
+      cy: nudgeCy(cardFromFigmaDesktop(FIGMA_DESKTOP.worldcupVideo).cy, -18, D.height),
     },
     mobile: {
       ...worldcupVideoMobileBase,
@@ -525,7 +526,7 @@ export const creativeCards: CreativeCard[] = [
     mobile: {
       ...memeMobileBase,
       height: memeMobileH,
-      cy: nudgeCy(memeMobileBase.cy, 60, M.height),
+      cy: nudgeCy(memeMobileBase.cy, 70, M.height),
     },
   },
   {
@@ -658,26 +659,29 @@ export const creativeLabels: CreativeLabel[] = [
   {
     id: "osechi",
     date: "2025.12–2026.1",
-    title: "NEW YEAR OSECHI COLLECTION",
+    title: "NEW YEAR OSECHI\nCOLLECTION",
     color: "#a8741d",
     zIndex: 20,
     desktop: labelDesktop(FIGMA_LABELS_DESKTOP.osechi),
     mobile: {
       ...osechiLabelMobile,
-      top: nudgeCy(osechiLabelMobile.top, 30, M.height),
+      top: nudgeCy(osechiLabelMobile.top, 20, M.height),
     },
   },
   {
     id: "mava",
     date: "2025.7",
-    title: "MAVA SOCIAL MEDIA TEMPLATES",
+    title: "MAVA SOCIAL MEDIA\nTEMPLATES",
     color: "#909090",
     zIndex: 20,
-    desktop: labelDesktop(FIGMA_LABELS_DESKTOP.mava),
+    desktop: {
+      ...labelDesktop(FIGMA_LABELS_DESKTOP.mava),
+      top: nudgeCy(labelDesktop(FIGMA_LABELS_DESKTOP.mava).top, -10, D.height),
+    },
     mobile: {
       ...mavaLabelMobile,
       cx: nudgeCx(mavaLabelMobile.cx, -10, M.width),
-      top: nudgeCy(mavaLabelMobile.top, 126, M.height),
+      top: nudgeCy(mavaLabelMobile.top, 116, M.height),
     },
   },
   {
@@ -686,7 +690,10 @@ export const creativeLabels: CreativeLabel[] = [
     title: "WORLDCUP CAMPAIGN",
     color: "#2068ff",
     zIndex: 20,
-    desktop: labelDesktop(FIGMA_LABELS_DESKTOP.worldcup),
+    desktop: {
+      ...labelDesktop(FIGMA_LABELS_DESKTOP.worldcup),
+      top: nudgeCy(labelDesktop(FIGMA_LABELS_DESKTOP.worldcup).top, 16, D.height),
+    },
     mobile: {
       ...worldcupLabelMobile,
       cx: nudgeCx(worldcupLabelMobile.cx, -36, M.width),
@@ -702,7 +709,7 @@ export const creativeLabels: CreativeLabel[] = [
     desktop: labelDesktop(FIGMA_LABELS_DESKTOP.meme),
     mobile: {
       ...memeLabelMobile,
-      top: nudgeCy(memeLabelMobile.top, 60, M.height),
+      top: nudgeCy(memeLabelMobile.top, 65, M.height),
     },
   },
   {
@@ -752,7 +759,8 @@ export const creativeClips: CreativeClip[] = [
     zIndex: 70,
     desktop: {
       ...worldcupClipDesktop,
-      cx: nudgeCx(worldcupClipDesktop.cx, -8, D.width),
+      cx: nudgeCx(worldcupClipDesktop.cx, -19, D.width),
+      cy: nudgeCy(worldcupClipDesktop.cy, -10, D.height),
     },
     mobile: {
       ...worldcupClipMobile,
@@ -767,7 +775,7 @@ export const creativeClips: CreativeClip[] = [
     desktop: {
       ...earlyClipDesktop,
       cx: nudgeCx(earlyClipDesktop.cx, 4, D.width),
-      cy: nudgeCy(earlyClipDesktop.cy, 8 - 24, D.height),
+      cy: nudgeCy(earlyClipDesktop.cy, -5, D.height),
       rotate: earlyClipDesktop.rotate - 49,
     },
     mobile: {
