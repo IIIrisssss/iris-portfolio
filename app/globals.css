@@ -18,6 +18,8 @@
     0px 85px 51px rgba(0, 0, 0, 0.05);
   --shadow-soft: 0px 9px 21px rgba(0, 0, 0, 0.05),
     0px 38px 38px rgba(0, 0, 0, 0.045), 0px 85px 51px rgba(0, 0, 0, 0.025);
+  --shadow-compact: 0px 4px 12px rgba(0, 0, 0, 0.05),
+    0px 12px 24px rgba(0, 0, 0, 0.03);
 
   /* card corners — match CollageBoard polaroid frame (Figma 8px / 6px) */
   --card-radius-outer: 8px;
