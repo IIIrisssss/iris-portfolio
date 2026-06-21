@@ -147,7 +147,7 @@
 
 .portfolio-slider-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(22rem, 32em) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1.2fr) minmax(20rem, 30em) minmax(0, 1.2fr);
   align-items: center;
   width: 100%;
   height: 100%;
@@ -179,9 +179,9 @@
 .portfolio-work-tag h1,
 .portfolio-project-name h1 {
   margin: 0;
-  max-width: 11em;
+  max-width: 13em;
   font-family: var(--font-headline), sans-serif;
-  font-size: clamp(2rem, 5em, 5rem);
+  font-size: clamp(2rem, 3.8em, 3.8rem);
   font-weight: 400;
   line-height: 0.95;
   letter-spacing: -0.02em;
@@ -338,7 +338,7 @@
 
   .portfolio-work-tag h1,
   .portfolio-project-name h1 {
-    font-size: clamp(1.75rem, 4em, 3.5rem);
+    font-size: clamp(1.75rem, 3.4em, 3rem);
   }
 
   .tilt-card-container {
