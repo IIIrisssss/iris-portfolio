@@ -122,7 +122,7 @@ export type PortfolioSlide = {
 };
 
 const radianceImage = (prefix: string, frame: number) =>
-  `/radiance-works/${prefix}-0${frame}.jpg`;
+  `/radiance-works/${prefix}-0${frame}.jpg?v=1`;
 
 /** Radiance-style portfolio showcase — https://radiance.family/ */
 export const portfolioSlides: PortfolioSlide[] = [
@@ -143,7 +143,7 @@ export const portfolioSlides: PortfolioSlide[] = [
     tagA: "BRANDING",
     tagB: "DIGITAL",
     year: "2023",
-    images: ["/radiance-works/spring-sakura-shiratama.jpg"],
+    images: ["/radiance-works/spring-sakura-shiratama.jpg?v=1"],
     imageWidth: 3240,
     imageHeight: 3915,
     unoptimizedImage: true,
@@ -225,15 +225,15 @@ export const brandMarqueeRowRight: BrandMarqueeItem[] = [
 
 /** More Work grid items. */
 export const moreWork: Work[] = [
-  { title: "Frugo", image: "/works/frugo.png", bg: "#ede6d3" },
-  { title: "Whop", image: "/works/whop.png", bg: "#ede6d3" },
-  { title: "Brompton", image: "/works/brompton.jpg", bg: "#ede6d3" },
-  { title: "260 Collins", image: "/works/collins.jpg", bg: "#ede6d3" },
-  { title: "Do Good", image: "/works/do-good.png", bg: "#ede6d3" },
-  { title: "ShakeShack", image: "/works/shakeshack.png", bg: "#ede6d3" },
-  { title: "Shred", image: "/works/shred.png", bg: "#ede6d3" },
-  { title: "Caulfield Cup", image: "/works/caulfield-cup.png", bg: "#ede6d3" },
-  { title: "DreamVault", image: "/works/dreamvault.jpg", bg: "#ede6d3" },
+  { title: "Frugo", image: "/works/frugo.png?v=1", bg: "#ede6d3" },
+  { title: "Whop", image: "/works/whop.png?v=1", bg: "#ede6d3" },
+  { title: "Brompton", image: "/works/brompton.jpg?v=1", bg: "#ede6d3" },
+  { title: "260 Collins", image: "/works/collins.jpg?v=1", bg: "#ede6d3" },
+  { title: "Do Good", image: "/works/do-good.png?v=1", bg: "#ede6d3" },
+  { title: "ShakeShack", image: "/works/shakeshack.png?v=1", bg: "#ede6d3" },
+  { title: "Shred", image: "/works/shred.png?v=1", bg: "#ede6d3" },
+  { title: "Caulfield Cup", image: "/works/caulfield-cup.png?v=1", bg: "#ede6d3" },
+  { title: "DreamVault", image: "/works/dreamvault.jpg?v=1", bg: "#ede6d3" },
 ];
 
 export type ProjectListItem = {
@@ -244,15 +244,15 @@ export type ProjectListItem = {
 
 /** Spencer Gabor–style projects list (about page module). */
 export const projectsList: ProjectListItem[] = [
-  { title: "Brompton", slug: "brompton", image: "/works/brompton.jpg" },
-  { title: "260 Collins", slug: "260-collins", image: "/works/collins.jpg" },
-  { title: "ShakeShack", slug: "shakeshack", image: "/works/shakeshack.png" },
+  { title: "Brompton", slug: "brompton", image: "/works/brompton.jpg?v=1" },
+  { title: "260 Collins", slug: "260-collins", image: "/works/collins.jpg?v=1" },
+  { title: "ShakeShack", slug: "shakeshack", image: "/works/shakeshack.png?v=1" },
   {
     title: "Caulfield Cup",
     slug: "caulfield-cup",
-    image: "/works/caulfield-cup.png",
+    image: "/works/caulfield-cup.png?v=1",
   },
-  { title: "Jaffa", slug: "jaffa", image: "/works/jaffa.jpg" },
+  { title: "Jaffa", slug: "jaffa", image: "/works/jaffa.jpg?v=1" },
 ];
 
 export const about = {

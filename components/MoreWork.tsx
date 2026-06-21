@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { motion } from "framer-motion";
 import { moreWork } from "@/lib/data";
 import { RevealMask } from "./RevealMask";
@@ -39,12 +38,18 @@ export function MoreWork() {
               className="relative h-full w-full overflow-hidden rounded-[var(--card-radius-outer)] shadow-[var(--shadow-soft)]"
               style={{ backgroundColor: work.bg }}
             >
-              <Image
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
                 src={work.image}
                 alt={work.title}
-                fill
-                sizes="(max-width: 768px) 45vw, 30vw"
-                className="object-cover"
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                }}
               />
             </div>
           </motion.div>
