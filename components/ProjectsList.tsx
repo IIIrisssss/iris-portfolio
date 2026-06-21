@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { projectsList } from "@/lib/data";
 import {
@@ -298,7 +297,8 @@ export function ProjectsList() {
           if (!scatter) return null;
 
           return (
-            <Image
+            /* eslint-disable-next-line @next/next/no-img-element */
+            <img
               key={`${activeProject?.slug ?? "project"}-preview-${index}-${popTick}`}
               ref={(node) => {
                 imageRefs.current[index] = node;
