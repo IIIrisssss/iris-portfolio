@@ -19,7 +19,8 @@
 .creative-collage__title {
   font-family: var(--font-headline), sans-serif;
   font-size: var(--section-title-size);
-  font-weight: 400;
+  font-weight: var(--headline-weight);
+  font-synthesis: weight;
   text-transform: uppercase;
   letter-spacing: -0.02em;
   line-height: 0.95;
@@ -40,6 +41,7 @@
   width: 100%;
   max-width: 1440px;
   padding-inline: var(--padding);
+  overflow: visible;
 }
 
 /* ---- viewports -------------------------------------------------------- */
@@ -48,10 +50,13 @@
   position: relative;
   width: 100%;
   container-type: inline-size;
+  overflow: visible;
 }
 
 .desktop-collage {
   aspect-ratio: 1440 / 911;
+  --grid-inset: 6%;
+  --grid-cell: 1.667; /* ~24px @ 1440 — denser grid */
   --frame-pad: 0.903cqw; /* 13px @1440 */
   --radius-outer: var(--card-radius-outer);
   --radius-inner: var(--card-radius-inner);
@@ -78,6 +83,9 @@
   width: 100%;
   aspect-ratio: 525 / 1112;
   container-type: inline-size;
+  overflow: visible;
+  --grid-inset: 5%;
+  --grid-cell: 4.762; /* ~25px @525 */
   --frame-pad: 1.524cqw; /* 8px @525 */
   --radius-outer: var(--card-radius-outer);
   --radius-inner: var(--card-radius-inner);
@@ -135,11 +143,40 @@
   .mobile-collage__viewport .collage-clip {
     width: 8.571cqw;
   }
+
+  .mobile-collage__viewport {
+    --grid-cell: 5.714;
+    --grid-inset: 4.5%;
+  }
+}
+
+/* ---- grid mat under cards (SVG lines) -------------------------------- */
+.collage-grid {
+  position: absolute;
+  inset: var(--grid-inset);
+  z-index: 0;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.collage-grid__svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.collage-grid__path {
+  fill: none;
+  stroke: rgba(203, 203, 203, 0.3);
+  stroke-width: 1;
+  shape-rendering: geometricPrecision;
 }
 
 /* ---- card anchor (NO rotation here) ----------------------------------- */
 .collage-card {
   position: absolute;
+  z-index: 1;
   left: var(--x);
   top: var(--y);
   width: var(--w);
@@ -251,6 +288,7 @@
 /* ---- label ------------------------------------------------------------ */
 .collage-label {
   position: absolute;
+  z-index: 1;
   left: var(--x);
   top: var(--y);
   max-width: var(--w);
@@ -291,6 +329,7 @@
 /* ---- paperclip -------------------------------------------------------- */
 .collage-clip {
   position: absolute;
+  z-index: 1;
   left: var(--x);
   top: var(--y);
   width: var(--w);

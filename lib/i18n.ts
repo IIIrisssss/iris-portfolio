@@ -6,6 +6,54 @@ export const featuredWorkTitle: Record<Locale, string> = {
   zh: "我的作品",
 };
 
+export type SectionCopy = {
+  title: string;
+  subtitle: string;
+  ariaLabel: string;
+};
+
+export const creativeProjectsSection: Record<Locale, SectionCopy> = {
+  en: {
+    title: "Creative Projects",
+    subtitle: "Click to explore the visual archives.",
+    ariaLabel: "Creative projects",
+  },
+  zh: {
+    title: "创意项目",
+    subtitle: "点击查看视觉档案。",
+    ariaLabel: "创意项目",
+  },
+};
+
+export const moreWorkSection: Record<Locale, SectionCopy> = {
+  en: {
+    title: "More Work",
+    subtitle: "Take a scroll, stay a while",
+    ariaLabel: "More work",
+  },
+  zh: {
+    title: "更多作品",
+    subtitle: "慢慢滑动，多停留一会儿",
+    ariaLabel: "更多作品",
+  },
+};
+
+export const navLabels: Record<
+  Locale,
+  { works: string; about: string; contact: string }
+> = {
+  en: {
+    works: "Works",
+    about: "About",
+    contact: "Contact",
+  },
+  zh: {
+    works: "作品",
+    about: "关于",
+    contact: "联系",
+  },
+};
+
 export type SlideLabels = {
   tagA: string;
   tagB: string;

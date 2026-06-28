@@ -54,13 +54,16 @@ export function Footer() {
           className="meet-footer__reveal meet-footer__reveal--headline"
         >
           <h2 className="meet-footer__headline">
-            {copy.headline}
             {copy.headlineLineBreakAfter ? (
               <>
-                <br />
-                {copy.headlineLineBreakAfter}
+                <span className="meet-footer__headline-line">{copy.headline}</span>
+                <span className="meet-footer__headline-line">
+                  {copy.headlineLineBreakAfter}
+                </span>
               </>
-            ) : null}
+            ) : (
+              copy.headline
+            )}
           </h2>
         </RevealMask>
 

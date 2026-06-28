@@ -39,7 +39,7 @@ export default async function CreativeProjectPage({
       <p className="font-[family-name:var(--font-body)] text-sm font-semibold uppercase tracking-[0.04em] text-[rgba(44,44,44,0.55)]">
         {project.date}
       </p>
-      <h1 className="font-[family-name:var(--font-headline)] text-[clamp(2rem,7vw,4rem)] uppercase tracking-[-0.02em] text-[#2c2c2c]">
+      <h1 className="font-[family-name:var(--font-headline)] text-[clamp(1.5rem,5.5vw,3rem)] font-bold uppercase tracking-[-0.02em] text-[#2c2c2c]">
         {project.title}
       </h1>
       <Link

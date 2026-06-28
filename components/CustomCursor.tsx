@@ -1,11 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 
 import "./CustomCursor.css";
-
-const lerp = (a: number, b: number, n: number) => (1 - n) * a + n * b;
 
 function canUseCustomCursor() {
   if (typeof window === "undefined") return false;
@@ -13,10 +12,21 @@ function canUseCustomCursor() {
 }
 
 export function CustomCursor() {
-  const innerRef = useRef<SVGCircleElement>(null);
-  const outerRef = useRef<SVGCircleElement>(null);
   const [mounted, setMounted] = useState(false);
   const [enabled, setEnabled] = useState(false);
+  const [isHovering, setIsHovering] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  const followerSpringConfig = { damping: 28, stiffness: 150, mass: 0.6 };
+  const followerX = useSpring(mouseX, followerSpringConfig);
+  const followerY = useSpring(mouseY, followerSpringConfig);
+
+  const CIRCLE_SIZE = 10;
+  const circleX = useTransform(followerX, (value) => value - CIRCLE_SIZE / 2);
+  const circleY = useTransform(followerY, (value) => value - CIRCLE_SIZE / 2);
 
   useEffect(() => {
     setMounted(true);
@@ -26,65 +36,65 @@ export function CustomCursor() {
   useEffect(() => {
     if (!enabled || !mounted) return;
 
-    const inner = innerRef.current;
-    const outer = outerRef.current;
-    if (!inner || !outer) return;
-
-    const cursor = { x: 0, y: 0 };
-    const rendered = { x: 0, y: 0 };
-    let rafId = 0;
-    let visible = false;
-
-    const render = () => {
-      rendered.x = lerp(rendered.x, cursor.x, 0.2);
-      rendered.y = lerp(rendered.y, cursor.y, 0.15);
-
-      inner.setAttribute("cx", String(rendered.x));
-      inner.setAttribute("cy", String(rendered.y));
-      outer.setAttribute("cx", String(rendered.x));
-      outer.setAttribute("cy", String(rendered.y));
-
-      rafId = requestAnimationFrame(render);
+    const onMouseMove = (e: MouseEvent) => {
+      mouseX.set(e.clientX);
+      mouseY.set(e.clientY);
+      if (!isVisible) setIsVisible(true);
     };
 
-    const onMouseMove = (event: MouseEvent) => {
-      cursor.x = event.clientX;
-      cursor.y = event.clientY;
+    const onMouseOver = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      const isClickable =
+        target.tagName === "A" ||
+        target.tagName === "BUTTON" ||
+        target.closest("a") ||
+        target.closest("button") ||
+        target.classList.contains("cursor-pointer") ||
+        getComputedStyle(target).cursor === "pointer";
 
-      if (!visible) {
-        visible = true;
-        inner.style.opacity = "1";
-        outer.style.opacity = "1";
-        rendered.x = cursor.x;
-        rendered.y = cursor.y;
-        cancelAnimationFrame(rafId);
-        rafId = requestAnimationFrame(render);
-      }
+      setIsHovering(!!isClickable);
     };
 
-    window.addEventListener("mousemove", onMouseMove, { passive: true });
-    document.body.classList.add("custom-cursor-enabled");
+    const onMouseOut = () => {
+      setIsHovering(false);
+    };
+
+    window.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("mouseover", onMouseOver);
+    window.addEventListener("mouseout", onMouseOut);
 
     return () => {
-      cancelAnimationFrame(rafId);
       window.removeEventListener("mousemove", onMouseMove);
-      document.body.classList.remove("custom-cursor-enabled");
+      window.removeEventListener("mouseover", onMouseOver);
+      window.removeEventListener("mouseout", onMouseOut);
     };
-  }, [enabled, mounted]);
+  }, [enabled, mounted, isVisible, mouseX, mouseY]);
 
   if (!mounted || !enabled) return null;
 
   return createPortal(
-    <svg
-      aria-hidden="true"
-      className="custom-cursor custom-cursor--outer"
-      width="48"
-      height="48"
-      viewBox="0 0 48 48"
+    <motion.div
+      className="custom-cursor custom-cursor__blend"
+      style={{
+        x: circleX,
+        y: circleY,
+        visibility: isVisible ? "visible" : "hidden",
+      }}
     >
-      <circle ref={outerRef} className="custom-cursor__outer" cx="24" cy="24" r="10" />
-      <circle ref={innerRef} className="custom-cursor__inner" cx="24" cy="24" r="4" />
-    </svg>,
+      <motion.svg
+        className="custom-cursor__circle"
+        width={CIRCLE_SIZE}
+        height={CIRCLE_SIZE}
+        viewBox="0 0 20 20"
+        aria-hidden="true"
+        animate={{
+          scale: isHovering ? 2.5 : 1,
+        }}
+        transition={{ type: "spring", stiffness: 250, damping: 25 }}
+      >
+        <circle cx="10" cy="10" r="9" fill="#fff" />
+      </motion.svg>
+    </motion.div>,
     document.body
   );
 }

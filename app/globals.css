@@ -26,7 +26,8 @@
   --card-radius-inner: 6px;
 
   /* section headings — MY WORKS / Creative Projects / MORE WORK */
-  --section-title-size: clamp(2.5rem, 6vw, 5rem);
+  --section-title-size: clamp(1.875rem, 4.5vw, 3.5rem);
+  --headline-weight: 700;
   --hero-mobile-stack-gap: 1.5rem;
 
   /* custom cursor (Codrops sketch 013) */
@@ -75,10 +76,12 @@ a {
   background-color: color-mix(in srgb, var(--color-secondary), transparent 50%);
 }
 
-/* Headline helper: condensed heavy uppercase like the reference */
+/* Headline helper: Questrial uppercase */
 .font-display {
   font-family: var(--font-headline), sans-serif;
   text-transform: uppercase;
+  font-weight: var(--headline-weight);
+  font-synthesis: weight;
   letter-spacing: -0.02em;
   line-height: 0.85;
 }
@@ -87,6 +90,8 @@ a {
 .eyebrow {
   font-family: var(--font-headline), sans-serif;
   text-transform: uppercase;
+  font-weight: var(--headline-weight);
+  font-synthesis: weight;
   letter-spacing: 0.12em;
   line-height: 1;
 }
@@ -95,7 +100,8 @@ a {
   margin: 0;
   font-family: var(--font-headline), sans-serif;
   font-size: var(--section-title-size);
-  font-weight: 400;
+  font-weight: var(--headline-weight);
+  font-synthesis: weight;
   line-height: 0.95;
   letter-spacing: -0.02em;
   text-transform: uppercase;
@@ -104,6 +110,6 @@ a {
 
 @media (max-width: 767px) {
   :root {
-    --section-title-size: clamp(1.75rem, 9vw, 2.75rem);
+    --section-title-size: clamp(1.375rem, 7vw, 2.125rem);
   }
 }

@@ -3,13 +3,15 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+import { navLabels } from "@/lib/i18n";
+import { useLanguage } from "./LanguageProvider";
 import { NavRollText, useRollHover } from "./NavRollText";
 
 import "./floema-nav.css";
 
-const links = [
-  { href: "/", label: "Works", match: (path: string) => path !== "/about" },
-  { href: "/about", label: "About", match: (path: string) => path === "/about" },
+const linkConfig = [
+  { href: "/", key: "works" as const, match: (path: string) => path !== "/about" },
+  { href: "/about", key: "about" as const, match: (path: string) => path === "/about" },
 ] as const;
 
 function NavRollLink({
@@ -47,6 +49,8 @@ function scrollToContact() {
 
 export function NavMetaRow() {
   const pathname = usePathname();
+  const { locale } = useLanguage();
+  const labels = navLabels[locale];
 
   const handleContactClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
     if (pathname !== "/") return;
@@ -58,18 +62,18 @@ export function NavMetaRow() {
   return (
     <nav aria-label="Primary" className="floema-meta-row">
       <div className="floema-meta-row__items">
-        {links.map((link) => (
+        {linkConfig.map((link) => (
           <NavRollLink
             key={link.href}
             href={link.href}
-            label={link.label}
+            label={labels[link.key]}
             active={link.match(pathname)}
           />
         ))}
 
         <NavRollLink
           href="/#contact-cta"
-          label="Contact"
+          label={labels.contact}
           active={false}
           onClick={handleContactClick}
         />

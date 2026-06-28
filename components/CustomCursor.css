@@ -1,34 +1,16 @@
-body.custom-cursor-enabled,
-body.custom-cursor-enabled a,
-body.custom-cursor-enabled button,
-body.custom-cursor-enabled [role="button"],
-body.custom-cursor-enabled .cursor-pointer {
-  cursor: none !important;
-}
-
-.custom-cursor {
+.custom-cursor__blend {
   position: fixed;
   top: 0;
   left: 0;
-  display: block;
-  pointer-events: none;
   z-index: 99999;
+  pointer-events: none;
+  mix-blend-mode: difference;
+  transform: translateZ(0);
+}
+
+.custom-cursor__circle {
+  display: block;
   overflow: visible;
-}
-
-.custom-cursor__outer,
-.custom-cursor__inner {
-  opacity: 0;
-  transition: opacity 0.15s ease;
-}
-
-.custom-cursor__outer {
-  fill: none;
-  stroke: #b8b8b8;
-  stroke-width: 1.5px;
-}
-
-.custom-cursor__inner {
-  fill: #9a9a9a;
-  stroke: none;
+  transform-origin: center center;
+  shape-rendering: geometricPrecision;
 }

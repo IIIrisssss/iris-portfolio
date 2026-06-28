@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Anton, Inter } from "next/font/google";
+import { Questrial, Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { LanguageProvider } from "@/components/LanguageProvider";
@@ -7,7 +7,7 @@ import { CustomCursor } from "@/components/CustomCursor";
 import { TopNav } from "@/components/TopNav";
 import { ColorPicker } from "@/components/ColorPicker";
 
-const anton = Anton({
+const questrial = Questrial({
   variable: "--font-headline",
   weight: "400",
   subsets: ["latin"],
@@ -33,7 +33,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${anton.variable} ${inter.variable}`}>
+    <html lang="en" className={`${questrial.variable} ${inter.variable}`}>
       <body>
         <ThemeProvider>
           <LanguageProvider>

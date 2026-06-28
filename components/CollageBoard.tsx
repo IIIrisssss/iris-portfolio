@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import type { CSSProperties } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 
 import {
   creativeCards,
@@ -13,6 +13,8 @@ import {
   type CreativeClip,
   type CreativeLabel,
 } from "@/lib/creativeProjects";
+import { creativeProjectsSection } from "@/lib/i18n";
+import { useLanguage } from "./LanguageProvider";
 import { PolaroidCard } from "./PolaroidCard";
 import { RevealMask } from "./RevealMask";
 
@@ -149,6 +151,75 @@ function ClipItem({ clip, layout }: { clip: CreativeClip; layout: Layout }) {
   );
 }
 
+type GridMetrics = {
+  width: number;
+  height: number;
+  path: string;
+};
+
+function CollageGrid() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [grid, setGrid] = useState<GridMetrics>({ width: 0, height: 0, path: "" });
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    const computeGrid = () => {
+      const rect = el.getBoundingClientRect();
+      const width = Math.round(rect.width);
+      const height = Math.round(rect.height);
+      if (width <= 0 || height <= 0) return;
+
+      const host = el.parentElement;
+      if (!host) return;
+
+      const hostWidth = host.getBoundingClientRect().width;
+      const cellUnit = parseFloat(
+        getComputedStyle(host).getPropertyValue("--grid-cell"),
+      );
+      const targetCell = (cellUnit / 100) * hostWidth;
+      const colCount = Math.max(2, Math.round(width / targetCell));
+      const rowCount = Math.max(2, Math.round(height / targetCell));
+
+      const segments: string[] = [];
+
+      for (let col = 0; col <= colCount; col += 1) {
+        const x = (col * width) / colCount;
+        segments.push(`M ${x} 0 L ${x} ${height}`);
+      }
+
+      for (let row = 0; row <= rowCount; row += 1) {
+        const y = (row * height) / rowCount;
+        segments.push(`M 0 ${y} L ${width} ${y}`);
+      }
+
+      setGrid({ width, height, path: segments.join(" ") });
+    };
+
+    computeGrid();
+    const observer = new ResizeObserver(computeGrid);
+    observer.observe(el);
+
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div ref={containerRef} className="collage-grid" aria-hidden="true">
+      {grid.width > 0 && grid.height > 0 ? (
+        <svg
+          className="collage-grid__svg"
+          viewBox={`${-1} ${-1} ${grid.width + 2} ${grid.height + 2}`}
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+        >
+          <path d={grid.path} className="collage-grid__path" />
+        </svg>
+      ) : null}
+    </div>
+  );
+}
+
 function CollageLayout({ layout }: { layout: Layout }) {
   return (
     <>
@@ -166,28 +237,29 @@ function CollageLayout({ layout }: { layout: Layout }) {
 }
 
 export function CollageBoard() {
+  const { locale } = useLanguage();
+  const copy = creativeProjectsSection[locale];
+
   return (
-    <section className="creative-collage" aria-label="Creative projects">
+    <section className="creative-collage" aria-label={copy.ariaLabel}>
       <header className="creative-collage__header">
         <RevealMask delay={0.12}>
-          <h2 className="creative-collage__title section-title">
-            Creative Projects
-          </h2>
+          <h2 className="creative-collage__title section-title">{copy.title}</h2>
         </RevealMask>
         <RevealMask delay={0.18}>
-          <p className="creative-collage__subtitle">
-            Click to explore the visual archives.
-          </p>
+          <p className="creative-collage__subtitle">{copy.subtitle}</p>
         </RevealMask>
       </header>
 
       <div className="creative-collage__stage">
         <div className="desktop-collage">
+          <CollageGrid />
           <CollageLayout layout="desktop" />
         </div>
         <div className="mobile-collage">
           <div className="mobile-collage__canvas">
             <div className="mobile-collage__viewport">
+              <CollageGrid />
               <CollageLayout layout="mobile" />
             </div>
           </div>

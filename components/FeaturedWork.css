@@ -34,7 +34,8 @@
   padding: 0 var(--padding) 0.25rem;
   font-family: var(--font-headline), sans-serif;
   font-size: var(--section-title-size);
-  font-weight: 400;
+  font-weight: var(--headline-weight);
+  font-synthesis: weight;
   line-height: 0.95;
   letter-spacing: -0.02em;
   text-align: center;

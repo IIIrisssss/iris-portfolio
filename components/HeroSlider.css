@@ -1,0 +1,155 @@
+.hero-slider {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background-color: #000;
+}
+
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.hero-media {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: transparent;
+  pointer-events: none;
+}
+
+.hero-pagination {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  z-index: 10;
+}
+
+.hero-indicator {
+  position: relative;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.4);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: auto; /* Ensure they receive pointer events */
+}
+
+.hero-indicator:hover {
+  background-color: rgba(255, 255, 255, 0.7);
+  transform: scale(1.2);
+}
+
+.hero-indicator.is-active {
+  width: 2.5rem;
+  border-radius: 1rem;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.hero-indicator.is-active:hover {
+  transform: scale(1.05); /* Subtle scale for the active one */
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+.hero-indicator-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background-color: #1a110a;
+  border-radius: 1rem; /* Ensure the fill itself has rounded corners */
+  animation: hero-progress 5s linear forwards;
+}
+
+@keyframes hero-progress {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+.hero-nav {
+  position: absolute;
+  inset: 0;
+  z-index: 11;
+  pointer-events: none;
+}
+
+.hero-nav__btn {
+  position: absolute;
+  top: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.45);
+  color: #fff;
+  cursor: pointer;
+  pointer-events: auto;
+  opacity: 0;
+  transform: translateY(-50%) scale(0.92);
+  transition:
+    opacity 0.28s ease,
+    transform 0.28s ease,
+    background-color 0.2s ease;
+}
+
+.hero-nav__btn svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.hero-nav__btn--prev {
+  left: 1rem;
+}
+
+.hero-nav__btn--next {
+  right: 1rem;
+}
+
+.hero-slider.is-hovered .hero-nav__btn {
+  opacity: 1;
+  transform: translateY(-50%) scale(1);
+}
+
+.hero-nav__btn:hover {
+  background-color: rgba(0, 0, 0, 0.65);
+}
+
+.hero-nav__btn:active {
+  transform: translateY(-50%) scale(0.96);
+}
+
+/* Remove old dot styles */
+
+@media (max-width: 768px) {
+  .hero-overlay {
+    padding: 3rem 1.5rem;
+  }
+
+  .hero-description {
+    font-size: 0.875rem;
+  }
+}
