@@ -55,11 +55,11 @@ function FolderCard({ data }: { data: typeof foldersData[0] }) {
         <div className="folder-layer folder-asset-kong" />
         
         <div className="folder-layer folder-asset-cats">
-          <img src="/folders/card-cats.png" alt="" />
+          <img src="/folders/card-cats.svg" alt="" />
         </div>
 
         <div className="folder-layer folder-asset-horse">
-          <img src="/folders/cat-horse.png" alt="" />
+          <img src="/folders/cat-horse.svg" alt="" />
         </div>
 
         {/* Front Cover (Glassmorphism) */}
@@ -77,15 +77,15 @@ function FolderCard({ data }: { data: typeof foldersData[0] }) {
 
         {/* Topmost Assets */}
         <div className="folder-layer folder-asset-paperclip">
-          <img src="/folders/paperclip.png" alt="" />
+          <img src="/folders/paperclip.svg" alt="" />
         </div>
         
         <div className="folder-layer folder-asset-crowned-cat">
-          <img src="/folders/cat-head.png" alt="" />
+          <img src="/folders/cat-head.svg" alt="" />
         </div>
         
         <div className="folder-layer folder-asset-peanut">
-          <img src="/folders/peanut.png" alt="" />
+          <img src="/folders/peanut.svg" alt="" />
         </div>
       </div>
     </div>
