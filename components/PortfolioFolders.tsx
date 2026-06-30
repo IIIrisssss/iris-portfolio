@@ -63,16 +63,16 @@ function FolderCard({ data }: { data: typeof foldersData[0] }) {
         </div>
 
         {/* Front Cover (Glassmorphism) */}
-        <div className="folder-layer portfolio-folder-front-glass" />
-
-        {/* Text Layer */}
-        <div className="portfolio-folder-titles">
-          <p className="folder-text-title1">{data.title1}</p>
-          <p className="folder-text-title2">{data.title2}</p>
-        </div>
-        
-        <div className="folder-layer portfolio-folder-logo">
-          <img src="/folders/logo.svg" alt="Portfolio" />
+        <div className="folder-layer portfolio-folder-front-glass">
+          {/* Text Layer (Now inside front glass to animate together) */}
+          <div className="portfolio-folder-titles">
+            <p className="folder-text-title1">{data.title1}</p>
+            <p className="folder-text-title2">{data.title2}</p>
+          </div>
+          
+          <div className="portfolio-folder-logo">
+            <img src="/folders/logo.svg" alt="Portfolio" />
+          </div>
         </div>
 
         {/* Topmost Assets */}
