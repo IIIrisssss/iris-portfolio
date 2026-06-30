@@ -47,7 +47,8 @@ function FolderCard({ data }: { data: typeof foldersData[0] }) {
       <div className="portfolio-folder-container">
         {/* Back Cover */}
         <div className="folder-layer folder-back">
-          <img src="/folders/folder-back.png" alt="" />
+          <div className="folder-back-tab" />
+          <div className="folder-back-main" />
         </div>
 
         {/* Popping Assets */}
