@@ -178,18 +178,12 @@
 
 /* Asset Horse */
 .folder-asset-horse {
-  /* From Figma metadata: id="198:18" x="443.29" y="276.17" width="442.63" height="452.67" */
-  /* Parent Panel-Folder-Back: x="657.47" y="411.44" width="441.47" height="299.90" */
-  /* left % = (443.29 - 657.47) / 441.47 = -48.51% */
-  /* top % = (276.17 - 411.44) / 299.90 = -45.11% */
-  /* width % = 442.63 / 441.47 = 100.26% */
-  /* height % = 452.67 / 299.90 = 150.94% */
-  left: -48.51%; 
-  top: -45.11%; 
-  width: 100.26%; 
-  height: 150.94%;
+  left: 40.00%; 
+  top: -33.07%; 
+  width: 76.11%; 
+  height: 118.83%;
   z-index: 4;
-  transform: translate(0, 0) rotate(0deg) scale(1);
+  transform: translate(0, 0) rotate(17.75deg) scale(1);
 }
 .portfolio-folder-wrapper:hover .folder-asset-horse {
   transform: translate(20.36%, -17.19%) rotate(26.85deg) scale(1.08, 1.057);
@@ -275,18 +269,12 @@
 
 /* Crowned Cat */
 .folder-asset-crowned-cat {
-  /* From Figma metadata: id="198:33" x="509.95" y="516.31" width="254.10" height="257.49" */
-  /* Parent Panel-Folder-Back: x="657.47" y="411.44" width="441.47" height="299.90" */
-  /* left % = (509.95 - 657.47) / 441.47 = -33.42% */
-  /* top % = (516.31 - 411.44) / 299.90 = 34.97% */
-  /* width % = 254.10 / 441.47 = 57.56% */
-  /* height % = 257.49 / 299.90 = 85.86% */
-  left: -33.42%; 
-  top: 34.97%; 
-  width: 57.56%; 
-  height: 85.86%;
+  left: 71.72%; 
+  top: 36.04%; 
+  width: 47.51%; 
+  height: 70.97%;
   z-index: 21;
-  transform: translate(0, 0) rotate(0deg) scale(1);
+  transform: translate(0, 0) rotate(13.3deg);
 }
 .portfolio-folder-wrapper:hover .folder-asset-crowned-cat {
   transform: translate(9.23%, 12.44%) rotate(13.3deg);
@@ -294,18 +282,12 @@
 
 /* Peanut */
 .folder-asset-peanut {
-  /* From Figma metadata: id="198:36" x="427.88" y="576.19" width="250.45" height="258.62" */
-  /* Parent Panel-Folder-Back: x="657.47" y="411.44" width="441.47" height="299.90" */
-  /* left % = (427.88 - 657.47) / 441.47 = -52.01% */
-  /* top % = (576.19 - 411.44) / 299.90 = 54.93% */
-  /* width % = 250.45 / 441.47 = 56.73% */
-  /* height % = 258.62 / 299.90 = 86.24% */
-  left: -52.01%; 
-  top: 54.93%; 
-  width: 56.73%; 
-  height: 86.24%;
+  left: 42.08%; 
+  top: 58.38%; 
+  width: 51.83%; 
+  height: 78.52%;
   z-index: 22;
-  transform: translate(0, 0) rotate(0deg) scale(1);
+  transform: translate(0, 0) rotate(9.3deg) scale(1);
 }
 .portfolio-folder-wrapper:hover .folder-asset-peanut {
   transform: translate(4.92%, 12.52%) rotate(9.3deg) scale(0.906);
