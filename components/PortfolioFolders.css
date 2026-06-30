@@ -1,0 +1,257 @@
+.portfolio-folders-section {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 var(--padding);
+  overflow: visible;
+}
+
+.portfolio-folders-header {
+  margin: 0 auto 4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  text-align: center;
+}
+
+.portfolio-folders-title {
+  font-family: var(--font-headline), sans-serif;
+  font-size: var(--section-title-size);
+  font-weight: var(--headline-weight);
+  font-synthesis: weight;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  line-height: 0.95;
+  color: #2c2c2c;
+}
+
+.portfolio-folders-subtitle {
+  font-family: var(--font-body), sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: rgba(44, 44, 44, 0.62);
+}
+
+.portfolio-folders-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 8rem 2rem;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .portfolio-folders-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10rem 4rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .portfolio-folders-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12rem 5rem;
+    padding: 0 2rem;
+  }
+}
+
+.portfolio-folder-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 340px;
+  margin: 0 auto;
+  /* The aspect ratio of the folder back cover */
+  aspect-ratio: 441.472 / 299.897;
+  container-type: inline-size;
+  /* Ensure popping elements are not clipped */
+  overflow: visible;
+}
+
+/* Invisible hover area to prevent flickering when elements pop out */
+.portfolio-folder-hover-area {
+  position: absolute;
+  /* Expand the hover hit area upwards and rightwards to cover the popped assets */
+  top: -90%;
+  left: -40%;
+  right: -20%;
+  bottom: -10%;
+  z-index: 100;
+}
+
+.portfolio-folder-container {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* Let hover area handle events */
+}
+
+.folder-layer {
+  position: absolute;
+  will-change: transform;
+  /* Bouncy physical spring feel */
+  transition: transform 0.6s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+}
+
+.folder-layer img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+/* Base positions based on Figma calculations */
+
+.folder-back {
+  left: 0; 
+  top: 0; 
+  width: 100%; 
+  height: 100%;
+  z-index: 1;
+}
+
+/* Asset Kong (Gray Bg) */
+.folder-asset-kong {
+  left: 12.91%; 
+  top: -62.50%; 
+  width: 89.56%; 
+  height: 94.17%;
+  background: #d4d4d4;
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+  z-index: 2;
+  transform: translate(0, 0) rotate(14.2deg) scale(1);
+}
+.portfolio-folder-wrapper:hover .folder-asset-kong {
+  transform: translate(3.21%, -25.18%) rotate(21.68deg) scale(1.026, 1.128);
+}
+
+/* Asset Cats */
+.folder-asset-cats {
+  left: 4.83%; 
+  top: -27.92%; 
+  width: 73.06%; 
+  height: 107.55%;
+  z-index: 3;
+  transform: translate(0, 0) rotate(-9.08deg) scale(1);
+}
+.portfolio-folder-wrapper:hover .folder-asset-cats {
+  transform: translate(-56.21%, -21.30%) rotate(-32.45deg) scale(1.205);
+}
+
+/* Asset Horse */
+.folder-asset-horse {
+  left: 40.00%; 
+  top: -33.07%; 
+  width: 76.11%; 
+  height: 118.83%;
+  z-index: 4;
+  transform: translate(0, 0) rotate(17.75deg) scale(1);
+}
+.portfolio-folder-wrapper:hover .folder-asset-horse {
+  transform: translate(20.36%, -17.19%) rotate(26.85deg) scale(1.08, 1.057);
+}
+
+/* Front Glass Panel */
+.portfolio-folder-front-glass {
+  left: 0; 
+  top: 32.33%; 
+  width: 100%; 
+  height: 79.35%;
+  background: rgba(42, 94, 238, 0.43);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+  z-index: 10;
+  transform-origin: top left;
+  transition: transform 0.6s cubic-bezier(0.68, -0.6, 0.32, 1.6), box-shadow 0.6s ease;
+}
+.portfolio-folder-wrapper:hover .portfolio-folder-front-glass {
+  transform: translate(-9.51%, 21.90%) scale(1.180, 0.781);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+}
+
+/* Titles Wrapper */
+.portfolio-folder-titles {
+  position: absolute;
+  left: 0; 
+  top: 0; 
+  width: 100%; 
+  height: 100%;
+  z-index: 11;
+  pointer-events: none;
+  transition: transform 0.6s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+}
+.portfolio-folder-wrapper:hover .portfolio-folder-titles {
+  transform: translate(-0.98%, 17.28%);
+}
+
+/* Text Elements */
+.folder-text-title1, .folder-text-title2 {
+  position: absolute;
+  left: 4.83%;
+  font-family: var(--font-headline), sans-serif;
+  font-size: 11.51cqw;
+  font-weight: var(--headline-weight, 700);
+  color: #fff;
+  line-height: 1;
+  margin: 0;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+.folder-text-title1 { top: 46.45%; }
+.folder-text-title2 { top: 63.20%; }
+
+.portfolio-folder-logo {
+  left: 5.17%; 
+  top: 95.43%;
+  width: 30.69%;
+  z-index: 11;
+  transition: transform 0.6s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+}
+.portfolio-folder-wrapper:hover .portfolio-folder-logo {
+  transform: translate(-0.98%, 17.28%);
+}
+
+/* Paperclip */
+.folder-asset-paperclip {
+  left: -0.91%; 
+  top: 20.86%; 
+  width: 20.78%; 
+  height: 34.50%;
+  z-index: 20;
+  transform: translate(0, 0) rotate(-77.69deg);
+}
+.portfolio-folder-wrapper:hover .folder-asset-paperclip {
+  transform: translate(-16.35%, 39.63%) rotate(-77.69deg);
+}
+
+/* Crowned Cat */
+.folder-asset-crowned-cat {
+  left: 71.72%; 
+  top: 36.04%; 
+  width: 47.51%; 
+  height: 70.97%;
+  z-index: 21;
+  transform: translate(0, 0) rotate(13.3deg);
+}
+.portfolio-folder-wrapper:hover .folder-asset-crowned-cat {
+  transform: translate(9.23%, 12.44%) rotate(13.3deg);
+}
+
+/* Peanut */
+.folder-asset-peanut {
+  left: 42.08%; 
+  top: 58.38%; 
+  width: 51.83%; 
+  height: 78.52%;
+  z-index: 22;
+  transform: translate(0, 0) rotate(9.3deg) scale(1);
+}
+.portfolio-folder-wrapper:hover .folder-asset-peanut {
+  transform: translate(4.92%, 12.52%) rotate(9.3deg) scale(0.906);
+}

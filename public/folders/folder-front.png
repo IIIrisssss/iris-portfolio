@@ -1,0 +1,18 @@
+<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 529.673 248.759" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Rectangle 2131355420" filter="url(#filter0_d_0_10)">
+<path d="M14.1463 44.8507C10.8884 25.3603 25.9167 7.61159 45.6775 7.61159H193.422H304.422H483.996C503.645 7.61159 518.643 25.1698 515.572 44.5769L490.662 201.997C488.204 217.53 474.813 228.969 459.086 228.969H71.9903C56.3685 228.969 43.0346 217.679 40.4591 202.271L14.1463 44.8507Z" fill="var(--fill-0, #2A5EEE)" fill-opacity="0.43" shape-rendering="crispEdges"/>
+</g>
+<defs>
+<filter id="filter0_d_0_10" x="0" y="0" width="529.673" height="248.759" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="6.08927"/>
+<feGaussianBlur stdDeviation="6.85043"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_0_10"/>
+<feBlend mode="normal" in="BackgroundImageFix" in2="effect1_dropShadow_0_10" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+</filter>
+</defs>
+</svg>
