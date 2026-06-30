@@ -55,16 +55,15 @@ function FolderCard({ data }: { data: typeof foldersData[0] }) {
         <div className="folder-layer folder-asset-kong" />
         
         <div className="folder-layer folder-asset-cats">
-          <img src="/folders/card-cats.png" alt="" />
+          <img src="/folders/card-cats.png?v=3" alt="" />
         </div>
 
         <div className="folder-layer folder-asset-horse">
-          <img src="/folders/cat-horse.png" alt="" />
+          <img src="/folders/cat-horse.png?v=3" alt="" />
         </div>
 
         {/* Front Cover (Glassmorphism) */}
         <div className="folder-layer portfolio-folder-front-glass">
-          {/* Text Layer (Now inside front glass to animate together) */}
           <div className="portfolio-folder-titles">
             <p className="folder-text-title1">{data.title1}</p>
             <p className="folder-text-title2">{data.title2}</p>
@@ -73,19 +72,19 @@ function FolderCard({ data }: { data: typeof foldersData[0] }) {
           <div className="portfolio-folder-logo">
             <img src="/folders/logo.svg" alt="Portfolio" />
           </div>
+
+          <div className="folder-asset-paperclip">
+            <img src="/folders/paperclip.png?v=3" alt="" />
+          </div>
         </div>
 
-        {/* Topmost Assets */}
-        <div className="folder-layer folder-asset-paperclip">
-          <img src="/folders/paperclip.png" alt="" />
-        </div>
-        
+        {/* Topmost Assets (always in front of Panel-Folder-Front) */}
         <div className="folder-layer folder-asset-crowned-cat">
-          <img src="/folders/cat-head.png" alt="" />
+          <img src="/folders/cat-head.png?v=3" alt="" />
         </div>
         
         <div className="folder-layer folder-asset-peanut">
-          <img src="/folders/peanut.png" alt="" />
+          <img src="/folders/peanut.png?v=3" alt="" />
         </div>
       </div>
     </div>

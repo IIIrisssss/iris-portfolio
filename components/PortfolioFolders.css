@@ -7,12 +7,14 @@
 }
 
 .portfolio-folders-header {
-  margin: 0 auto 4rem;
+  margin: 0 auto 3rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
   text-align: center;
+  position: relative;
+  z-index: 2;
 }
 
 .portfolio-folders-title {
@@ -37,35 +39,45 @@
 .portfolio-folders-grid {
   display: grid;
   grid-template-columns: repeat(1, 1fr);
-  gap: 8rem 2rem;
+  gap: 9rem 2.5rem;
   width: 100%;
+  padding-top: 7rem;
 }
 
 @media (min-width: 768px) {
   .portfolio-folders-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 10rem 4rem;
+    gap: 11rem 5rem;
+    padding-top: 8rem;
   }
 }
 
 @media (min-width: 1024px) {
   .portfolio-folders-grid {
     grid-template-columns: repeat(3, 1fr);
-    gap: 12rem 5rem;
-    padding: 0 2rem;
+    gap: 14rem 6rem;
+    padding: 8rem 2rem 0;
   }
 }
 
 .portfolio-folder-wrapper {
   position: relative;
   width: 100%;
-  max-width: 340px;
+  max-width: 280px;
   margin: 0 auto;
-  /* The aspect ratio of the folder back cover */
-  aspect-ratio: 441.472 / 299.897;
+  /* Panel-Folder-Back — Figma 441.472 × 333.559 (extended to match front bottom) */
+  aspect-ratio: 441.472 / 333.559;
   container-type: inline-size;
   /* Ensure popping elements are not clipped */
   overflow: visible;
+  z-index: 1;
+  transform-origin: center center;
+  transition: transform 0.45s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+}
+
+.portfolio-folder-wrapper:hover {
+  z-index: 20;
+  transform: scale(1.06);
 }
 
 /* Invisible hover area to prevent flickering when elements pop out */
@@ -85,8 +97,6 @@
   width: 100%;
   height: 100%;
   pointer-events: none; /* Let hover area handle events */
-  /* Enable 3D space for children */
-  transform-style: preserve-3d;
 }
 
 .folder-layer {
@@ -102,6 +112,9 @@
   height: 100%;
   object-fit: contain;
   pointer-events: none;
+  /* Effects (shadow, radius) live on the wrapper — never baked into PNG */
+  border-radius: 0;
+  box-shadow: none;
 }
 
 /* Base positions based on Figma calculations */
@@ -119,16 +132,19 @@
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 87.82%;
+  /* Extended body — top edge/tab unchanged, bottom aligns with front panel */
+  height: 89.04%;
   background: #0D41CF;
-  border-radius: 18px;
+  /* Bottom corners match Panel-Folder-Front (32px) */
+  border-radius: 18px 18px 32px 32px;
 }
 .folder-back-tab {
   position: absolute;
   top: 0;
   right: 0;
   width: 53.07%;
-  height: 14%;
+  /* Fixed tab height (~42px) — 12.58% of new 333.559px total */
+  height: 12.58%;
   background: #0D41CF;
   border-radius: 18px 18px 0 0;
 }
@@ -169,8 +185,12 @@
   height: 107.55%;
   z-index: 3;
   transform: translate(0, 0) rotate(-9.08deg) scale(1);
+  overflow: hidden;
   border-radius: 9.134px;
   box-shadow: 0px 6.089px 18.268px rgba(0, 0, 0, 0.25);
+}
+.folder-asset-cats img {
+  object-fit: cover;
 }
 .portfolio-folder-wrapper:hover .folder-asset-cats {
   transform: translate(-56.21%, -21.30%) rotate(-32.45deg) scale(1.205);
@@ -189,29 +209,62 @@
   transform: translate(20.36%, -17.19%) rotate(26.85deg) scale(1.08, 1.057);
 }
 
-/* Front Glass Panel */
+/* Front Glass Panel — Glassmorphism (Figma #2A5EEE @ 43%) */
 .portfolio-folder-front-glass {
   left: 0; 
-  top: 32.33%; 
+  /* Front top: (508.391 - 411.441) / 333.559 = 29.07% */
+  top: 29.07%; 
   width: 100%; 
-  height: 79.35%;
-  background: rgba(42, 94, 238, 0.85);
-  backdrop-filter: blur(24px) saturate(140%);
-  -webkit-backdrop-filter: blur(24px) saturate(140%);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 12px;
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+  /* Front height: 237.966 / 333.559 = 71.34% — bottom aligns with back */
+  height: 71.34%;
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 32px;
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.4),
+    0 8px 32px rgba(0, 0, 0, 0.1);
   z-index: 10;
-  /* Make the hinge at the bottom center */
   transform-origin: bottom center;
-  /* Use 3D perspective to keep bottom edge fixed while top opens */
-  transform: perspective(1000px) rotateX(0deg);
   transition: transform 0.6s cubic-bezier(0.68, -0.6, 0.32, 1.6), box-shadow 0.6s ease;
 }
+
+/* Dedicated frost plane — extreme blur, hint of assets behind */
+.portfolio-folder-front-glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-color: rgba(42, 94, 238, 0.5);
+  backdrop-filter: blur(300px) saturate(120%);
+  -webkit-backdrop-filter: blur(300px) saturate(120%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* #2A5EEE vertical gradient — 100% opacity at bottom → 0% at top */
+.portfolio-folder-front-glass::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    to top,
+    rgba(42, 94, 238, 1) 0%,
+    rgba(42, 94, 238, 0) 100%
+  );
+  z-index: 0;
+  pointer-events: none;
+}
+
+.portfolio-folder-front-glass > * {
+  z-index: 1;
+}
+
 .portfolio-folder-wrapper:hover .portfolio-folder-front-glass {
-  /* Rotate towards the viewer to open the folder */
   transform: perspective(1000px) rotateX(-20deg) scale(1.02);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.4),
+    0 12px 40px rgba(0, 0, 0, 0.14);
 }
 
 /* Titles Wrapper */
@@ -238,11 +291,10 @@
   letter-spacing: 0.07em;
   text-transform: uppercase;
 }
-/* Recalculate top relative to front glass (which is 79.35% height and starts at 32.33%) */
-/* Title1: (46.45 - 32.33) / 79.35 = 17.79% */
-/* Title2: (63.20 - 32.33) / 79.35 = 38.90% */
-.folder-text-title1 { top: 17.79%; }
-.folder-text-title2 { top: 38.90%; }
+/* Title1: (46.45 - 32.33) / 79.35 = 17.79% → nudged closer to top edge */
+/* Title2: (63.20 - 32.33) / 79.35 = 38.90% → nudged closer to top edge */
+.folder-text-title1 { top: 14.5%; }
+.folder-text-title2 { top: 35.5%; }
 
 .portfolio-folder-logo {
   position: absolute;
@@ -254,39 +306,42 @@
   pointer-events: none;
 }
 
-/* Paperclip */
-.folder-asset-paperclip {
-  left: -0.91%; 
-  top: 20.86%; 
-  width: 20.78%; 
-  height: 34.50%;
-  z-index: 20;
-  transform: translate(0, 0) rotate(-77.69deg);
-}
-.portfolio-folder-wrapper:hover .folder-asset-paperclip {
-  transform: translate(-16.35%, 39.63%) rotate(-77.69deg);
+/* Paperclip — nested in Panel-Folder-Front, moves with 3D flip */
+.portfolio-folder-front-glass .folder-asset-paperclip {
+  position: absolute;
+  /* Relative to front glass top edge: (20.86 - 32.33) / 79.35 */
+  left: -0.91%;
+  top: -14.45%;
+  width: 20.78%;
+  height: 43.48%;
+  z-index: 12;
+  overflow: hidden;
+  transform: rotate(-77.69deg);
+  /* No independent transition — follows front panel */
+  transition: none;
+  will-change: auto;
 }
 
-/* Crowned Cat */
+/* Crowned Cat — always in front of Panel-Folder-Front */
 .folder-asset-crowned-cat {
   left: 71.72%; 
   top: 36.04%; 
   width: 47.51%; 
   height: 70.97%;
-  z-index: 21;
+  z-index: 31;
   transform: translate(0, 0) rotate(13.3deg);
 }
 .portfolio-folder-wrapper:hover .folder-asset-crowned-cat {
   transform: translate(9.23%, 12.44%) rotate(13.3deg);
 }
 
-/* Peanut */
+/* Peanut — topmost, always in front of Panel-Folder-Front */
 .folder-asset-peanut {
   left: 42.08%; 
   top: 58.38%; 
   width: 51.83%; 
   height: 78.52%;
-  z-index: 22;
+  z-index: 32;
   transform: translate(0, 0) rotate(9.3deg) scale(1);
 }
 .portfolio-folder-wrapper:hover .folder-asset-peanut {
