@@ -205,6 +205,58 @@ export const brandMarqueeRowRight: BrandMarqueeItem[] = [
   { title: "fx chocolate", image: "/brand-marquee/fx_chocolate.png" },
 ];
 
+/** Bento grid cell order from Figma Bento-Grid-Wrapper (208:10257), layer order L→R, T→B. */
+export type MoreWorkGridCell = {
+  size: "big" | "small";
+  figmaName: string;
+  /** Asset filename in public/more-work/ (underscore naming, e.g. 1_big.webp) */
+  asset: string;
+  image: string;
+  bg: string;
+};
+
+export const moreWorkGridLayout: MoreWorkGridCell[] = [
+  { size: "big", figmaName: "1-big", asset: "1_big.webp", image: "/more-work/1_big.webp", bg: "#ffffff" },
+  { size: "small", figmaName: "卡片3", asset: "1_small.webp", image: "/more-work/1_small.webp", bg: "#ffffff" },
+  { size: "small", figmaName: "卡片4", asset: "2_small.webp", image: "/more-work/2_small.webp", bg: "#ffffff" },
+  { size: "small", figmaName: "卡片21", asset: "3_small.webp", image: "/more-work/3_small.webp", bg: "#ffffff" },
+  { size: "small", figmaName: "卡片6", asset: "4_small.webp", image: "/more-work/4_small.webp", bg: "#ffffff" },
+  { size: "small", figmaName: "卡片9", asset: "5_small.webp", image: "/more-work/5_small.webp", bg: "#ffffff" },
+  { size: "small", figmaName: "卡片10", asset: "6_small.webp", image: "/more-work/6_small.webp", bg: "#ffffff" },
+  { size: "small", figmaName: "卡片11", asset: "7_small.webp", image: "/more-work/7_small.webp", bg: "#ffffff" },
+  { size: "small", figmaName: "卡片12", asset: "8_small.webp", image: "/more-work/8_small.webp", bg: "#ffffff" },
+  { size: "small", figmaName: "卡片1", asset: "9_small.webp", image: "/more-work/9_small.webp", bg: "#ffffff" },
+  { size: "small", figmaName: "卡片7", asset: "10_small.webp", image: "/more-work/10_small.webp", bg: "#ffffff" },
+  { size: "small", figmaName: "卡片15", asset: "11_small.webp", image: "/more-work/11_small.webp", bg: "#ffffff" },
+  { size: "small", figmaName: "卡片17", asset: "12_small.webp", image: "/more-work/12_small.webp", bg: "#ffffff" },
+  { size: "small", figmaName: "卡片16", asset: "13_small.webp", image: "/more-work/13_small.webp", bg: "#ffffff" },
+  { size: "small", figmaName: "卡片23", asset: "14_small.webp", image: "/more-work/14_small.webp", bg: "#ffffff" },
+  { size: "small", figmaName: "卡片19", asset: "15_small.webp", image: "/more-work/15_small.webp", bg: "#ffffff" },
+  { size: "small", figmaName: "卡片22", asset: "16_small.webp", image: "/more-work/16_small.webp", bg: "#ffffff" },
+  { size: "small", figmaName: "250770", asset: "17_small.webp", image: "/more-work/17_small.webp", bg: "#ffffff" },
+  { size: "big", figmaName: "卡片18", asset: "2_big.webp", image: "/more-work/2_big.webp", bg: "#ffffff" },
+  { size: "small", figmaName: "卡片24", asset: "18_small.webp", image: "/more-work/18_small.webp", bg: "#ffffff" },
+  { size: "small", figmaName: "卡片17", asset: "19_small.webp", image: "/more-work/19_small.webp", bg: "#ffffff" },
+  { size: "small", figmaName: "卡片1", asset: "20_small.webp", image: "/more-work/20_small.webp", bg: "#ffffff" },
+  { size: "small", figmaName: "卡片21", asset: "21_small.webp", image: "/more-work/21_small.webp", bg: "#ffffff" },
+  { size: "small", figmaName: "卡片21", asset: "22_small.webp", image: "/more-work/22_small.webp", bg: "#ffffff" },
+  { size: "small", figmaName: "卡片1", asset: "23_small.webp", image: "/more-work/23_small.webp", bg: "#ffffff" },
+  { size: "small", figmaName: "卡片14", asset: "24_small.webp", image: "/more-work/24_small.webp", bg: "#ffffff" },
+  { size: "small", figmaName: "250769", asset: "25_small.webp", image: "/more-work/25_small.webp", bg: "#ffffff" },
+  { size: "small", figmaName: "卡片23", asset: "26_small.webp", image: "/more-work/26_small.webp", bg: "#ffffff" },
+  { size: "small", figmaName: "卡片17", asset: "27_small.webp", image: "/more-work/27_small.webp", bg: "#ffffff" },
+  { size: "small", figmaName: "250769", asset: "28_small.webp", image: "/more-work/28_small.webp", bg: "#ffffff" },
+  { size: "small", figmaName: "卡片7", asset: "29_small.webp", image: "/more-work/29_small.webp", bg: "#ffffff" },
+  { size: "big", figmaName: "卡片5", asset: "3_big.webp", image: "/more-work/3_big.webp", bg: "#ffffff" },
+  { size: "small", figmaName: "卡片21", asset: "30_small.webp", image: "/more-work/30_small.webp", bg: "#ffffff" },
+  { size: "small", figmaName: "卡片22", asset: "31_small.webp", image: "/more-work/31_small.webp", bg: "#ffffff" },
+  { size: "small", figmaName: "卡片2", asset: "32_small.webp", image: "/more-work/32_small.webp", bg: "#ffffff" },
+  { size: "small", figmaName: "卡片21", asset: "33_small.webp", image: "/more-work/33_small.webp", bg: "#ffffff" },
+  { size: "small", figmaName: "卡片8", asset: "34_small.webp", image: "/more-work/34_small.webp", bg: "#ffffff" },
+  { size: "small", figmaName: "卡片16", asset: "35_small.webp", image: "/more-work/35_small.webp", bg: "#ffffff" },
+  { size: "small", figmaName: "卡片1", asset: "36_small.webp", image: "/more-work/36_small.webp", bg: "#ffffff" },
+];
+
 /** More Work grid items. */
 export const moreWork: Work[] = [
   { title: "Project 01", image: "/works/project-01.jpg?v=2", bg: "#ede6d3" },
