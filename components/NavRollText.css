@@ -13,15 +13,6 @@
   height: var(--nav-mark-height, 0.75rem);
 }
 
-.nav-roll--logo {
-  height: calc(var(--nav-height) - 0.5rem);
-  overflow: visible;
-}
-
-.nav-roll--logo .nav-roll__line {
-  height: calc(var(--nav-height) - 0.5rem);
-}
-
 .nav-roll--surface .nav-roll__line {
   height: var(--nav-mark-height, 0.75rem);
 }

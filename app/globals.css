@@ -126,15 +126,15 @@ a {
 .section-title-mark {
   display: block;
   width: auto;
-  height: calc(var(--section-title-size) * 2);
-  max-width: min(100%, 52rem);
+  height: calc(var(--section-title-size) * 1.333);
+  max-width: min(100%, 35rem);
   margin: 0 auto;
   object-fit: contain;
 }
 
 .section-title-mark--large {
-  height: calc(var(--section-title-size) * 4);
-  max-width: min(100%, 64rem);
+  height: calc(var(--section-title-size) * 2.667 * 0.8148);
+  max-width: min(100%, 35rem);
 }
 
 .section-subtitle {
@@ -144,11 +144,11 @@ a {
 }
 
 .section-subtitle--creative {
-  font-size: calc(0.875rem * 1.5);
+  font-size: calc(0.875rem * 1.5 * 0.667);
 }
 
 .section-subtitle--more-work {
-  font-size: calc(1rem * 1.5);
+  font-size: calc(1rem * 1.5 * 0.667);
 }
 
 @media (max-width: 767px) {

@@ -9,7 +9,7 @@ export function LogoMark({ className = "h-10" }: LogoMarkProps) {
       src="/icon/logo-mark.svg"
       alt=""
       aria-hidden
-      className={`block aspect-[534/69] h-full w-auto max-w-none object-contain object-left ${className}`.trim()}
+      className={`block aspect-[534/69] w-auto max-w-none object-contain object-left ${className}`.trim()}
     />
   );
 }

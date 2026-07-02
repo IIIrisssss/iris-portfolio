@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 
 import { navLabels } from "@/lib/i18n";
@@ -10,9 +11,11 @@ import { NavRollSurface, useRollHover } from "./NavRollText";
 
 import "./floema-nav.css";
 
+type NavSection = "works" | "about" | "contact";
+
 const linkConfig = [
-  { href: "/", key: "works" as const, match: (path: string) => path !== "/about" },
-  { href: "/about", key: "about" as const, match: (path: string) => path === "/about" },
+  { href: "/", key: "works" as const, section: "works" as const },
+  { href: "/about", key: "about" as const, section: "about" as const },
 ] as const;
 
 const navMarks = {
@@ -62,11 +65,53 @@ export function NavMetaRow() {
   const pathname = usePathname();
   const { locale } = useLanguage();
   const labels = navLabels[locale];
+  const [activeSection, setActiveSection] = useState<NavSection>(() =>
+    pathname === "/about" ? "about" : "works",
+  );
+
+  useEffect(() => {
+    if (pathname === "/about") {
+      setActiveSection("about");
+      return;
+    }
+
+    if (pathname !== "/") return;
+
+    const syncFromHash = () => {
+      if (window.location.hash === "#contact-cta") {
+        setActiveSection("contact");
+      }
+    };
+
+    syncFromHash();
+    window.addEventListener("hashchange", syncFromHash);
+
+    const contactEl = document.getElementById("contact-cta");
+    if (!contactEl) {
+      return () => window.removeEventListener("hashchange", syncFromHash);
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setActiveSection(entry.isIntersecting ? "contact" : "works");
+      },
+      { threshold: 0.35, rootMargin: "-10% 0px -35% 0px" },
+    );
+
+    observer.observe(contactEl);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("hashchange", syncFromHash);
+    };
+  }, [pathname]);
 
   const handleContactClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
     if (pathname !== "/") return;
 
     event.preventDefault();
+    setActiveSection("contact");
+    window.history.pushState(null, "", "#contact-cta");
     scrollToContact();
   };
 
@@ -79,7 +124,7 @@ export function NavMetaRow() {
             href={link.href}
             label={labels[link.key]}
             mark={navMarks[link.key]}
-            active={link.match(pathname)}
+            active={activeSection === link.section}
           />
         ))}
 
@@ -87,7 +132,7 @@ export function NavMetaRow() {
           href="/#contact-cta"
           label={labels.contact}
           mark={navMarks.contact}
-          active={false}
+          active={activeSection === "contact"}
           onClick={handleContactClick}
         />
       </div>
