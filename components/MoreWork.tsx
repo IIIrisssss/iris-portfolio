@@ -5,6 +5,7 @@ import { moreWorkGridLayout } from "@/lib/data";
 import { moreWorkSection } from "@/lib/i18n";
 import { useLanguage } from "./LanguageProvider";
 import { RevealMask } from "./RevealMask";
+import { SectionTitleMark } from "./SectionTitleMark";
 import { elastic } from "@/lib/motion";
 import "./MoreWork.css";
 
@@ -33,19 +34,25 @@ function GridCell({
   asset,
   image,
   bg,
+  fit = "cover",
 }: {
   order: number;
   size: "big" | "small";
   asset: string;
   image: string;
   bg: string;
+  fit?: "cover" | "contain";
 }) {
   const orderLabel = String(order).padStart(2, "0");
   const sizeClass = size === "big" ? "grid-item-large" : "grid-item-small";
+  const fitClass =
+    fit === "contain" ? "grid-item-image--contain" : "grid-item-image--cover";
 
   return (
     <motion.div
       className={`group relative w-full cursor-pointer ${sizeClass}`}
+      data-asset={asset}
+      style={{ order }}
       {...gridItemMotionProps}
     >
       <div
@@ -56,7 +63,7 @@ function GridCell({
         <img
           src={image}
           alt={`${asset} — ${orderLabel} ${size}`}
-          className="grid-item-image absolute left-0 top-0"
+          className={`grid-item-image absolute left-0 top-0 ${fitClass}`}
         />
       </div>
     </motion.div>
@@ -76,6 +83,7 @@ export function MoreWork() {
         asset={layout.asset}
         image={layout.image}
         bg={layout.bg}
+        fit={layout.fit}
       />
     );
   };
@@ -87,10 +95,14 @@ export function MoreWork() {
     >
       <RevealMask delay={0.82}>
         <header className="flex w-full flex-col items-center gap-3 px-[var(--padding)] text-center">
-          <h2 className="section-title w-fit text-[var(--color-on-primary)]">
-            {copy.title}
+          <h2 className="more-work-title">
+            <SectionTitleMark
+              src="/icon/headings/more-work-title.svg"
+              aspect="560/57"
+              alt={copy.title}
+            />
           </h2>
-          <p className="max-w-[24em] text-[1rem] font-medium leading-[1.3] text-[var(--color-on-primary)]/70">
+          <p className="section-subtitle section-subtitle--more-work max-w-[24em] leading-[1.3] text-[var(--color-on-primary)]/70">
             {copy.subtitle}
           </p>
         </header>

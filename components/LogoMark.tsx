@@ -4,9 +4,12 @@ type LogoMarkProps = {
 
 export function LogoMark({ className = "h-10" }: LogoMarkProps) {
   return (
-    <span
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src="/icon/logo-mark.svg"
+      alt=""
       aria-hidden
-      className={`block aspect-[435/164] w-auto bg-[var(--color-on-primary)] [mask-image:url(/icon/logo-mark.svg)] [mask-position:left_center] [mask-repeat:no-repeat] [mask-size:contain] [-webkit-mask-image:url(/icon/logo-mark.svg)] [-webkit-mask-position:left_center] [-webkit-mask-repeat:no-repeat] [-webkit-mask-size:contain] ${className}`}
+      className={`block aspect-[534/69] h-full w-auto max-w-none object-contain object-left ${className}`.trim()}
     />
   );
 }

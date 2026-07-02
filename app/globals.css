@@ -1,5 +1,16 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: "Zen Dots";
+  src:
+    local("Zen Dots"),
+    local("ZenDots-Regular"),
+    url("/fonts/ZenDots-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   /* palette */
   --color-white: #ffffff;
@@ -32,6 +43,9 @@
 
   /* custom cursor (Codrops sketch 013) */
   --cursor-stroke: var(--color-on-primary);
+
+  /* system / local fonts */
+  --font-zen-dots: "Zen Dots", "ZenDots-Regular", sans-serif;
 }
 
 @theme inline {
@@ -40,6 +54,7 @@
   --color-accent: var(--color-secondary);
   --font-headline: var(--font-headline);
   --font-body: var(--font-body);
+  --font-zen-dots: var(--font-zen-dots);
 }
 
 * {
@@ -106,6 +121,34 @@ a {
   letter-spacing: -0.02em;
   text-transform: uppercase;
   color: #2c2c2c;
+}
+
+.section-title-mark {
+  display: block;
+  width: auto;
+  height: calc(var(--section-title-size) * 2);
+  max-width: min(100%, 52rem);
+  margin: 0 auto;
+  object-fit: contain;
+}
+
+.section-title-mark--large {
+  height: calc(var(--section-title-size) * 4);
+  max-width: min(100%, 64rem);
+}
+
+.section-subtitle {
+  font-family: "Zen Dots", var(--font-zen-dots);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+
+.section-subtitle--creative {
+  font-size: calc(0.875rem * 1.5);
+}
+
+.section-subtitle--more-work {
+  font-size: calc(1rem * 1.5);
 }
 
 @media (max-width: 767px) {

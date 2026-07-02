@@ -213,6 +213,8 @@ export type MoreWorkGridCell = {
   asset: string;
   image: string;
   bg: string;
+  /** Use contain for assets with letterboxing or decorative margins */
+  fit?: "cover" | "contain";
 };
 
 export const moreWorkGridLayout: MoreWorkGridCell[] = [

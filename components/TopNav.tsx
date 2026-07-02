@@ -22,7 +22,7 @@ export function TopNav() {
               className="floema-nav-logo"
               onMouseEnter={onLogoEnter}
             >
-              <NavRollSurface rollRef={logoRollRef}>
+              <NavRollSurface rollRef={logoRollRef} className="nav-roll--logo">
                 <LogoMark className="floema-nav-logo__mark" />
               </NavRollSurface>
             </Link>

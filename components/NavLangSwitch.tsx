@@ -81,7 +81,17 @@ export function NavLangSwitch() {
         onClick={() => setOpen((value) => !value)}
         className={`floema-lang__btn ${open ? "is-open" : ""}`}
       >
-        {current.short}
+        {locale === "en" ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src="/icon/nav/en.svg"
+            alt=""
+            aria-hidden
+            className="floema-lang__mark"
+          />
+        ) : (
+          current.short
+        )}
         <ChevronIcon open={open} />
       </button>
 

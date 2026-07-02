@@ -3,6 +3,7 @@
 import { useLanguage } from "./LanguageProvider";
 import { creativeProjectsSection } from "@/lib/i18n";
 import { RevealMask } from "./RevealMask";
+import { SectionTitleMark } from "./SectionTitleMark";
 import "./PortfolioFolders.css";
 
 const foldersData = [
@@ -22,10 +23,19 @@ export function PortfolioFolders() {
     <section className="portfolio-folders-section" aria-label={copy.ariaLabel}>
       <header className="portfolio-folders-header">
         <RevealMask delay={0.12}>
-          <h2 className="portfolio-folders-title section-title">{copy.title}</h2>
+          <h2 className="portfolio-folders-title">
+            <SectionTitleMark
+              src="/icon/headings/creative-projects-title.svg"
+              aspect="492/108"
+              alt={copy.title}
+              size="large"
+            />
+          </h2>
         </RevealMask>
         <RevealMask delay={0.18}>
-          <p className="portfolio-folders-subtitle">{copy.subtitle}</p>
+          <p className="portfolio-folders-subtitle section-subtitle section-subtitle--creative">
+            {copy.subtitle}
+          </p>
         </RevealMask>
       </header>
 

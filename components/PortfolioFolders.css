@@ -18,21 +18,10 @@
 }
 
 .portfolio-folders-title {
-  font-family: var(--font-headline), sans-serif;
-  font-size: var(--section-title-size);
-  font-weight: var(--headline-weight);
-  font-synthesis: weight;
-  text-transform: uppercase;
-  letter-spacing: -0.02em;
-  line-height: 0.95;
-  color: #2c2c2c;
+  margin: 0;
 }
 
 .portfolio-folders-subtitle {
-  font-family: var(--font-body), sans-serif;
-  font-size: 0.875rem;
-  font-weight: 500;
-  letter-spacing: -0.01em;
   color: rgba(44, 44, 44, 0.62);
 }
 
