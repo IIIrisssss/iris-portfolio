@@ -55,21 +55,36 @@ function FolderCard({ data }: { data: typeof foldersData[0] }) {
       <div className="portfolio-folder-hover-area" />
 
       <div className="portfolio-folder-container">
-        {/* Back Cover */}
-        <div className="folder-layer folder-back">
-          <div className="folder-back-tab" />
-          <div className="folder-back-main" />
+        {/* Everything painted before Panel-Folder-Front — backdrop-filter samples this group */}
+        <div className="folder-underlay">
+          <div className="folder-layer folder-back">
+            <div className="folder-back-tab" />
+            <div className="folder-back-main" />
+          </div>
+
+          <div className="folder-layer folder-asset-kong" />
+
+          <div className="folder-layer folder-asset-cats">
+            <img src="/folders/card-cats.png?v=3" alt="" />
+          </div>
+
+          <div className="folder-layer folder-asset-horse">
+            <img src="/folders/cat-horse.png?v=3" alt="" />
+          </div>
         </div>
 
-        {/* Popping Assets */}
-        <div className="folder-layer folder-asset-kong" />
-        
-        <div className="folder-layer folder-asset-cats">
-          <img src="/folders/card-cats.png?v=3" alt="" />
-        </div>
-
-        <div className="folder-layer folder-asset-horse">
-          <img src="/folders/cat-horse.png?v=3" alt="" />
+        {/* Frost — blur lives inside front panel bounds, not on asset layers */}
+        <div className="folder-layer portfolio-folder-front-frost" aria-hidden="true">
+          <div className="portfolio-folder-front-frost__block" aria-hidden="true" />
+          <div className="portfolio-folder-front-frost__scene">
+            <div className="folder-layer folder-asset-cats folder-asset-cats--frost">
+              <img src="/folders/card-cats.png?v=3" alt="" />
+            </div>
+            <div className="folder-layer folder-asset-horse folder-asset-horse--frost">
+              <img src="/folders/cat-horse.png?v=3" alt="" />
+            </div>
+          </div>
+          <div className="portfolio-folder-front-frost__tint" aria-hidden="true" />
         </div>
 
         {/* Front Cover (Glassmorphism) */}
@@ -78,7 +93,7 @@ function FolderCard({ data }: { data: typeof foldersData[0] }) {
             <p className="folder-text-title1">{data.title1}</p>
             <p className="folder-text-title2">{data.title2}</p>
           </div>
-          
+
           <div className="portfolio-folder-logo">
             <img src="/folders/logo.svg" alt="Portfolio" />
           </div>
@@ -92,7 +107,7 @@ function FolderCard({ data }: { data: typeof foldersData[0] }) {
         <div className="folder-layer folder-asset-crowned-cat">
           <img src="/folders/cat-head.png?v=3" alt="" />
         </div>
-        
+
         <div className="folder-layer folder-asset-peanut">
           <img src="/folders/peanut.png?v=3" alt="" />
         </div>

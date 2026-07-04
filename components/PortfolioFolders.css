@@ -88,10 +88,15 @@
   pointer-events: none; /* Let hover area handle events */
 }
 
+/* Flat compositing group — no transform/filter so frost backdrop can sample it */
+.folder-underlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
 .folder-layer {
   position: absolute;
-  will-change: transform;
-  /* Bouncy physical spring feel */
   transition: transform 0.6s cubic-bezier(0.68, -0.6, 0.32, 1.6);
 }
 
@@ -109,12 +114,11 @@
 /* Base positions based on Figma calculations */
 
 .folder-back {
-  left: 0; 
-  top: 0; 
-  width: 100%; 
+  left: 0;
+  top: 0;
+  width: 100%;
   height: 100%;
   z-index: 1;
-  filter: drop-shadow(0px 6.089px 13.7px rgba(0, 0, 0, 0.25));
 }
 .folder-back-main {
   position: absolute;
@@ -126,6 +130,7 @@
   background: #0D41CF;
   /* Bottom corners match Panel-Folder-Front (32px) */
   border-radius: 18px 18px 32px 32px;
+  box-shadow: 0px 6.089px 13.7px rgba(0, 0, 0, 0.25);
 }
 .folder-back-tab {
   position: absolute;
@@ -152,9 +157,9 @@
 
 /* Asset Kong (Gray Bg) */
 .folder-asset-kong {
-  left: 12.91%; 
-  top: -62.50%; 
-  width: 89.56%; 
+  left: 12.91%;
+  top: -62.50%;
+  width: 89.56%;
   height: 94.17%;
   background: #d4d4d4;
   border-radius: 7.71px;
@@ -166,12 +171,12 @@
   transform: translate(3.21%, -25.18%) rotate(21.68deg) scale(1.026, 1.128);
 }
 
-/* Asset Cats */
+/* Asset-Cat-Stickers — square card (456×456 source) */
 .folder-asset-cats {
-  left: 4.83%; 
-  top: -27.92%; 
-  width: 73.06%; 
-  height: 107.55%;
+  left: 4.83%;
+  top: -27.92%;
+  width: 73.06%;
+  height: 73.06cqw;
   z-index: 3;
   transform: translate(0, 0) rotate(-9.08deg) scale(1);
   overflow: hidden;
@@ -179,32 +184,92 @@
   box-shadow: 0px 6.089px 18.268px rgba(0, 0, 0, 0.25);
 }
 .folder-asset-cats img {
-  object-fit: cover;
+  object-fit: contain;
 }
-.portfolio-folder-wrapper:hover .folder-asset-cats {
+.folder-asset-cats--frost {
+  box-shadow: none;
+}
+.portfolio-folder-wrapper:hover .folder-asset-cats,
+.portfolio-folder-wrapper:hover .folder-asset-cats--frost {
   transform: translate(-56.21%, -21.30%) rotate(-32.45deg) scale(1.205);
 }
 
 /* Asset Horse */
 .folder-asset-horse {
-  left: 40.00%; 
-  top: -33.07%; 
-  width: 76.11%; 
+  left: 40.00%;
+  top: -33.07%;
+  width: 76.11%;
   height: 118.83%;
   z-index: 4;
   transform: translate(0, 0) rotate(17.75deg) scale(1);
 }
-.portfolio-folder-wrapper:hover .folder-asset-horse {
+.portfolio-folder-wrapper:hover .folder-asset-horse,
+.portfolio-folder-wrapper:hover .folder-asset-horse--frost {
   transform: translate(20.36%, -17.19%) rotate(26.85deg) scale(1.08, 1.057);
 }
 
-/* Front Glass Panel — Glassmorphism (Figma #2A5EEE @ 43%) */
+/* Panel-Folder-Front frost — clips blur to front panel rect */
+.portfolio-folder-front-frost {
+  left: 0;
+  top: 29.07%;
+  width: 100%;
+  height: 71.34%;
+  overflow: hidden;
+  border-radius: 32px;
+  background: transparent;
+  z-index: 9;
+  transform-origin: bottom center;
+  pointer-events: none;
+  transition: transform 0.6s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+}
+
+/* Opaque base — blocks sharp underlay assets from bleeding through */
+.portfolio-folder-front-frost__block {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: #2A5EEE;
+  z-index: 0;
+}
+
+/* Blur scene — folder-container coordinates, clipped to panel */
+.portfolio-folder-front-frost__scene {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  top: -40.75%;
+  height: 140.73%;
+  filter: blur(20px);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Color gradient only — sits above blur, does not replace it */
+.portfolio-folder-front-frost__tint {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  z-index: 2;
+  background: linear-gradient(
+    to top,
+    #0D41CF 0%,
+    rgba(13, 65, 207, 0.72) 22%,
+    rgba(42, 94, 238, 0.28) 48%,
+    rgba(42, 94, 238, 0) 62%
+  );
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+.portfolio-folder-wrapper:hover .portfolio-folder-front-frost {
+  transform: perspective(1000px) rotateX(-20deg) scale(1.02);
+}
+
+/* Front Glass Panel — border + content only; frost handles blur/tint */
 .portfolio-folder-front-glass {
-  left: 0; 
-  /* Front top: (508.391 - 411.441) / 333.559 = 29.07% */
-  top: 29.07%; 
-  width: 100%; 
-  /* Front height: 237.966 / 333.559 = 71.34% — bottom aligns with back */
+  left: 0;
+  top: 29.07%;
+  width: 100%;
   height: 71.34%;
   background-color: transparent;
   border: 1px solid rgba(255, 255, 255, 0.25);
@@ -217,35 +282,8 @@
   transition: transform 0.6s cubic-bezier(0.68, -0.6, 0.32, 1.6), box-shadow 0.6s ease;
 }
 
-/* Dedicated frost plane — extreme blur, hint of assets behind */
-.portfolio-folder-front-glass::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background-color: rgba(42, 94, 238, 0.5);
-  backdrop-filter: blur(300px) saturate(120%);
-  -webkit-backdrop-filter: blur(300px) saturate(120%);
-  z-index: 0;
-  pointer-events: none;
-}
-
-/* #2A5EEE vertical gradient — 100% opacity at bottom → 0% at top */
-.portfolio-folder-front-glass::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: linear-gradient(
-    to top,
-    rgba(42, 94, 238, 1) 0%,
-    rgba(42, 94, 238, 0) 100%
-  );
-  z-index: 0;
-  pointer-events: none;
-}
-
 .portfolio-folder-front-glass > * {
+  position: relative;
   z-index: 1;
 }
 
@@ -259,9 +297,9 @@
 /* Titles Wrapper */
 .portfolio-folder-titles {
   position: absolute;
-  left: 0; 
-  top: 0; 
-  width: 100%; 
+  left: 0;
+  top: 0;
+  width: 100%;
   height: 100%;
   z-index: 11;
   pointer-events: none;
@@ -287,7 +325,7 @@
 
 .portfolio-folder-logo {
   position: absolute;
-  left: 5.17%; 
+  left: 5.17%;
   /* Logo: (95.43 - 32.33) / 79.35 = 79.52% */
   top: 79.52%;
   width: 30.69%;
@@ -313,9 +351,9 @@
 
 /* Crowned Cat — always in front of Panel-Folder-Front */
 .folder-asset-crowned-cat {
-  left: 71.72%; 
-  top: 36.04%; 
-  width: 47.51%; 
+  left: 71.72%;
+  top: 36.04%;
+  width: 47.51%;
   height: 70.97%;
   z-index: 31;
   transform: translate(0, 0) rotate(13.3deg);
@@ -326,9 +364,9 @@
 
 /* Peanut — topmost, always in front of Panel-Folder-Front */
 .folder-asset-peanut {
-  left: 42.08%; 
-  top: 58.38%; 
-  width: 51.83%; 
+  left: 42.08%;
+  top: 58.38%;
+  width: 51.83%;
   height: 78.52%;
   z-index: 32;
   transform: translate(0, 0) rotate(9.3deg) scale(1);
