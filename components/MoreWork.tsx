@@ -93,12 +93,11 @@ export function MoreWork() {
       className="more-work relative z-0 flex flex-col gap-12 pt-4 md:gap-14 md:pt-8"
       aria-label={copy.ariaLabel}
     >
-      <RevealMask delay={0.82}>
+      <RevealMask className="reveal-mask--title" delay={0.82}>
         <header className="flex w-full flex-col items-center gap-3 px-[var(--padding)] text-center">
           <h2 className="more-work-title">
             <SectionTitleMark
-              src="/icon/headings/more-work-title.svg"
-              aspect="560/57"
+              title="moreWorks"
               alt={copy.title}
             />
           </h2>

@@ -145,6 +145,10 @@
 /* Remove old dot styles */
 
 @media (max-width: 768px) {
+  .hero-slider {
+    margin-top: calc(3.25rem + env(safe-area-inset-top));
+  }
+
   .hero-overlay {
     padding: 3rem 1.5rem;
   }

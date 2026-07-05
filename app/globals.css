@@ -123,18 +123,46 @@ a {
   color: #2c2c2c;
 }
 
-.section-title-mark {
+.magnetic-scatter-title {
+  position: relative;
   display: block;
-  width: auto;
-  height: calc(var(--section-title-size) * 1.333);
-  max-width: min(100%, 35rem);
+  width: min(100%, 28rem);
+  padding: clamp(12px, 2vw, 22px);
+  box-sizing: border-box;
   margin: 0 auto;
-  object-fit: contain;
+  overflow: visible;
+  isolation: isolate;
+  touch-action: manipulation;
 }
 
-.section-title-mark--large {
-  height: calc(var(--section-title-size) * 2.667 * 0.8148);
-  max-width: min(100%, 35rem);
+.magnetic-scatter-title__letter {
+  position: absolute;
+  display: block;
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+}
+
+.magnetic-scatter-title__glyph {
+  position: absolute;
+  display: block;
+  inset: 0;
+}
+
+.magnetic-scatter-title__piece {
+  position: absolute;
+  display: block;
+  overflow: hidden;
+}
+
+.magnetic-scatter-title__image {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: contain;
+  pointer-events: none;
 }
 
 .section-subtitle {
@@ -154,5 +182,17 @@ a {
 @media (max-width: 767px) {
   :root {
     --section-title-size: clamp(1.375rem, 7vw, 2.125rem);
+  }
+
+  .magnetic-scatter-title {
+    width: min(100%, 22rem);
+    padding: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .magnetic-scatter-title__letter {
+    transition: none !important;
+    transform: translate3d(0, 0, 0) !important;
   }
 }

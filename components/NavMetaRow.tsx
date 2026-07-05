@@ -68,10 +68,11 @@ export function NavMetaRow() {
   const [activeSection, setActiveSection] = useState<NavSection>(() =>
     pathname === "/about" ? "about" : "works",
   );
+  const resolvedActiveSection: NavSection =
+    pathname === "/about" ? "about" : activeSection;
 
   useEffect(() => {
     if (pathname === "/about") {
-      setActiveSection("about");
       return;
     }
 
@@ -124,7 +125,7 @@ export function NavMetaRow() {
             href={link.href}
             label={labels[link.key]}
             mark={navMarks[link.key]}
-            active={activeSection === link.section}
+            active={resolvedActiveSection === link.section}
           />
         ))}
 
@@ -132,7 +133,7 @@ export function NavMetaRow() {
           href="/#contact-cta"
           label={labels.contact}
           mark={navMarks.contact}
-          active={activeSection === "contact"}
+          active={resolvedActiveSection === "contact"}
           onClick={handleContactClick}
         />
       </div>
