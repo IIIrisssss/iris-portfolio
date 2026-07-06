@@ -2,6 +2,7 @@
   position: relative;
   width: 100%;
   aspect-ratio: 16 / 9;
+  margin-top: calc(3.5rem + env(safe-area-inset-top));
   overflow: hidden;
   background-color: #000;
 }
