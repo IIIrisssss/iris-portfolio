@@ -169,11 +169,8 @@ export function Footer() {
 
               <div className="meet-footer__info-block">
                 <div className="meet-footer__label">{copy.statusLabel}</div>
-                <div className="meet-footer__status">
-                  <span className="meet-footer__status-dot" aria-hidden="true" />
-                  <span className="meet-footer__value meet-footer__value--status meet-footer__value--single-line">
-                    {copy.statusValue}
-                  </span>
+                <div className="meet-footer__value meet-footer__value--single-line">
+                  {copy.statusValue}
                 </div>
               </div>
             </div>

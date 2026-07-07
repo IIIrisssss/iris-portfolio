@@ -100,6 +100,139 @@ export function getFeaturedBySlug(slug: string) {
   return featured.find((work) => work.slug === slug);
 }
 
+export type FolderData = {
+  id: string;
+  slug: string;
+  title1: string;
+  title2: string;
+  frontColor?: string;
+  backColor?: string;
+};
+
+/** Creative Projects folder cards — Figma folder stack on home. */
+export const foldersData: FolderData[] = [
+  {
+    id: "worldcup-campaign",
+    slug: "worldcup-campaign",
+    title1: "WORLDCUP",
+    title2: "CAMPAIGN",
+    frontColor: "#004DEE",
+    backColor: "#003BB8",
+  },
+  {
+    id: "spring-dango-points",
+    slug: "spring-dango-points",
+    title1: "SPRING",
+    title2: "DANGO",
+    frontColor: "#FE6358",
+    backColor: "#F43B2D",
+  },
+  {
+    id: "new-year-osechi",
+    slug: "new-year-osechi",
+    title1: "NEW YEAR",
+    title2: "OSECHI",
+    frontColor: "#FFC743",
+    backColor: "#FFBE27",
+  },
+  {
+    id: "mava-social-media",
+    slug: "mava-social-media",
+    title1: "MAVA",
+    title2: "SOCIAL",
+    frontColor: "#00CAEA",
+    backColor: "#11AFE3",
+  },
+  { id: "manekineko-meme", slug: "manekineko-meme", title1: "MANEKINEKO", title2: "MEME" },
+  { id: "early-creations", slug: "early-creations", title1: "EARLY", title2: "CREATIONS" },
+];
+
+export type CreativeProjectDetail = {
+  title: string;
+  date: string;
+  description: string;
+};
+
+/** Detail page copy for /creative/[slug] routes. */
+export const creativeProjectDetails: Record<string, CreativeProjectDetail> = {
+  "spring-dango-points": {
+    title: "Spring Dango Points",
+    date: "2026.2–2026.3",
+    description:
+      "A playful seasonal set built around bright motion, soft character poses, and a light collectible feel.",
+  },
+  "new-year-osechi": {
+    title: "New Year Osechi Collection",
+    date: "2025.12–2026.1",
+    description:
+      "A festive illustration system with a celebratory palette and stacked compositions for social sharing.",
+  },
+  "mava-social-media": {
+    title: "Mava Social Media Templates",
+    date: "2025.7",
+    description:
+      "A compact social kit designed for quick updates, clear hierarchy, and bright branded moments.",
+  },
+  "worldcup-campaign": {
+    title: "Worldcup Campaign",
+    date: "2026.5–2026.6",
+    description:
+      "A high-energy campaign set with bold color, layered motion, and strong sports-event contrast.",
+  },
+  "manekineko-meme": {
+    title: "Manekineko Meme",
+    date: "2026.1–2026.2",
+    description:
+      "A mascot-driven sticker pack that balances humor, gesture, and a loud, collectible composition.",
+  },
+  "early-creations": {
+    title: "Early Creations",
+    date: "2022.1–2023.1",
+    description:
+      "An early archive of experiments that leans into collage, contrast, and rough-edged visual play.",
+  },
+};
+
+export type HeroSlideData = {
+  type: "image" | "video";
+  src: string;
+  title: string;
+  subtitle: string;
+  description: string;
+};
+
+/** Hero carousel slides on the home page. */
+export const heroSlides: HeroSlideData[] = [
+  {
+    type: "image",
+    src: "/hero-media/1-replacement.png",
+    title: "DESIGN",
+    subtitle: "CREATIVE.LQB",
+    description: "to use AI to explore.\nis one of the design\npursue. Just do it",
+  },
+  {
+    type: "image",
+    src: "/hero-media/2-replacement.png",
+    title: "WORK",
+    subtitle: "CREATIVE.LQB",
+    description: "AI时代下技术赋能与视觉表达的融合实践探索",
+  },
+  {
+    type: "image",
+    src: "/hero-media/3-replacement.png",
+    title: "A FUTURE",
+    subtitle: "CREATIVE.LQB",
+    description: "我是陆78，让技术成为放大 imagination 的引擎",
+  },
+  {
+    type: "image",
+    src: "/hero-media/4-replacement.png",
+    title: "EXPLORE",
+    subtitle: "CREATIVE.LQB",
+    description: "浪潮中思考与判断力愈发不可替代",
+  },
+];
+
 export type PortfolioSlide = {
   nameA: string;
   nameB: string;

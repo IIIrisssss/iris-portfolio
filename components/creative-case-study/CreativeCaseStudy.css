@@ -1,0 +1,63 @@
+.creative-case-study {
+  --case-design-width: 1290;
+  --case-gutter: clamp(1rem, 4vw, 3rem);
+  --case-body-color: #f3ead8;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100svh;
+  background: var(--case-body-color);
+}
+
+.creative-case-study__hero {
+  flex: none;
+  width: 100%;
+}
+
+.creative-case-study__hero-image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.creative-case-study__body {
+  flex: 1 1 auto;
+  width: 100%;
+  background: var(--case-body-color);
+}
+
+.creative-case-study__footer {
+  flex: none;
+  width: 100%;
+  border-top: 1px solid rgba(36, 31, 33, 0.08);
+  background: var(--case-body-color);
+}
+
+.creative-case-study__footer-inner {
+  display: flex;
+  justify-content: center;
+  width: min(100%, calc(var(--case-design-width) * 1px));
+  margin: 0 auto;
+  padding: clamp(1.5rem, 4vw, 2.5rem) var(--case-gutter)
+    clamp(2rem, 5vw, 3rem);
+}
+
+.creative-case-study__back-link {
+  color: var(--case-footer-link-color, #2c2c2c);
+  font-family: var(--font-body), sans-serif;
+  font-size: clamp(0.72rem, 1.6vw, 0.82rem);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: opacity 0.2s ease;
+}
+
+.creative-case-study__back-link:hover {
+  opacity: 0.65;
+}
+
+.creative-case-study__back-link:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--case-footer-link-color, #2c2c2c) 35%, transparent);
+  outline-offset: 3px;
+}

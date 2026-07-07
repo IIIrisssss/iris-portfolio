@@ -2,38 +2,10 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { heroSlides } from "@/lib/data";
 import "./HeroSlider.css";
 
-const slides = [
-  {
-    type: "image",
-    src: "/hero-media/1-replacement.png",
-    title: "DESIGN",
-    subtitle: "CREATIVE.LQB",
-    description: "to use AI to explore.\nis one of the design\npursue. Just do it",
-  },
-  {
-    type: "image",
-    src: "/hero-media/2-replacement.png",
-    title: "WORK",
-    subtitle: "CREATIVE.LQB",
-    description: "AI时代下技术赋能与视觉表达的融合实践探索",
-  },
-  {
-    type: "image",
-    src: "/hero-media/3-replacement.png",
-    title: "A FUTURE",
-    subtitle: "CREATIVE.LQB",
-    description: "我是陆78，让技术成为放大 imagination 的引擎",
-  },
-  {
-    type: "image",
-    src: "/hero-media/4-replacement.png",
-    title: "EXPLORE",
-    subtitle: "CREATIVE.LQB",
-    description: "浪潮中思考与判断力愈发不可替代",
-  },
-];
+const slides = heroSlides;
 
 export function HeroSlider() {
   const [currentIndex, setCurrentIndex] = useState(0);

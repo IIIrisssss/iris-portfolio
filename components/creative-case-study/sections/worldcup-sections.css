@@ -1,0 +1,307 @@
+/* ── Proportional scale canvas (1920 design base) ── */
+
+.wc-scaled-canvas {
+  --wc-design-w: 1920;
+  --wc-design-h: 845;
+  width: 100%;
+}
+
+.wc-scaled-canvas__viewport {
+  position: relative;
+  width: 100%;
+  aspect-ratio: var(--wc-design-w) / var(--wc-design-h);
+  container-type: inline-size;
+  overflow: hidden;
+}
+
+.wc-scaled-canvas__inner {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.creative-case-study__sections {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* S1/S2 pair — seam mascot pinned to the boundary between blue + white sections */
+.wc-section-pair {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.wc-section-pair--s1-s2 {
+  --wc-design-w: 1920;
+}
+
+.wc-section-pair__s1 {
+  position: relative;
+  z-index: 2;
+}
+
+.wc-section-pair--s1-s2 .wc-s2 {
+  position: relative;
+  z-index: 1;
+}
+
+.wc-section-seam {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  z-index: 10;
+  width: calc(100% / 6);
+  transform: translate(-50%, 50%);
+  pointer-events: none;
+}
+
+.wc-section-seam__mascot {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* ── Figma coordinate placement (inside scaled artboard only) ── */
+
+.wc-figma-placement {
+  position: absolute;
+  box-sizing: border-box;
+}
+
+/* ── Shared pill badges ── */
+
+.wc-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(8 / var(--wc-design-w) * 100cqw);
+  height: calc(56 / var(--wc-design-w) * 100cqw);
+  padding: calc(16 / var(--wc-design-w) * 100cqw)
+    calc(22 / var(--wc-design-w) * 100cqw)
+    calc(16 / var(--wc-design-w) * 100cqw)
+    calc(16 / var(--wc-design-w) * 100cqw);
+  border-radius: 999px;
+  font-family: "TikTok_Sans:Medium", var(--font-headline), sans-serif;
+  font-size: calc(32 / var(--wc-design-w) * 100cqw);
+  font-weight: 500;
+  line-height: 1.25;
+  text-transform: capitalize;
+  white-space: nowrap;
+}
+
+.wc-pill--outline {
+  border: calc(1 / var(--wc-design-w) * 100cqw) solid #2b2b2b;
+  color: #2b2b2b;
+  background: transparent;
+}
+
+.wc-pill--outline.wc-pill--dark {
+  border-color: #1e1e1e;
+  color: #1e1e1e;
+}
+
+.wc-pill--filled {
+  border: calc(1 / var(--wc-design-w) * 100cqw) solid #000;
+  color: #fff;
+  background: #000;
+}
+
+.wc-pill__icon {
+  display: block;
+  width: calc(24 / var(--wc-design-w) * 100cqw);
+  height: calc(24 / var(--wc-design-w) * 100cqw);
+  transform: rotate(90deg);
+}
+
+.wc-pill__icon--aigc {
+  width: calc(28 / var(--wc-design-w) * 100cqw);
+  height: calc(28 / var(--wc-design-w) * 100cqw);
+  transform: none;
+}
+
+/* ── Section 1: Context ── */
+
+.wc-s1 .wc-scaled-canvas__inner {
+  background: #004dee;
+}
+
+.wc-s1__bullet {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+}
+
+.wc-s1__heading {
+  margin: 0;
+  color: #fff;
+  font-family: "PingFang_SC:Medium", var(--font-body), sans-serif;
+  font-size: calc(36.727 / var(--wc-design-w) * 100cqw);
+  font-weight: 500;
+  line-height: normal;
+}
+
+.wc-s1__body {
+  margin: 0;
+  color: #fff;
+  font-family: "PingFang_SC:Regular", var(--font-body), sans-serif;
+  font-size: calc(30.98 / var(--wc-design-w) * 100cqw);
+  font-weight: 400;
+  line-height: normal;
+}
+
+.wc-s1__body--roles p {
+  margin: 0 0 0.35em;
+  line-height: 1.46;
+}
+
+.wc-s1__body--roles p:last-child {
+  margin-bottom: 0;
+}
+
+.wc-s1__body strong {
+  font-family: "PingFang_SC:Semibold", var(--font-body), sans-serif;
+  font-weight: 600;
+}
+
+.wc-s1__art-image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* ── Section 2: Analysis ── */
+
+.wc-s2 .wc-scaled-canvas__inner {
+  background: #fff;
+}
+
+.wc-s2__bg {
+  position: absolute;
+  inset: 0;
+  background-color: #fff;
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-size: 100% 100%;
+  pointer-events: none;
+}
+
+.wc-s2__title {
+  margin: 0;
+  color: #474747;
+  font-family: "PingFang_SC:Medium", var(--font-body), sans-serif;
+  font-size: calc(40 / var(--wc-design-w) * 100cqw);
+  font-weight: 500;
+  line-height: normal;
+}
+
+.wc-s2__subtitle {
+  margin: 0;
+  color: #717171;
+  font-family: "PingFang_SC:Thin", var(--font-body), sans-serif;
+  font-size: calc(32 / var(--wc-design-w) * 100cqw);
+  font-weight: 100;
+  letter-spacing: 0.06em;
+  line-height: normal;
+  text-transform: uppercase;
+}
+
+.wc-s2__body {
+  margin: 0;
+  color: #5e5e5e;
+  font-family: "PingFang_SC:Regular", var(--font-body), sans-serif;
+  font-size: calc(28.802 / var(--wc-design-w) * 100cqw);
+  font-weight: 400;
+  line-height: normal;
+}
+
+.wc-s2__challenge-title {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0 calc(23 / var(--wc-design-w) * 100cqw);
+  border: calc(2 / var(--wc-design-w) * 100cqw) solid #898989;
+  border-radius: calc(12 / var(--wc-design-w) * 100cqw);
+  color: #474747;
+  font-family: "PingFang_SC:Regular", var(--font-body), sans-serif;
+  font-size: calc(32 / var(--wc-design-w) * 100cqw);
+  font-weight: 400;
+  line-height: normal;
+}
+
+.wc-s2__divider-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+}
+
+.wc-s2__tags {
+  display: flex;
+  gap: calc(24 / var(--wc-design-w) * 100cqw);
+  align-items: center;
+}
+
+.wc-s2__brand-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* ── Section 3: Visual ── */
+
+.wc-s3 .wc-scaled-canvas__inner {
+  background: #fff;
+}
+
+.wc-s3__bg {
+  position: absolute;
+  inset: 0;
+  background-color: #fff;
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-size: 100% 100%;
+  pointer-events: none;
+}
+
+.wc-s3__title {
+  margin: 0;
+  color: #474747;
+  font-family: "PingFang_SC:Medium", var(--font-body), sans-serif;
+  font-size: calc(40 / var(--wc-design-w) * 100cqw);
+  font-weight: 500;
+  line-height: normal;
+}
+
+.wc-s3__subtitle {
+  margin: 0;
+  color: #717171;
+  font-family: "PingFang_SC:Thin", var(--font-body), sans-serif;
+  font-size: calc(32 / var(--wc-design-w) * 100cqw);
+  font-weight: 100;
+  letter-spacing: 0.06em;
+  line-height: normal;
+  text-transform: uppercase;
+}
+
+.wc-s3__showcase-image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* ── Full-bleed composite sections (4–6) ── */
+
+.wc-fullbleed-section__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+}

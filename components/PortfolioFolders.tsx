@@ -5,57 +5,12 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import type { CSSProperties } from "react";
 
+import { foldersData, type FolderData } from "@/lib/data";
 import { creativeProjectsSection } from "@/lib/i18n";
 import { useLanguage } from "./LanguageProvider";
 import { RevealMask } from "./RevealMask";
 import { SectionTitleMark } from "./SectionTitleMark";
 import "./PortfolioFolders.css";
-
-type FolderData = {
-  id: string;
-  slug: string;
-  title1: string;
-  title2: string;
-  frontColor?: string;
-  backColor?: string;
-};
-
-const foldersData: FolderData[] = [
-  { id: "manekineko-meme", slug: "manekineko-meme", title1: "MANEKINEKO", title2: "MEME" },
-  {
-    id: "spring-dango-points",
-    slug: "spring-dango-points",
-    title1: "MANEKINEKO",
-    title2: "MEME",
-    frontColor: "#FE6358",
-    backColor: "#F43B2D",
-  },
-  {
-    id: "new-year-osechi",
-    slug: "new-year-osechi",
-    title1: "NEW YEAR",
-    title2: "OSECHI",
-    frontColor: "#FFC743",
-    backColor: "#FFBE27",
-  },
-  {
-    id: "mava-social-media",
-    slug: "mava-social-media",
-    title1: "MAVA",
-    title2: "SOCIAL",
-    frontColor: "#00CAEA",
-    backColor: "#11AFE3",
-  },
-  {
-    id: "worldcup-campaign",
-    slug: "worldcup-campaign",
-    title1: "WORLDCUP",
-    title2: "CAMPAIGN",
-    frontColor: "#CDCDCD",
-    backColor: "#B2B2B2",
-  },
-  { id: "early-creations", slug: "early-creations", title1: "EARLY", title2: "CREATIONS" },
-];
 
 export function PortfolioFolders() {
   const { locale } = useLanguage();
@@ -87,11 +42,17 @@ export function PortfolioFolders() {
   };
 
   return (
-    <section className="portfolio-folders-section" aria-label={copy.ariaLabel}>
+    <section
+      id="portfolio-folders"
+      className="portfolio-folders-section"
+      aria-label={copy.ariaLabel}
+    >
       <header className="portfolio-folders-header">
         <RevealMask className="reveal-mask--title" delay={0.12}>
           <h2 className="portfolio-folders-title">
-            <SectionTitleMark title="creativeProjects" alt={copy.title} />
+            <span className="section-title-mark-creative">
+              <SectionTitleMark title="creativeProjects" alt={copy.title} />
+            </span>
           </h2>
         </RevealMask>
         <RevealMask delay={0.18}>
@@ -230,8 +191,16 @@ function FolderCard({
           </span>
 
           <span className="folder-layer folder-asset-crowned-cat">
-            <img className="folder-crowned-cat-default" src="/folders/figma-assets/crowned-cat-default.png" alt="" />
-            <img className="folder-crowned-cat-hover" src="/folders/figma-assets/crowned-cat-hover.png" alt="" />
+            <img
+              className="folder-crowned-cat-default"
+              src="/folders/figma-assets/crowned-cat-default.png"
+              alt=""
+            />
+            <img
+              className="folder-crowned-cat-hover"
+              src="/folders/figma-assets/crowned-cat-hover.png"
+              alt=""
+            />
           </span>
 
           <span className="folder-layer folder-asset-peanut">

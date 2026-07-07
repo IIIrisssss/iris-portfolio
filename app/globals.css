@@ -123,11 +123,25 @@ a {
   color: #2c2c2c;
 }
 
+.section-title-mark {
+  display: block;
+  width: auto;
+  height: calc(var(--section-title-size) * 1.333);
+  max-width: min(100%, 35rem);
+  margin: 0 auto;
+  object-fit: contain;
+}
+
+.section-title-mark--large {
+  height: calc(var(--section-title-size) * 2.667 * 0.8148);
+  max-width: min(100%, 35rem);
+}
+
 .magnetic-scatter-title {
   position: relative;
   display: block;
-  width: min(100%, 28rem);
-  padding: clamp(12px, 2vw, 22px);
+  width: min(100%, 112rem);
+  padding: clamp(20px, 4vw, 48px);
   box-sizing: border-box;
   margin: 0 auto;
   overflow: visible;
@@ -185,8 +199,8 @@ a {
   }
 
   .magnetic-scatter-title {
-    width: min(100%, 22rem);
-    padding: 12px;
+    width: min(100%, 88rem);
+    padding: 18px;
   }
 }
 

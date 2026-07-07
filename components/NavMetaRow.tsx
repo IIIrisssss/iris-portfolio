@@ -14,30 +14,45 @@ import "./floema-nav.css";
 type NavSection = "works" | "about" | "contact";
 
 const linkConfig = [
-  { href: "/", key: "works" as const, section: "works" as const },
+  { href: "/#portfolio-folders", key: "works" as const, section: "works" as const },
   { href: "/about", key: "about" as const, section: "about" as const },
 ] as const;
 
 const navMarks = {
-  works: { src: "/icon/nav/works.svg", aspect: "243/39" as const },
+  works: {
+    src: "/icon/nav/works.svg",
+    inactiveSrc: "/icon/nav/works-inactive.svg",
+    aspect: "243/39" as const,
+  },
   about: { src: "/icon/nav/about.svg", aspect: "244/39" as const },
-  contact: { src: "/icon/nav/contact.svg", aspect: "315/39" as const },
+  contact: {
+    src: "/icon/nav/contact.svg",
+    inactiveSrc: "/icon/nav/contact-inactive.svg",
+    aspect: "315/39" as const,
+  },
 };
 
 function NavRollLink({
   href,
   label,
   mark,
+  section,
   active,
   onClick,
 }: {
   href: string;
   label: string;
-  mark: { src: string; aspect: `${number}/${number}` };
+  mark: {
+    src: string;
+    inactiveSrc?: string;
+    aspect: `${number}/${number}`;
+  };
+  section: NavSection;
   active: boolean;
   onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void;
 }) {
   const { rollRef, onMouseEnter } = useRollHover();
+  const markSrc = active ? mark.src : (mark.inactiveSrc ?? mark.src);
 
   return (
     <Link
@@ -47,9 +62,10 @@ function NavRollLink({
       onMouseEnter={onMouseEnter}
       onClick={onClick}
       className={`floema-meta-row__link ${active ? "is-active" : ""}`}
+      data-nav={section}
     >
       <NavRollSurface rollRef={rollRef}>
-        <NavRollMark src={mark.src} aspect={mark.aspect} />
+        <NavRollMark src={markSrc} aspect={mark.aspect} />
       </NavRollSurface>
       <span className="sr-only">{label}</span>
     </Link>
@@ -61,6 +77,10 @@ function scrollToContact() {
   target?.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
+function scrollToPortfolioFolders() {
+  document.getElementById("portfolio-folders")?.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
 export function NavMetaRow() {
   const pathname = usePathname();
   const { locale } = useLanguage();
@@ -68,11 +88,10 @@ export function NavMetaRow() {
   const [activeSection, setActiveSection] = useState<NavSection>(() =>
     pathname === "/about" ? "about" : "works",
   );
-  const resolvedActiveSection: NavSection =
-    pathname === "/about" ? "about" : activeSection;
 
   useEffect(() => {
     if (pathname === "/about") {
+      setActiveSection("about");
       return;
     }
 
@@ -81,6 +100,8 @@ export function NavMetaRow() {
     const syncFromHash = () => {
       if (window.location.hash === "#contact-cta") {
         setActiveSection("contact");
+      } else if (window.location.hash === "#portfolio-folders") {
+        setActiveSection("works");
       }
     };
 
@@ -107,6 +128,19 @@ export function NavMetaRow() {
     };
   }, [pathname]);
 
+  const handleAboutClick = () => {
+    setActiveSection("about");
+  };
+
+  const handleWorksClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    if (pathname !== "/") return;
+
+    event.preventDefault();
+    setActiveSection("works");
+    window.history.pushState(null, "", "#portfolio-folders");
+    scrollToPortfolioFolders();
+  };
+
   const handleContactClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
     if (pathname !== "/") return;
 
@@ -125,7 +159,15 @@ export function NavMetaRow() {
             href={link.href}
             label={labels[link.key]}
             mark={navMarks[link.key]}
-            active={resolvedActiveSection === link.section}
+            section={link.section}
+            active={activeSection === link.section}
+            onClick={
+              link.section === "works"
+                ? handleWorksClick
+                : link.section === "about"
+                  ? handleAboutClick
+                  : undefined
+            }
           />
         ))}
 
@@ -133,7 +175,8 @@ export function NavMetaRow() {
           href="/#contact-cta"
           label={labels.contact}
           mark={navMarks.contact}
-          active={resolvedActiveSection === "contact"}
+          section="contact"
+          active={activeSection === "contact"}
           onClick={handleContactClick}
         />
       </div>

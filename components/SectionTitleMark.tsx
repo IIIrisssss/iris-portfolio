@@ -21,6 +21,8 @@ type LetterState = {
 
 const prefersReducedMotionQuery = "(prefers-reduced-motion: reduce)";
 
+const titleWidth = "min(100%, clamp(480px, 116vw, 56rem))";
+
 function clamp(value: number, min: number, max: number) {
   return Math.min(max, Math.max(min, value));
 }
@@ -231,7 +233,7 @@ export function SectionTitleMark({ title, alt, className = "" }: SectionTitleMar
       data-title={title}
       style={{
         aspectRatio: `${config.viewBoxWidth} / ${config.viewBoxHeight}`,
-        width: title === "moreWorks" ? "clamp(220px, 54vw, 26rem)" : "clamp(240px, 58vw, 28rem)",
+        width: titleWidth,
       }}
     >
       {config.letters.map((letter) => (

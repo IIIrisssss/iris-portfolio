@@ -4,10 +4,11 @@
 }
 
 .reveal-mask--title {
-  --reveal-mask-pad-x: clamp(12px, 1.25vw, 18px);
-  --reveal-mask-pad-y: clamp(8px, 0.9vw, 12px);
-  padding: var(--reveal-mask-pad-y) var(--reveal-mask-pad-x);
-  margin: calc(var(--reveal-mask-pad-y) * -1) calc(var(--reveal-mask-pad-x) * -1);
+  overflow: visible;
+}
+
+.reveal-mask--title .reveal-mask__inner {
+  overflow: visible;
 }
 
 .reveal-mask__inner {

@@ -1,28 +1,92 @@
 .portfolio-folders-section {
+  --portfolio-content-max: min(100%, clamp(1440px, 92vw, 1960px));
+  --portfolio-folder-max: min(100%, 18rem);
+  --portfolio-title-max: clamp(480px, 116vw, 56rem);
+  --portfolio-title-scale: 1.155;
   width: 100%;
-  max-width: 1440px;
+  max-width: var(--portfolio-content-max);
   margin: 0 auto;
   padding: 0 var(--padding);
   overflow: visible;
+  scroll-margin-top: calc(var(--padding) + 4.5rem);
+}
+
+@media (min-width: 1280px) {
+  .portfolio-folders-section {
+    --portfolio-folder-max: min(100%, clamp(18rem, 14vw, 22rem));
+    --portfolio-title-max: clamp(480px, 62vw, 68rem);
+    --portfolio-title-scale: clamp(1.155, calc(1.155 + (100vw - 1280px) * 0.000266), 1.406);
+  }
+}
+
+@media (min-width: 1600px) {
+  .portfolio-folders-section {
+    --portfolio-content-max: min(100%, clamp(1560px, 94vw, 2100px));
+    --portfolio-folder-max: min(100%, clamp(20rem, 13vw, 26rem));
+    --portfolio-title-max: clamp(520px, 58vw, 76rem);
+    --portfolio-title-scale: clamp(1.254, calc(1.254 + (100vw - 1600px) * 0.00019), 1.52);
+  }
+}
+
+@media (min-width: 1920px) {
+  .portfolio-folders-section {
+    --portfolio-content-max: min(100%, clamp(1680px, 96vw, 2200px));
+    --portfolio-folder-max: min(100%, clamp(22rem, 12vw, 28rem));
+  }
 }
 
 .portfolio-folders-header {
-  margin: 0 auto 3rem;
+  margin: 0 auto 6rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
+  gap: 2.5rem;
   text-align: center;
   position: relative;
   z-index: 2;
 }
 
+.portfolio-folders-header .reveal-mask--title {
+  width: 100%;
+}
+
+.portfolio-folders-header .reveal-mask--title .reveal-mask__inner {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
 .portfolio-folders-title {
   margin: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.section-title-mark-creative {
+  display: block;
+  width: min(100%, calc(var(--portfolio-title-max) * 0.76));
+  aspect-ratio: 494 / 108;
+  margin-inline: auto;
+  overflow: visible;
+}
+
+.section-title-mark-creative .magnetic-scatter-title[data-title="creativeProjects"] {
+  width: calc(100% / var(--portfolio-title-scale)) !important;
+  margin-inline: auto;
+  padding: clamp(8px, 1.5vw, 17px);
+  transform: scale(var(--portfolio-title-scale));
+  transform-origin: center top;
 }
 
 .portfolio-folders-subtitle {
   color: rgba(44, 44, 44, 0.62);
+}
+
+@media (min-width: 1440px) {
+  .portfolio-folders-subtitle.section-subtitle--creative {
+    font-size: calc(0.875rem * 1.5 * 0.667 * clamp(1, 1 + (100vw - 1440px) / 3200, 1.18));
+  }
 }
 
 .portfolio-folders-grid {
@@ -38,6 +102,18 @@
     grid-template-columns: repeat(3, 1fr);
     gap: clamp(4.75rem, 8vw, 7rem) clamp(2.5rem, 4vw, 5rem);
     padding: clamp(5rem, 7vw, 8rem) 2rem 0;
+  }
+}
+
+@media (min-width: 1440px) {
+  .portfolio-folders-header {
+    margin-bottom: clamp(6rem, 7vw, 8rem);
+    gap: clamp(2.5rem, 3vw, 3.5rem);
+  }
+
+  .portfolio-folders-grid {
+    gap: clamp(5rem, 6.5vw, 8rem) clamp(3rem, 4.5vw, 6rem);
+    padding-top: clamp(6rem, 7.5vw, 9rem);
   }
 }
 
@@ -73,7 +149,7 @@
   position: relative;
   display: block;
   width: 100%;
-  max-width: min(100%, 18rem);
+  max-width: var(--portfolio-folder-max);
   margin: 0 auto;
   /* Panel-Folder-Back — Figma 441.472 × 333.559 (extended to match front bottom) */
   aspect-ratio: 441.472 / 333.559;
