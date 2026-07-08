@@ -1,0 +1,31 @@
+.wc-more-work-image-motion,
+.wc-more-work-image-motion__parallax {
+  display: block;
+  width: 100%;
+}
+
+.wc-more-work-image-motion {
+  cursor: pointer;
+  transform-origin: center center;
+}
+
+.wc-more-work-image-motion__parallax {
+  transform-style: preserve-3d;
+}
+
+.wc-section-seam .wc-more-work-image-motion {
+  pointer-events: auto;
+}
+
+.wc-more-work-image-motion > img,
+.wc-more-work-image-motion__parallax img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wc-more-work-image-motion {
+    cursor: default;
+  }
+}

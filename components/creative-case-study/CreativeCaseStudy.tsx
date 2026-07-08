@@ -4,6 +4,7 @@ import type { CSSProperties } from "react";
 import type { CaseStudyConfig } from "@/lib/creativeCaseStudies";
 
 import { CreativeCaseStudyFooter } from "./CreativeCaseStudyFooter";
+import { WorldcupScrollMotion } from "./motion/WorldcupScrollMotion";
 import { WorldcupBody } from "./sections/WorldcupBody";
 
 import "./CreativeCaseStudy.css";
@@ -14,7 +15,9 @@ type CreativeCaseStudyProps = {
 };
 
 export function CreativeCaseStudy({ config }: CreativeCaseStudyProps) {
-  return (
+  const isWorldcup = config.slug === "worldcup-campaign";
+
+  const content = (
     <div
       className="creative-case-study"
       style={
@@ -36,10 +39,16 @@ export function CreativeCaseStudy({ config }: CreativeCaseStudyProps) {
       </header>
 
       <div className="creative-case-study__body">
-        {config.slug === "worldcup-campaign" ? <WorldcupBody /> : null}
+        {isWorldcup ? <WorldcupBody /> : null}
       </div>
 
       <CreativeCaseStudyFooter />
     </div>
   );
+
+  if (isWorldcup) {
+    return <WorldcupScrollMotion>{content}</WorldcupScrollMotion>;
+  }
+
+  return content;
 }

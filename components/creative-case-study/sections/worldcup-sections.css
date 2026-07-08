@@ -59,6 +59,10 @@
   pointer-events: none;
 }
 
+.wc-section-seam .wc-more-work-image-motion {
+  pointer-events: auto;
+}
+
 .wc-section-seam__mascot {
   display: block;
   width: 100%;
@@ -297,11 +301,56 @@
   height: auto;
 }
 
-/* ── Full-bleed composite sections (4–6) ── */
+/* ── Full-bleed composite sections (4–8) ── */
+
+.wc-s4 .wc-scaled-canvas__inner {
+  background: #004dee;
+}
+
+.wc-fullbleed-section__frame {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  top: calc(var(--wc-top-inset, 0) / var(--wc-design-h) * 100%);
+  height: calc(var(--wc-content-h, var(--wc-design-h)) / var(--wc-design-h) * 100%);
+}
 
 .wc-fullbleed-section__image {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: fill;
+  will-change: transform;
+}
+
+/* ── Scroll motion ── */
+
+.wc-motion-root [data-wc-parallax] {
+  will-change: transform;
+}
+
+.wc-figma-placement .reveal-mask {
+  overflow: hidden;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.wc-figma-placement .reveal-mask__inner {
+  display: block;
+}
+
+.wc-s2__challenge-title.reveal-mask__inner,
+.reveal-mask .wc-s2__challenge-title {
+  width: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wc-motion-root [data-wc-parallax] {
+    will-change: auto;
+  }
+
+  .wc-fullbleed-section__image {
+    will-change: auto;
+  }
 }

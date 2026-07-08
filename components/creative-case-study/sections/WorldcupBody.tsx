@@ -1,3 +1,4 @@
+import { MoreWorkImageMotion } from "../motion/MoreWorkImageMotion";
 import { WorldcupAnalysisSection } from "./WorldcupAnalysisSection";
 import { WorldcupContextSection } from "./WorldcupContextSection";
 import { WorldcupFullbleedSection } from "./WorldcupFullbleedSection";
@@ -23,14 +24,16 @@ export function WorldcupBody() {
         <div className="wc-section-pair__s1">
           <WorldcupContextSection />
           <div className="wc-section-seam" aria-hidden="true">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={SEAM_MASCOT}
-              alt=""
-              className="wc-section-seam__mascot"
-              loading="eager"
-              decoding="async"
-            />
+            <MoreWorkImageMotion scrollEntrance>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={SEAM_MASCOT}
+                alt=""
+                className="wc-section-seam__mascot"
+                loading="eager"
+                decoding="async"
+              />
+            </MoreWorkImageMotion>
           </div>
         </div>
         <WorldcupAnalysisSection />
@@ -39,6 +42,7 @@ export function WorldcupBody() {
       <WorldcupFullbleedSection
         className="wc-s4"
         designHeight={1709}
+        topInset={120}
         imageSrc={SECTION_4_IMAGE}
         alt="3.2 视觉页面设计：Coin Dozer、Incentive Soccer 等玩法主页面、弹窗与加载页"
       />

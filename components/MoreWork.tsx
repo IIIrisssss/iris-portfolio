@@ -6,27 +6,10 @@ import { moreWorkSection } from "@/lib/i18n";
 import { useLanguage } from "./LanguageProvider";
 import { RevealMask } from "./RevealMask";
 import { SectionTitleMark } from "./SectionTitleMark";
-import { elastic } from "@/lib/motion";
+import { moreWorkImageMotion } from "@/lib/motion";
 import "./MoreWork.css";
 
-const gridItemMotionProps = {
-  initial: { scale: 0.7, opacity: 0 },
-  whileInView: { scale: 1, opacity: 1 },
-  viewport: { once: true, margin: "-8% 0px" },
-  transition: elastic,
-  whileHover: {
-    scale: 1.06,
-    rotate: -2,
-    zIndex: 10,
-    transition: {
-      type: "spring" as const,
-      stiffness: 400,
-      damping: 15,
-      mass: 1,
-    },
-  },
-  whileTap: { scale: 0.96 },
-};
+const gridItemMotionProps = moreWorkImageMotion;
 
 function GridCell({
   order,

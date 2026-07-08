@@ -22,6 +22,29 @@ export const softSpring: Transition = {
   damping: 20,
 };
 
+/** More Work grid image hover spring. */
+export const moreWorkHoverSpring: Transition = {
+  type: "spring",
+  stiffness: 400,
+  damping: 15,
+  mass: 1,
+};
+
+/** Shared More Work image motion — scroll pop-in + hover lift. */
+export const moreWorkImageMotion = {
+  initial: { scale: 0.7, opacity: 0 },
+  whileInView: { scale: 1, opacity: 1 },
+  viewport: { once: true, margin: "-8% 0px" },
+  transition: elastic,
+  whileHover: {
+    scale: 1.06,
+    rotate: -2,
+    zIndex: 10,
+    transition: moreWorkHoverSpring,
+  },
+  whileTap: { scale: 0.96 },
+} as const;
+
 /** Smooth non-spring easing (ease-out-expo) for fades. */
 export const easeOutExpo: [number, number, number, number] = [0.19, 1, 0.22, 1];
 
