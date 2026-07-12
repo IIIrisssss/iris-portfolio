@@ -1,0 +1,137 @@
+/* Worldcup folder only — Figma 339:11542 (default) / 339:11675 (hover) */
+
+.portfolio-folder-wrapper--worldcup .folder-asset-kong {
+  left: -12.01%;
+  top: -5.23%;
+  width: 64.33%;
+  height: 107.78%;
+  overflow: visible;
+  border-radius: 10px;
+  box-shadow: none;
+  transform: rotate(-18.92deg) scale(2.36);
+  transform-origin: center center;
+}
+
+.portfolio-folder-wrapper--worldcup .folder-asset-kong img {
+  object-fit: contain;
+}
+
+.portfolio-folder-wrapper--worldcup:hover .folder-asset-kong {
+  transform: translate(-9.28%, -24.28%) rotate(-18.92deg) scale(2.36);
+}
+
+.portfolio-folder-wrapper--worldcup .folder-asset-cats {
+  left: 15.4%;
+  top: 1.37%;
+  width: 70.91%;
+  height: 95.02%;
+  transform: rotate(10.16deg) scale(0.88);
+  transform-origin: center center;
+}
+
+.portfolio-folder-wrapper--worldcup:hover .folder-asset-cats,
+.portfolio-folder-wrapper--worldcup:hover .folder-asset-cats--frost {
+  transform: translate(1.82%, -42.58%) rotate(10.16deg) scale(1);
+}
+
+.portfolio-folder-wrapper--worldcup .folder-asset-horse {
+  left: 47.12%;
+  top: 8.86%;
+  width: 66.38%;
+  height: 82.99%;
+  transform: rotate(11.9deg);
+}
+
+.portfolio-folder-wrapper--worldcup:hover .folder-asset-horse,
+.portfolio-folder-wrapper--worldcup:hover .folder-asset-horse--frost {
+  transform: translate(5.88%, -35.07%) rotate(11.9deg) scale(1.087);
+}
+
+/* Paperclip — nested in front panel, flips with front cover */
+.portfolio-folder-wrapper--worldcup .portfolio-folder-front-glass .folder-asset-paperclip {
+  left: 73.5%;
+  top: -22%;
+  width: 17%;
+  height: 40%;
+  transform: none;
+  overflow: visible;
+}
+
+.portfolio-folder-wrapper--worldcup .folder-asset-paperclip img {
+  position: static;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Crowned cat — default smaller; hover uses full Figma size */
+.portfolio-folder-wrapper--worldcup .folder-asset-crowned-cat {
+  left: 67.73%;
+  top: 39.14%;
+  width: 46.9%;
+  height: 57.39%;
+  transform: rotate(-28.2deg) scale(0.85);
+  transform-origin: center center;
+  transition:
+    transform 0.6s cubic-bezier(0.68, -0.6, 0.32, 1.6),
+    left 0.6s cubic-bezier(0.68, -0.6, 0.32, 1.6),
+    top 0.6s cubic-bezier(0.68, -0.6, 0.32, 1.6),
+    width 0.6s cubic-bezier(0.68, -0.6, 0.32, 1.6),
+    height 0.6s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+}
+
+.portfolio-folder-wrapper--worldcup:hover .folder-asset-crowned-cat {
+  left: 79.71%;
+  top: 35.51%;
+  width: 36.24%;
+  height: 47.97%;
+  transform: rotate(0deg) scale(1);
+}
+
+/* Peanut — default smaller; hover uses full Figma size */
+.portfolio-folder-wrapper--worldcup .folder-asset-peanut {
+  left: 6.34%;
+  top: 57.43%;
+  width: 51.35%;
+  height: 68.2%;
+  transform: rotate(29deg) scale(0.85);
+  transform-origin: center center;
+  transition:
+    transform 0.6s cubic-bezier(0.68, -0.6, 0.32, 1.6),
+    left 0.6s cubic-bezier(0.68, -0.6, 0.32, 1.6),
+    top 0.6s cubic-bezier(0.68, -0.6, 0.32, 1.6),
+    width 0.6s cubic-bezier(0.68, -0.6, 0.32, 1.6),
+    height 0.6s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+}
+
+.portfolio-folder-wrapper--worldcup:hover .folder-asset-peanut {
+  left: 10.42%;
+  top: 59.5%;
+  width: 45.08%;
+  height: 53.12%;
+  transform: rotate(-4.23deg) scale(1);
+}
+
+.portfolio-folder-wrapper--worldcup .folder-peanut-default {
+  opacity: 1;
+}
+
+.portfolio-folder-wrapper--worldcup .folder-peanut-hover {
+  opacity: 0;
+}
+
+.portfolio-folder-wrapper--worldcup:hover .folder-peanut-default {
+  opacity: 0;
+}
+
+.portfolio-folder-wrapper--worldcup:hover .folder-peanut-hover {
+  opacity: 1;
+}
+
+.portfolio-folder-wrapper--worldcup .folder-asset-peanut img {
+  position: absolute;
+  inset: 0;
+  object-fit: contain;
+  transition: opacity 0.22s ease;
+}

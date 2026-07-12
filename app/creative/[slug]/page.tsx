@@ -27,7 +27,10 @@ export default async function CreativeProjectPage({ params }: CreativePageProps)
   }
 
   return (
-    <main className="min-h-[100svh] bg-[var(--color-primary)]">
+    <main
+      className="min-h-[100svh]"
+      style={{ background: config.theme.marginColor ?? "#eaeaea" }}
+    >
       <CreativeCaseStudy config={config} />
     </main>
   );

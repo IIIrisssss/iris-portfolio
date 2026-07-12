@@ -44,9 +44,19 @@
   z-index: 2;
 }
 
+.wc-section-pair > .wc-scaled-canvas,
 .wc-section-pair--s1-s2 .wc-s2 {
   position: relative;
   z-index: 1;
+}
+
+/* S5→S6→S7: stagger z-index so each seam floats above the next section */
+.wc-section-pair--s5-s7 .wc-section-pair__s1:first-child {
+  z-index: 3;
+}
+
+.wc-section-pair--s5-s7 .wc-section-pair__s1:nth-child(2) {
+  z-index: 2;
 }
 
 .wc-section-seam {
@@ -56,17 +66,39 @@
   z-index: 10;
   width: calc(100% / 6);
   transform: translate(-50%, 50%);
-  pointer-events: none;
+  pointer-events: auto;
 }
 
 .wc-section-seam .wc-more-work-image-motion {
   pointer-events: auto;
 }
 
+.wc-section-seam--s5-s6 {
+  left: 65%;
+}
+
+/* S5/S6 + S6/S7 assets are tighter-cropped — scale down to match S1/S2 mascot */
+.wc-section-seam--compact {
+  width: calc(100% / 6 * 0.84);
+}
+
+.wc-section-seam__motion {
+  display: block;
+  width: 100%;
+  transform-origin: center center;
+  cursor: pointer;
+}
+
 .wc-section-seam__mascot {
   display: block;
   width: 100%;
   height: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wc-section-seam__motion {
+    cursor: default;
+  }
 }
 
 /* ── Figma coordinate placement (inside scaled artboard only) ── */
@@ -261,6 +293,7 @@
 
 /* ── Section 3: Visual ── */
 
+.wc-s2 .wc-scaled-canvas__inner,
 .wc-s3 .wc-scaled-canvas__inner {
   background: #fff;
 }
@@ -304,7 +337,7 @@
 /* ── Full-bleed composite sections (4–8) ── */
 
 .wc-s4 .wc-scaled-canvas__inner {
-  background: #004dee;
+  background: #fff;
 }
 
 .wc-fullbleed-section__frame {
@@ -313,6 +346,11 @@
   width: 100%;
   top: calc(var(--wc-top-inset, 0) / var(--wc-design-h) * 100%);
   height: calc(var(--wc-content-h, var(--wc-design-h)) / var(--wc-design-h) * 100%);
+  overflow: visible;
+}
+
+.wc-fullbleed-section__frame .wc-figma-placement {
+  position: absolute;
 }
 
 .wc-fullbleed-section__image {
@@ -320,13 +358,28 @@
   width: 100%;
   height: 100%;
   object-fit: fill;
-  will-change: transform;
+  image-rendering: auto;
 }
 
-/* ── Scroll motion ── */
+.wc-jp-pill-placement {
+  z-index: 5;
+  pointer-events: none;
+}
 
-.wc-motion-root [data-wc-parallax] {
-  will-change: transform;
+.wc-jp-pill-overlay {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+}
+
+.sd-s1--placeholder .wc-scaled-canvas__viewport {
+  min-height: 0;
+}
+
+.sd-s1__spacer {
+  width: 100%;
+  height: 100%;
 }
 
 .wc-figma-placement .reveal-mask {
@@ -345,12 +398,3 @@
   width: 100%;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .wc-motion-root [data-wc-parallax] {
-    will-change: auto;
-  }
-
-  .wc-fullbleed-section__image {
-    will-change: auto;
-  }
-}

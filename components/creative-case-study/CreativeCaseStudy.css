@@ -1,17 +1,112 @@
 .creative-case-study {
-  --case-design-width: 1290;
-  --case-gutter: clamp(1rem, 4vw, 3rem);
+  /* 1200px cap / ~72vw — wider column with generous side gutters */
+  --case-content-width: min(75rem, 72vw);
+  --case-gutter: clamp(1rem, 3vw, 1.75rem);
+  --case-back-inset: clamp(1.25rem, 2.5vw, 2rem);
+  --case-margin-color: #eaeaea;
+  --case-back-color: #2c2c2c;
   --case-body-color: #f3ead8;
   display: flex;
   flex-direction: column;
   width: 100%;
   min-height: 100svh;
+  overflow-x: clip;
+  background: var(--case-margin-color);
+}
+
+.creative-case-study__back {
+  position: fixed;
+  top: var(--case-back-inset);
+  /* Top-left of the left margin band (viewport edge, not content column) */
+  left: var(--case-back-inset);
+  z-index: 40;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45em;
+  color: var(--case-back-color, #2c2c2c);
+  font-family: var(--font-body), sans-serif;
+  font-size: clamp(0.78rem, 1.4vw, 0.875rem);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.creative-case-study__back-arrow {
+  font-size: 1.15em;
+  line-height: 1;
+  transform: translateY(-0.04em);
+}
+
+.creative-case-study__back:hover {
+  opacity: 0.65;
+}
+
+.creative-case-study__back:focus-visible {
+  outline: 2px solid
+    color-mix(in srgb, var(--case-back-color, #2c2c2c) 35%, transparent);
+  outline-offset: 4px;
+}
+
+.creative-case-study__pager {
+  position: fixed;
+  top: var(--case-back-inset);
+  right: var(--case-back-inset);
+  z-index: 40;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.creative-case-study__pager-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  color: var(--case-back-color, #2c2c2c);
+  font-family: var(--font-body), sans-serif;
+  font-size: clamp(0.78rem, 1.4vw, 0.875rem);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.creative-case-study__pager-arrow {
+  font-size: 1.15em;
+  line-height: 1;
+  transform: translateY(-0.04em);
+}
+
+.creative-case-study__pager-btn:hover {
+  opacity: 0.65;
+}
+
+.creative-case-study__pager-btn:focus-visible {
+  outline: 2px solid
+    color-mix(in srgb, var(--case-back-color, #2c2c2c) 35%, transparent);
+  outline-offset: 4px;
+}
+
+/* Full-bleed page backdrop — sides show theme color on ultra-wide screens. */
+.creative-case-study__shell {
+  display: flex;
+  flex-direction: column;
+  width: var(--case-content-width);
+  max-width: 100%;
+  margin-inline: auto;
   background: var(--case-body-color);
+  box-shadow: 0 4px 60px rgba(0, 0, 0, 0.03);
 }
 
 .creative-case-study__hero {
   flex: none;
   width: 100%;
+}
+
+.creative-case-study__hero--white {
+  background: #ffffff;
 }
 
 .creative-case-study__hero-image {
@@ -26,38 +121,19 @@
   background: var(--case-body-color);
 }
 
-.creative-case-study__footer {
-  flex: none;
-  width: 100%;
-  border-top: 1px solid rgba(36, 31, 33, 0.08);
-  background: var(--case-body-color);
+@media (max-width: 767px) {
+  .creative-case-study {
+    --case-content-width: calc(100% - 2 * var(--case-gutter));
+  }
+
+  .creative-case-study__shell {
+    box-shadow: none;
+  }
 }
 
-.creative-case-study__footer-inner {
-  display: flex;
-  justify-content: center;
-  width: min(100%, calc(var(--case-design-width) * 1px));
-  margin: 0 auto;
-  padding: clamp(1.5rem, 4vw, 2.5rem) var(--case-gutter)
-    clamp(2rem, 5vw, 3rem);
-}
-
-.creative-case-study__back-link {
-  color: var(--case-footer-link-color, #2c2c2c);
-  font-family: var(--font-body), sans-serif;
-  font-size: clamp(0.72rem, 1.6vw, 0.82rem);
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-decoration: none;
-  text-transform: uppercase;
-  transition: opacity 0.2s ease;
-}
-
-.creative-case-study__back-link:hover {
-  opacity: 0.65;
-}
-
-.creative-case-study__back-link:focus-visible {
-  outline: 2px solid color-mix(in srgb, var(--case-footer-link-color, #2c2c2c) 35%, transparent);
-  outline-offset: 3px;
+@media (prefers-reduced-motion: reduce) {
+  .creative-case-study__back,
+  .creative-case-study__pager-btn {
+    transition: none;
+  }
 }

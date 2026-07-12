@@ -1,4 +1,4 @@
-import { CASE_STUDY_HERO_PLACEHOLDER, type CaseStudyConfig } from "./types";
+import type { CaseStudyConfig } from "./types";
 
 export const osechiCaseStudy: CaseStudyConfig = {
   slug: "new-year-osechi",
@@ -7,10 +7,12 @@ export const osechiCaseStudy: CaseStudyConfig = {
   description:
     "A festive illustration system with a celebratory palette and stacked compositions for social sharing.",
   hero: {
-    src: CASE_STUDY_HERO_PLACEHOLDER,
-    alt: "New Year Osechi campaign hero placeholder",
+    src: "/creative/new-year-osechi/hero.webp",
+    alt: "迎春ごちそう祭 — New Year Osechi Collection hero with festive food and TikTok Lite branding",
   },
   theme: {
-    body: "#f3ead8",
+    body: "#f5edd6",
+    marginColor: "#FFF4DE",
+    footerLink: "#2c2c2c",
   },
 };

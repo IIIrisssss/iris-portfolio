@@ -219,39 +219,12 @@
   height: 100%;
   z-index: 1;
 }
-.folder-back-main {
-  position: absolute;
-  bottom: 0;
-  left: 0;
+
+.folder-back-svg {
+  display: block;
   width: 100%;
-  /* Extended body — top edge/tab unchanged, bottom aligns with front panel */
-  height: 89.04%;
-  background: var(--folder-back-color, #0D41CF);
-  /* Bottom corners match Panel-Folder-Front (32px) */
-  border-radius: 18px 18px 32px 32px;
-  box-shadow: 0px 6.089px 13.7px rgba(0, 0, 0, 0.25);
-}
-.folder-back-tab {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 53.07%;
-  /* Fixed tab height (~42px) — 12.58% of new 333.559px total */
-  height: 12.58%;
-  background: var(--folder-back-color, #0D41CF);
-  border-radius: 18px 18px 0 0;
-}
-.folder-back-tab::before {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: -20px;
-  width: 40px;
   height: 100%;
-  background: var(--folder-back-color, #0D41CF);
-  transform-origin: bottom right;
-  transform: skewX(-45deg);
-  border-radius: 18px 0 0 0;
+  filter: drop-shadow(0 6.089px 13.7px rgba(0, 0, 0, 0.25));
 }
 
 /* Asset Kong (Gray Bg) */
@@ -318,7 +291,8 @@
   width: 100%;
   height: 71.34%;
   overflow: hidden;
-  border-radius: 32px;
+  /* 32px at Figma width 441.472px — scales with folder like Panel-Folder-Back SVG */
+  border-radius: 7.248cqw;
   background: transparent;
   z-index: 9;
   transform-origin: bottom center;
@@ -376,7 +350,7 @@
   height: 71.34%;
   background-color: transparent;
   border: 1px solid rgba(255, 255, 255, 0.25);
-  border-radius: 32px;
+  border-radius: 7.248cqw;
   box-shadow:
     inset 0 1px 1px rgba(255, 255, 255, 0.4),
     0 8px 32px rgba(0, 0, 0, 0.1);
@@ -438,7 +412,7 @@
 .folder-text-subtitle1 { top: 10.34%; }
 .folder-text-title1 { top: 21.27%; }
 .folder-text-title2 { top: 37.66%; }
-.folder-text-subtitle2 { top: 52.78%; }
+.folder-text-subtitle2 { top: 56.2%; }
 
 .portfolio-folder-logo {
   position: absolute;

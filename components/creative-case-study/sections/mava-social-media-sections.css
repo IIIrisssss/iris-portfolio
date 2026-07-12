@@ -1,0 +1,81 @@
+/* ── Mava / Spring Sakura — Section 6 video design ── */
+
+.mava-s6 .wc-scaled-canvas__inner {
+  background: #94e1ff;
+}
+
+.mava-s6__bg {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+}
+
+.mava-video-player,
+.mava-video-player__surface {
+  width: 100%;
+  height: 100%;
+}
+
+.mava-video-player__surface {
+  position: relative;
+  overflow: hidden;
+  border-radius: calc(20 / var(--wc-design-w) * 100cqw);
+  background: transparent;
+  cursor: pointer;
+}
+
+.mava-video-player__video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+}
+
+.mava-video-player__play {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: rgba(0, 0, 0, 0.18);
+  cursor: pointer;
+  transition: opacity 0.2s ease, background 0.2s ease;
+}
+
+.mava-video-player__play:hover {
+  background: rgba(0, 0, 0, 0.28);
+}
+
+.mava-video-player__play--hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.mava-video-player__play-icon {
+  position: relative;
+  width: calc(96 / var(--wc-design-w) * 100cqw);
+  height: calc(96 / var(--wc-design-w) * 100cqw);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+}
+
+.mava-video-player__play-icon::after {
+  content: "";
+  position: absolute;
+  left: 54%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 0;
+  height: 0;
+  border-top: calc(18 / var(--wc-design-w) * 100cqw) solid transparent;
+  border-bottom: calc(18 / var(--wc-design-w) * 100cqw) solid transparent;
+  border-left: calc(28 / var(--wc-design-w) * 100cqw) solid #2b2b2b;
+}

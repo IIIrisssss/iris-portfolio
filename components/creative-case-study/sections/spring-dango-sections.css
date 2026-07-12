@@ -1,0 +1,817 @@
+/* ── Spring Dango · Module 2: Manekineko showcase (Figma 36:47441) ── */
+
+.sd-s2 .wc-scaled-canvas__viewport {
+  overflow: hidden;
+}
+
+.sd-s2 .wc-scaled-canvas__inner {
+  overflow: hidden;
+}
+
+.sd-s2__canvas {
+  position: absolute;
+  inset: 0;
+  background: #fff;
+  overflow: hidden;
+}
+
+/* Embedded phone — black image frame + slight button extension */
+.sd-s2__phone-layer {
+  z-index: 2;
+  overflow: visible;
+}
+
+.sd-s2__cat-layer {
+  z-index: 6;
+}
+
+.sd-s2 .wechat-phone-module--embedded .phone-device {
+  filter: none;
+  overflow: visible;
+}
+
+.sd-s2 .wechat-phone-module--embedded .phone-device__screen {
+  background: #ededed;
+}
+
+.sd-s2__bg-mask {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+  user-select: none;
+}
+
+.sd-s2__bg-decor {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+  user-select: none;
+}
+
+.sd-s2__cat-frame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.sd-s2__cat-art {
+  position: absolute;
+  left: -7.85%;
+  top: -2.9%;
+  width: 107.15%;
+  height: 107.15%;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+}
+
+.sd-s2__brand-logo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+}
+
+.sd-s2__swipe-arrow {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+}
+
+.sd-s2__swipe-arrow--down {
+  transform: scaleY(-1);
+}
+
+.sd-s2__heading {
+  margin: 0;
+  color: #5a3f35;
+  font-family: "TikTok_Sans:Bold", var(--font-headline), sans-serif;
+  font-weight: 700;
+  line-height: normal;
+  white-space: nowrap;
+}
+
+.sd-s2__heading--lg {
+  font-size: calc(68.345 / var(--wc-design-w) * 100cqw);
+}
+
+.sd-s2__heading--md {
+  font-size: calc(62.966 / var(--wc-design-w) * 100cqw);
+}
+
+.sd-s2__description {
+  margin: 0;
+  color: #5a3f35;
+  font-family: "TikTok_Sans:SemiBold", var(--font-headline), sans-serif;
+  font-weight: 600;
+  font-size: calc(17.778 / var(--wc-design-w) * 100cqw);
+  line-height: normal;
+}
+
+.sd-s2__credit {
+  margin: 0;
+  color: #5a3f35;
+  font-family: "Skia:Bold", Skia, var(--font-headline), sans-serif;
+  font-weight: 700;
+  font-size: calc(21.717 / var(--wc-design-w) * 100cqw);
+  line-height: normal;
+  text-align: right;
+  text-transform: uppercase;
+}
+
+.sd-s2__credit--by {
+  line-height: 1.15;
+}
+
+.sd-s2__swipe-en {
+  margin: 0;
+  color: #5a3f35;
+  font-family: "Skia:Bold", Skia, var(--font-headline), sans-serif;
+  font-weight: 700;
+  font-size: calc(59.165 / var(--wc-design-w) * 100cqw);
+  line-height: normal;
+}
+
+.sd-s2__swipe-zh {
+  margin: 0;
+  color: #8b7066;
+  font-family: "TikTok_Display:Medium", var(--font-headline), sans-serif;
+  font-weight: 500;
+  font-size: calc(34.432 / var(--wc-design-w) * 100cqw);
+  line-height: normal;
+}
+
+.sd-s2__tag {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: calc(12 / var(--wc-design-w) * 100cqw);
+  width: 100%;
+  height: 100%;
+  border-radius: calc(33.86 / var(--wc-design-w) * 100cqw);
+  box-sizing: border-box;
+}
+
+.sd-s2__tag--filled {
+  background: #5a3f35;
+}
+
+.sd-s2__tag--outline {
+  border: calc(3.88 / var(--wc-design-w) * 100cqw) solid #5a3f35;
+  background: transparent;
+}
+
+.sd-s2__tag-text {
+  display: block;
+  color: #fff;
+  font-family: "TikTok_Sans:Bold", var(--font-headline), sans-serif;
+  font-weight: 700;
+  font-size: calc(19.35 / var(--wc-design-w) * 100cqw);
+  line-height: 1;
+  white-space: nowrap;
+  text-transform: uppercase;
+}
+
+.sd-s2__tag-text--dark {
+  color: #5a3f35;
+}
+
+.sd-s2__year-hash {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  color: #5a3f35;
+  font-family: var(--font-zen-dots);
+  font-size: calc(45.408 / var(--wc-design-w) * 100cqw);
+  line-height: normal;
+}
+
+.sd-s2__year {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  color: #5a3f35;
+  font-family: "Skia:Black", Skia, var(--font-headline), sans-serif;
+  font-weight: 900;
+  font-size: calc(55.499 / var(--wc-design-w) * 100cqw);
+  line-height: normal;
+}
+
+/* ── Spring Dango · Festive incentive (Figma 38:49336) ── */
+
+.sd-s3 .wc-scaled-canvas__viewport {
+  background: #f5edd6;
+}
+
+.sd-s3__canvas {
+  position: absolute;
+  inset: 0;
+  background: #f5edd6;
+  overflow: hidden;
+}
+
+.sd-s3__title {
+  margin: 0;
+  color: #5a3f35;
+  font-family: "Skia:Bold", Skia, var(--font-headline), sans-serif;
+  font-weight: 700;
+  font-size: calc(58.502 / var(--wc-design-w) * 100cqw);
+  line-height: normal;
+}
+
+.sd-s3__subtitle {
+  margin: 0;
+  color: #8b7066;
+  font-family: "TikTok_Display:Medium", var(--font-headline), sans-serif;
+  font-weight: 500;
+  font-size: calc(35.496 / var(--wc-design-w) * 100cqw);
+  line-height: normal;
+}
+
+.sd-s3__body {
+  margin: 0;
+  color: #5a3f35;
+  font-family: "PingFang SC", var(--font-body), sans-serif;
+  font-weight: 400;
+  font-size: calc(32 / var(--wc-design-w) * 100cqw);
+  line-height: normal;
+}
+
+.sd-s3__brand-logo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+}
+
+.sd-s3__credit {
+  margin: 0;
+  color: #5a3f35;
+  font-family: "Skia:Bold", Skia, var(--font-headline), sans-serif;
+  font-weight: 700;
+  font-size: calc(21.717 / var(--wc-design-w) * 100cqw);
+  line-height: normal;
+  text-align: right;
+  text-transform: uppercase;
+}
+
+.sd-s3__credit--by {
+  line-height: 1.15;
+}
+
+.sd-s3__tile {
+  width: 100%;
+  height: 100%;
+  border-radius: calc(22 / var(--wc-design-w) * 100cqw);
+  background: #e4d3ad;
+  overflow: hidden;
+}
+
+.sd-s3__tile-gif {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+}
+
+.sd-s3__tile-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+}
+
+.sd-s3__bullet {
+  margin: 0;
+  padding: 0 0 0 calc(34.5 / var(--wc-design-w) * 100cqw);
+  color: #5a3f35;
+  font-family: "PingFang SC", var(--font-body), sans-serif;
+  font-weight: 400;
+  font-size: calc(23 / var(--wc-design-w) * 100cqw);
+  line-height: normal;
+  list-style: disc;
+}
+
+.sd-s3__bullet li {
+  margin: 0;
+}
+
+.sd-s3__tag {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: calc(12 / var(--wc-design-w) * 100cqw);
+  width: 100%;
+  height: 100%;
+  border-radius: calc(33.86 / var(--wc-design-w) * 100cqw);
+  box-sizing: border-box;
+}
+
+.sd-s3__tag--filled {
+  background: #5a3f35;
+}
+
+.sd-s3__tag--outline {
+  border: calc(3.88 / var(--wc-design-w) * 100cqw) solid #5a3f35;
+  background: transparent;
+}
+
+.sd-s3__tag-text {
+  display: block;
+  color: #fff;
+  font-family: "TikTok_Sans:Bold", var(--font-headline), sans-serif;
+  font-weight: 700;
+  font-size: calc(19.35 / var(--wc-design-w) * 100cqw);
+  line-height: 1;
+  white-space: nowrap;
+  text-transform: uppercase;
+}
+
+.sd-s3__tag-text--dark {
+  color: #5a3f35;
+}
+
+.sd-s3__year-hash {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  color: #5a3f35;
+  font-family: var(--font-zen-dots);
+  font-size: calc(45.408 / var(--wc-design-w) * 100cqw);
+  line-height: normal;
+}
+
+.sd-s3__year {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  color: #5a3f35;
+  font-family: "Skia:Black", Skia, var(--font-headline), sans-serif;
+  font-weight: 900;
+  font-size: calc(55.499 / var(--wc-design-w) * 100cqw);
+  line-height: normal;
+}
+
+/* ── Spring Dango · Dynamic fun (Figma 38:49522) ── */
+
+.sd-s5 .wc-scaled-canvas__viewport {
+  background: #f5edd6;
+}
+
+.sd-s5__canvas {
+  position: absolute;
+  inset: 0;
+  background: #f5edd6;
+  overflow: hidden;
+}
+
+.sd-s5__title {
+  margin: 0;
+  color: #5a3f35;
+  font-family: "Skia:Bold", Skia, var(--font-headline), sans-serif;
+  font-weight: 700;
+  font-size: calc(58.502 / var(--wc-design-w) * 100cqw);
+  line-height: normal;
+  white-space: nowrap;
+}
+
+.sd-s5__subtitle {
+  margin: 0;
+  color: #8b7066;
+  font-family: "TikTok_Display:Medium", var(--font-headline), sans-serif;
+  font-weight: 500;
+  font-size: calc(35.496 / var(--wc-design-w) * 100cqw);
+  line-height: normal;
+}
+
+.sd-s5__body {
+  margin: 0;
+  color: #5a3f35;
+  font-family: "PingFang SC", var(--font-body), sans-serif;
+  font-weight: 400;
+  font-size: calc(32 / var(--wc-design-w) * 100cqw);
+  line-height: normal;
+}
+
+.sd-s5__brand-logo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+}
+
+.sd-s5__credit {
+  margin: 0;
+  color: #5a3f35;
+  font-family: "Skia:Bold", Skia, var(--font-headline), sans-serif;
+  font-weight: 700;
+  font-size: calc(21.717 / var(--wc-design-w) * 100cqw);
+  line-height: normal;
+  text-align: right;
+  text-transform: uppercase;
+}
+
+.sd-s5__credit--by {
+  line-height: 1.15;
+}
+
+.sd-s5__tile {
+  width: 100%;
+  height: 100%;
+  border-radius: calc(22 / var(--wc-design-w) * 100cqw);
+  background: #e4d3ad;
+  overflow: hidden;
+}
+
+.sd-s5__tile-gif {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+}
+
+.sd-s5__bullet {
+  margin: 0;
+  padding: 0 0 0 calc(34.5 / var(--wc-design-w) * 100cqw);
+  color: #5a3f35;
+  font-family: "PingFang SC", var(--font-body), sans-serif;
+  font-weight: 400;
+  font-size: calc(23 / var(--wc-design-w) * 100cqw);
+  line-height: normal;
+  list-style: disc;
+}
+
+.sd-s5__bullet li {
+  margin: 0;
+}
+
+.sd-s5__tag {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: calc(12 / var(--wc-design-w) * 100cqw);
+  width: 100%;
+  height: 100%;
+  border-radius: calc(33.86 / var(--wc-design-w) * 100cqw);
+  box-sizing: border-box;
+}
+
+.sd-s5__tag--filled {
+  background: #5a3f35;
+}
+
+.sd-s5__tag--outline {
+  border: calc(3.88 / var(--wc-design-w) * 100cqw) solid #5a3f35;
+  background: transparent;
+}
+
+.sd-s5__tag-text {
+  display: block;
+  color: #fff;
+  font-family: "TikTok_Sans:Bold", var(--font-headline), sans-serif;
+  font-weight: 700;
+  font-size: calc(19.35 / var(--wc-design-w) * 100cqw);
+  line-height: 1;
+  white-space: nowrap;
+  text-transform: uppercase;
+}
+
+.sd-s5__tag-text--dark {
+  color: #5a3f35;
+}
+
+.sd-s5__year-hash {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  color: #5a3f35;
+  font-family: var(--font-zen-dots);
+  font-size: calc(45.408 / var(--wc-design-w) * 100cqw);
+  line-height: normal;
+}
+
+.sd-s5__year {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  color: #5a3f35;
+  font-family: "Skia:Black", Skia, var(--font-headline), sans-serif;
+  font-weight: 900;
+  font-size: calc(55.499 / var(--wc-design-w) * 100cqw);
+  line-height: normal;
+}
+
+/* ── Spring Dango · Creative thinking (Figma 36:47446) ── */
+
+.sd-s1 .wc-scaled-canvas__viewport {
+  background: #f5edd6;
+}
+
+.sd-s1__canvas {
+  position: absolute;
+  inset: 0;
+  background: #f5edd6;
+  overflow: hidden;
+}
+
+.sd-s1__title {
+  margin: 0;
+  color: #5a3f35;
+  font-family: "Skia:Bold", Skia, var(--font-headline), sans-serif;
+  font-weight: 700;
+  font-size: calc(58.502 / var(--wc-design-w) * 100cqw);
+  line-height: normal;
+}
+
+.sd-s1__subtitle {
+  margin: 0;
+  color: #8b7066;
+  font-family: "TikTok_Display:Medium", var(--font-headline), sans-serif;
+  font-weight: 500;
+  font-size: calc(35.496 / var(--wc-design-w) * 100cqw);
+  line-height: normal;
+}
+
+.sd-s1__preview-gif,
+.sd-s4__preview-gif {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  user-select: none;
+}
+
+.sd-s1__credit {
+  margin: 0;
+  color: #5a3f35;
+  font-family: "Skia:Bold", Skia, var(--font-headline), sans-serif;
+  font-weight: 700;
+  font-size: calc(21.717 / var(--wc-design-w) * 100cqw);
+  line-height: normal;
+  text-align: right;
+  text-transform: uppercase;
+}
+
+.sd-s1__credit--by {
+  line-height: 1.15;
+}
+
+.sd-s1__ellipse {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+}
+
+.sd-s1__node-label {
+  margin: 0;
+  color: #5a3f35;
+  font-family: "PingFang SC", var(--font-body), sans-serif;
+  font-weight: 500;
+  font-size: calc(28.661 / var(--wc-design-w) * 100cqw);
+  line-height: normal;
+  text-align: center;
+}
+
+.sd-s1__node-label--lg {
+  font-size: calc(40 / var(--wc-design-w) * 100cqw);
+}
+
+.sd-s1__arrow {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+}
+
+.sd-s1__tag {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: calc(12 / var(--wc-design-w) * 100cqw);
+  width: 100%;
+  height: 100%;
+  border-radius: calc(33.86 / var(--wc-design-w) * 100cqw);
+  box-sizing: border-box;
+}
+
+.sd-s1__tag--filled {
+  background: #5a3f35;
+}
+
+.sd-s1__tag--outline {
+  border: calc(3.88 / var(--wc-design-w) * 100cqw) solid #5a3f35;
+  background: transparent;
+}
+
+.sd-s1__tag-text {
+  display: block;
+  color: #fff;
+  font-family: "TikTok_Sans:Bold", var(--font-headline), sans-serif;
+  font-weight: 700;
+  font-size: calc(19.35 / var(--wc-design-w) * 100cqw);
+  line-height: 1;
+  white-space: nowrap;
+  text-transform: uppercase;
+}
+
+.sd-s1__tag-text--dark {
+  color: #5a3f35;
+}
+
+.sd-s1__year-hash {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  color: #5a3f35;
+  font-family: var(--font-zen-dots);
+  font-size: calc(45.408 / var(--wc-design-w) * 100cqw);
+  line-height: normal;
+}
+
+.sd-s1__year {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  color: #5a3f35;
+  font-family: "Skia:Black", Skia, var(--font-headline), sans-serif;
+  font-weight: 900;
+  font-size: calc(55.499 / var(--wc-design-w) * 100cqw);
+  line-height: normal;
+}
+
+/* ── Spring Dango · Localized design (Figma 38:49436) ── */
+
+.sd-s4 .wc-scaled-canvas__viewport {
+  background: #f5edd6;
+}
+
+.sd-s4__canvas {
+  position: absolute;
+  inset: 0;
+  background: #f5edd6;
+  overflow: hidden;
+}
+
+.sd-s4__bg-cat {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+  user-select: none;
+}
+
+.sd-s4__title {
+  margin: 0;
+  color: #5a3f35;
+  font-family: "Skia:Bold", Skia, var(--font-headline), sans-serif;
+  font-weight: 700;
+  font-size: calc(58.502 / var(--wc-design-w) * 100cqw);
+  line-height: normal;
+}
+
+.sd-s4__subtitle {
+  margin: 0;
+  color: #8b7066;
+  font-family: "TikTok_Display:Medium", var(--font-headline), sans-serif;
+  font-weight: 500;
+  font-size: calc(35.496 / var(--wc-design-w) * 100cqw);
+  line-height: normal;
+}
+
+.sd-s4__credit {
+  margin: 0;
+  color: #5a3f35;
+  font-family: "Skia:Bold", Skia, var(--font-headline), sans-serif;
+  font-weight: 700;
+  font-size: calc(21.717 / var(--wc-design-w) * 100cqw);
+  line-height: normal;
+  text-align: right;
+  text-transform: uppercase;
+}
+
+.sd-s4__credit--by {
+  line-height: 1.15;
+}
+
+.sd-s4__pill {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border-radius: calc(30.5 / var(--wc-design-w) * 100cqw);
+  background: #5a3f35;
+  color: #fff;
+  font-family: "PingFang SC", var(--font-body), sans-serif;
+  font-weight: 500;
+  font-size: calc(28.661 / var(--wc-design-w) * 100cqw);
+  line-height: normal;
+}
+
+.sd-s4__tile {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: calc(22 / var(--wc-design-w) * 100cqw);
+  pointer-events: none;
+  user-select: none;
+}
+
+.sd-s4__tag {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: calc(12 / var(--wc-design-w) * 100cqw);
+  width: 100%;
+  height: 100%;
+  border-radius: calc(33.86 / var(--wc-design-w) * 100cqw);
+  box-sizing: border-box;
+}
+
+.sd-s4__tag--filled {
+  background: #5a3f35;
+}
+
+.sd-s4__tag--outline {
+  border: calc(3.88 / var(--wc-design-w) * 100cqw) solid #5a3f35;
+  background: transparent;
+}
+
+.sd-s4__tag-text {
+  display: block;
+  color: #fff;
+  font-family: "TikTok_Sans:Bold", var(--font-headline), sans-serif;
+  font-weight: 700;
+  font-size: calc(19.35 / var(--wc-design-w) * 100cqw);
+  line-height: 1;
+  white-space: nowrap;
+  text-transform: uppercase;
+}
+
+.sd-s4__tag-text--dark {
+  color: #5a3f35;
+}
+
+.sd-s4__year-hash {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  color: #5a3f35;
+  font-family: var(--font-zen-dots);
+  font-size: calc(45.408 / var(--wc-design-w) * 100cqw);
+  line-height: normal;
+}
+
+.sd-s4__year {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  color: #5a3f35;
+  font-family: "Skia:Black", Skia, var(--font-headline), sans-serif;
+  font-weight: 900;
+  font-size: calc(55.499 / var(--wc-design-w) * 100cqw);
+  line-height: normal;
+}

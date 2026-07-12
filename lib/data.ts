@@ -105,6 +105,10 @@ export type FolderData = {
   slug: string;
   title1: string;
   title2: string;
+  /** Top small label, e.g. "#2026". */
+  subtitle1?: string;
+  /** Lower tagline below titles, e.g. "#TikTok Lite". */
+  subtitle2?: string;
   frontColor?: string;
   backColor?: string;
 };
@@ -122,8 +126,8 @@ export const foldersData: FolderData[] = [
   {
     id: "spring-dango-points",
     slug: "spring-dango-points",
-    title1: "SPRING",
-    title2: "DANGO",
+    title1: "MANEKINEKO",
+    title2: "MEME",
     frontColor: "#FE6358",
     backColor: "#F43B2D",
   },
@@ -138,13 +142,23 @@ export const foldersData: FolderData[] = [
   {
     id: "mava-social-media",
     slug: "mava-social-media",
-    title1: "MAVA",
-    title2: "SOCIAL",
+    title1: "SPRING SAKURA",
+    title2: "COLLECTION",
+    subtitle2: "#TIKTOK",
     frontColor: "#00CAEA",
     backColor: "#11AFE3",
   },
-  { id: "manekineko-meme", slug: "manekineko-meme", title1: "MANEKINEKO", title2: "MEME" },
-  { id: "early-creations", slug: "early-creations", title1: "EARLY", title2: "CREATIONS" },
+  { id: "manekineko-meme", slug: "manekineko-meme", title1: "AI WORKFLOW", title2: "DESIGN" },
+  {
+    id: "early-creations",
+    slug: "early-creations",
+    title1: "MAVA BRAND",
+    title2: "SOCIAL",
+    subtitle1: "#2025",
+    subtitle2: "#Layout Template Design",
+    frontColor: "#CDCDCD",
+    backColor: "#B2B2B2",
+  },
 ];
 
 export type CreativeProjectDetail = {
@@ -186,10 +200,10 @@ export const creativeProjectDetails: Record<string, CreativeProjectDetail> = {
       "A mascot-driven sticker pack that balances humor, gesture, and a loud, collectible composition.",
   },
   "early-creations": {
-    title: "Early Creations",
-    date: "2022.1–2023.1",
+    title: "Mava Brand Visual Design",
+    date: "2025",
     description:
-      "An early archive of experiments that leans into collage, contrast, and rough-edged visual play.",
+      "Oriental travel aesthetics for MAVA — grayscale symbiosis, material storytelling, and unified social templates.",
   },
 };
 

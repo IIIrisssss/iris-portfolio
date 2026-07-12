@@ -2,10 +2,10 @@
 
 import type { CSSProperties } from "react";
 import type { CaseStudyConfig } from "@/lib/creativeCaseStudies";
+import { resolveCaseStudyBody } from "@/lib/creativeCaseStudies/bodyComponents";
 
-import { CreativeCaseStudyFooter } from "./CreativeCaseStudyFooter";
-import { WorldcupScrollMotion } from "./motion/WorldcupScrollMotion";
-import { WorldcupBody } from "./sections/WorldcupBody";
+import { CreativeCaseStudyBack } from "./CreativeCaseStudyBack";
+import { CreativeCaseStudyNav } from "./CreativeCaseStudyNav";
 
 import "./CreativeCaseStudy.css";
 import "./sections/worldcup-sections.css";
@@ -15,7 +15,8 @@ type CreativeCaseStudyProps = {
 };
 
 export function CreativeCaseStudy({ config }: CreativeCaseStudyProps) {
-  const isWorldcup = config.slug === "worldcup-campaign";
+  const Body = resolveCaseStudyBody(config.slug);
+  const heroBackground = config.theme.heroBackground;
 
   const content = (
     <div
@@ -23,32 +24,39 @@ export function CreativeCaseStudy({ config }: CreativeCaseStudyProps) {
       style={
         {
           "--case-body-color": config.theme.body,
+          "--case-margin-color": config.theme.marginColor ?? "#eaeaea",
           "--case-footer-link-color": config.theme.footerLink ?? "#2c2c2c",
         } as CSSProperties
       }
     >
-      <header className="creative-case-study__hero" aria-label="Project hero">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={config.hero.src}
-          alt={config.hero.alt}
-          className="creative-case-study__hero-image"
-          loading="eager"
-          decoding="async"
-        />
-      </header>
+      <CreativeCaseStudyBack />
+      <CreativeCaseStudyNav slug={config.slug} />
+      <div className="creative-case-study__shell">
+        <header
+          className={[
+            "creative-case-study__hero",
+            heroBackground === "white" ? "creative-case-study__hero--white" : "",
+          ]
+            .filter(Boolean)
+            .join(" ")}
+          aria-label="Project hero"
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={config.hero.src}
+            alt={config.hero.alt}
+            className="creative-case-study__hero-image"
+            loading="eager"
+            decoding="async"
+          />
+        </header>
 
-      <div className="creative-case-study__body">
-        {isWorldcup ? <WorldcupBody /> : null}
+        <div className="creative-case-study__body">
+          <Body />
+        </div>
       </div>
-
-      <CreativeCaseStudyFooter />
     </div>
   );
-
-  if (isWorldcup) {
-    return <WorldcupScrollMotion>{content}</WorldcupScrollMotion>;
-  }
 
   return content;
 }

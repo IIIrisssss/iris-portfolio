@@ -11,6 +11,11 @@ import { useLanguage } from "./LanguageProvider";
 import { RevealMask } from "./RevealMask";
 import { SectionTitleMark } from "./SectionTitleMark";
 import "./PortfolioFolders.css";
+import "./PortfolioFolders.worldcup.css";
+
+/** Panel-Folder-Back — Figma 441.472 × 333.559 (path normalized to viewBox origin) */
+const FOLDER_BACK_PATH =
+  "M441.472 31.969C441.472 14.313 427.159 0 409.503 0H295.956C291.038 0 286.186 1.135 281.777 3.316L221.348 33.219C216.94 35.401 212.088 36.536 207.169 36.536H32.969C15.313 36.536 1 50.849 1 68.505V301.59C1 319.246 15.313 333.558 32.969 333.558H409.503C427.159 333.558 441.472 319.246 441.472 301.59V31.969Z";
 
 export function PortfolioFolders() {
   const { locale } = useLanguage();
@@ -107,6 +112,9 @@ function FolderCard({
       : {}),
   } as CSSProperties;
 
+  const isWorldcup = data.id === "worldcup-campaign";
+  const assetBase = isWorldcup ? "/folders/worldcup" : "/folders/figma-assets";
+
   return (
     <motion.button
       type="button"
@@ -137,26 +145,39 @@ function FolderCard({
     >
       <span className="sr-only">{`${data.title1} ${data.title2}`}</span>
 
-      <span className="portfolio-folder-wrapper">
+      <span
+        className={[
+          "portfolio-folder-wrapper",
+          isWorldcup ? "portfolio-folder-wrapper--worldcup" : "",
+        ]
+          .filter(Boolean)
+          .join(" ")}
+      >
         <span className="portfolio-folder-hover-area" />
 
         <span className="portfolio-folder-container">
           <span className="folder-underlay">
             <span className="folder-layer folder-back">
-              <span className="folder-back-tab" />
-              <span className="folder-back-main" />
+              <svg
+                className="folder-back-svg"
+                viewBox="0 0 441.472 333.559"
+                fill="none"
+                aria-hidden="true"
+              >
+                <path d={FOLDER_BACK_PATH} fill="var(--folder-back-color, #0D41CF)" />
+              </svg>
             </span>
 
             <span className="folder-layer folder-asset-kong">
-              <img src="/folders/figma-assets/kong.png" alt="" />
+              <img src={`${assetBase}/kong.png`} alt="" />
             </span>
 
             <span className="folder-layer folder-asset-cats">
-              <img src="/folders/figma-assets/cat-stickers.png" alt="" />
+              <img src={`${assetBase}/cat-stickers.png`} alt="" />
             </span>
 
             <span className="folder-layer folder-asset-horse">
-              <img src="/folders/figma-assets/horse-rider.png" alt="" />
+              <img src={`${assetBase}/horse-rider.png`} alt="" />
             </span>
           </span>
 
@@ -164,10 +185,10 @@ function FolderCard({
             <span className="portfolio-folder-front-frost__block" aria-hidden="true" />
             <span className="portfolio-folder-front-frost__scene">
               <span className="folder-layer folder-asset-cats folder-asset-cats--frost">
-                <img src="/folders/figma-assets/cat-stickers.png" alt="" />
+                <img src={`${assetBase}/cat-stickers.png`} alt="" />
               </span>
               <span className="folder-layer folder-asset-horse folder-asset-horse--frost">
-                <img src="/folders/figma-assets/horse-rider.png" alt="" />
+                <img src={`${assetBase}/horse-rider.png`} alt="" />
               </span>
             </span>
             <span className="portfolio-folder-front-frost__tint" aria-hidden="true" />
@@ -175,10 +196,10 @@ function FolderCard({
 
           <span className="folder-layer portfolio-folder-front-glass">
             <span className="portfolio-folder-titles">
-              <span className="folder-text-subtitle1">#2026</span>
+              <span className="folder-text-subtitle1">{data.subtitle1 ?? "#2026"}</span>
               <span className="folder-text-title1">{data.title1}</span>
               <span className="folder-text-title2">{data.title2}</span>
-              <span className="folder-text-subtitle2">#TikTok Lite</span>
+              <span className="folder-text-subtitle2">{data.subtitle2 ?? "#TikTok Lite"}</span>
             </span>
 
             <span className="portfolio-folder-logo">
@@ -186,25 +207,47 @@ function FolderCard({
             </span>
 
             <span className="folder-asset-paperclip">
-              <img src="/folders/paperclip.png?v=3" alt="" />
+              <img
+                src={
+                  isWorldcup
+                    ? `${assetBase}/paperclip.png`
+                    : "/folders/paperclip.png?v=3"
+                }
+                alt=""
+              />
             </span>
           </span>
 
           <span className="folder-layer folder-asset-crowned-cat">
             <img
               className="folder-crowned-cat-default"
-              src="/folders/figma-assets/crowned-cat-default.png"
+              src={`${assetBase}/crowned-cat-default.png`}
               alt=""
             />
             <img
               className="folder-crowned-cat-hover"
-              src="/folders/figma-assets/crowned-cat-hover.png"
+              src={`${assetBase}/crowned-cat-hover.png`}
               alt=""
             />
           </span>
 
           <span className="folder-layer folder-asset-peanut">
-            <img src="/folders/figma-assets/peanut.png" alt="" />
+            {isWorldcup ? (
+              <>
+                <img
+                  className="folder-peanut-default"
+                  src={`${assetBase}/peanut-default.png`}
+                  alt=""
+                />
+                <img
+                  className="folder-peanut-hover"
+                  src={`${assetBase}/peanut-hover.png`}
+                  alt=""
+                />
+              </>
+            ) : (
+              <img src={`${assetBase}/peanut.png`} alt="" />
+            )}
           </span>
         </span>
       </span>
