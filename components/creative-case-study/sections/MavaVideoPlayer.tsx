@@ -4,9 +4,10 @@ import { useRef, useState } from "react";
 
 type MavaVideoPlayerProps = {
   src: string;
+  poster?: string;
 };
 
-export function MavaVideoPlayer({ src }: MavaVideoPlayerProps) {
+export function MavaVideoPlayer({ src, poster }: MavaVideoPlayerProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [playing, setPlaying] = useState(false);
 
@@ -37,6 +38,7 @@ export function MavaVideoPlayer({ src }: MavaVideoPlayerProps) {
           ref={videoRef}
           className="mava-video-player__video"
           src={src}
+          poster={poster}
           playsInline
           preload="metadata"
           onEnded={() => setPlaying(false)}

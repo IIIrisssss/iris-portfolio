@@ -1,0 +1,143 @@
+/* Early Creations folder only — Figma 340:12086 (default) / 348:13272 (hover) */
+
+/* No crowned cat in this design */
+.portfolio-folder-wrapper--early-creations .folder-asset-crowned-cat {
+  display: none;
+}
+
+/* Kong — phone slice, inner 143.462×293.246, rotate -19.5deg */
+.portfolio-folder-wrapper--early-creations .folder-asset-kong {
+  left: 0.42%;
+  top: 1.23%;
+  width: 32.5%;
+  height: 87.91%;
+  z-index: 2;
+  overflow: hidden;
+  border-radius: 0;
+  box-shadow: none;
+  filter: none;
+  transform: rotate(-19.5deg) scale(2);
+  transform-origin: center center;
+}
+
+.portfolio-folder-wrapper--early-creations .folder-asset-kong img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center center;
+}
+
+.portfolio-folder-wrapper--early-creations:hover .folder-asset-kong {
+  transform: translate(-6.12%, -12.59%) rotate(-19.5deg) scale(2);
+}
+
+/* Horse — card art via CSS rounded mask, no shadow */
+.portfolio-folder-wrapper--early-creations .folder-asset-horse {
+  left: 58.32%;
+  top: 1.5%;
+  width: 39.85%;
+  height: 87.55%;
+  z-index: 4;
+  overflow: hidden;
+  border-radius: 10px;
+  filter: none;
+  box-shadow: none;
+  transform: rotate(30.88deg);
+  transform-origin: center center;
+}
+
+.portfolio-folder-wrapper--early-creations .folder-asset-horse img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+}
+
+.portfolio-folder-wrapper--early-creations:hover .folder-asset-horse,
+.portfolio-folder-wrapper--early-creations:hover .folder-asset-horse--frost {
+  transform: translate(11.78%, -26.98%) rotate(30.88deg);
+}
+
+/* Cat stickers — inner 270.765×275.627, rotate 18.01deg */
+.portfolio-folder-wrapper--early-creations .folder-asset-cats {
+  left: 17.21%;
+  top: -0.4%;
+  width: 61.33%;
+  height: 82.63%;
+  z-index: 3;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.25);
+  transform: rotate(18.01deg);
+  transform-origin: center center;
+}
+
+.portfolio-folder-wrapper--early-creations .folder-asset-cats img {
+  object-fit: cover;
+}
+
+.portfolio-folder-wrapper--early-creations:hover .folder-asset-cats,
+.portfolio-folder-wrapper--early-creations:hover .folder-asset-cats--frost {
+  transform: translate(0.45%, -28.18%) rotate(18.01deg);
+}
+
+.portfolio-folder-wrapper--early-creations .folder-asset-cats--frost {
+  z-index: 3;
+  box-shadow: none;
+}
+
+.portfolio-folder-wrapper--early-creations .folder-asset-horse--frost {
+  z-index: 4;
+}
+
+/* Paperclip — on front panel, flips with cover */
+.portfolio-folder-wrapper--early-creations .portfolio-folder-front-glass .folder-asset-paperclip {
+  position: absolute;
+  left: 24.47%;
+  top: -24%;
+  width: 15.17%;
+  height: 42%;
+  z-index: 12;
+  overflow: visible;
+  transform: none;
+  transition: none;
+}
+
+.portfolio-folder-wrapper--early-creations .folder-asset-paperclip img {
+  position: static;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Peanut — on front panel, flips with cover */
+.portfolio-folder-wrapper--early-creations .portfolio-folder-front-glass .folder-asset-peanut--front {
+  position: absolute;
+  left: 46.66%;
+  top: -5.63%;
+  width: 53.46%;
+  height: 105.9%;
+  z-index: 11;
+  overflow: hidden;
+  border-radius: 31px;
+  filter: drop-shadow(0px 5.072px 16.907px rgba(0, 0, 0, 0.25));
+  transform: rotate(180deg) scaleY(-1);
+  transform-origin: center center;
+  transition: none;
+}
+
+.portfolio-folder-wrapper--early-creations .folder-asset-peanut--front img {
+  position: absolute;
+  width: 100.18%;
+  height: 112.46%;
+  left: -0.09%;
+  top: 0;
+  object-fit: cover;
+}
+
+/* Peanut lives on front glass for early-creations — underlay copy not used */

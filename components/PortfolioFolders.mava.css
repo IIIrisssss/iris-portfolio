@@ -1,0 +1,142 @@
+/* Mava / Spring Sakura folder only — Figma 340:12019 (default) / 348:13142 (hover)
+   Positions use pre-rotation inner boxes (design_context), not rotated AABB metadata. */
+
+/* Logo — right side, same as folder 1 (worldcup) */
+.portfolio-folder-wrapper--mava .portfolio-folder-logo,
+.portfolio-folder-wrapper--mava-social-media .portfolio-folder-logo {
+  left: 55.72%;
+  top: 82.62%;
+  width: 39.04%;
+}
+
+/* Kong — top layer */
+.portfolio-folder-wrapper--mava .folder-asset-kong {
+  left: -11.1%;
+  top: 1.84%;
+  width: 61.11%;
+  height: 73.78%;
+  z-index: 4;
+  overflow: hidden;
+  border-radius: 0;
+  box-shadow: none;
+  filter: drop-shadow(0px 6px 20px rgba(0, 0, 0, 0.25));
+  transform: rotate(-15.5deg);
+  transform-origin: center center;
+}
+
+.portfolio-folder-wrapper--mava .folder-asset-kong img {
+  position: absolute;
+  width: 106.51%;
+  height: 107%;
+  left: -6.45%;
+  top: -7%;
+  object-fit: cover;
+}
+
+.portfolio-folder-wrapper--mava:hover .folder-asset-kong {
+  transform: translate(-7.93%, -28%) rotate(-15.5deg);
+}
+
+/* Horse — middle layer */
+.portfolio-folder-wrapper--mava .folder-asset-horse {
+  left: 66.13%;
+  top: 4.32%;
+  width: 31.23%;
+  height: 86.42%;
+  z-index: 3;
+  filter: none;
+  box-shadow: none;
+  overflow: visible;
+  transform: rotate(19.89deg);
+  transform-origin: center center;
+}
+
+.portfolio-folder-wrapper--mava .folder-asset-horse img {
+  object-fit: cover;
+}
+
+.portfolio-folder-wrapper--mava:hover .folder-asset-horse,
+.portfolio-folder-wrapper--mava:hover .folder-asset-horse--frost {
+  transform: translate(6.58%, -32%) rotate(19.89deg);
+}
+
+/* Cat stickers — bottom layer */
+.portfolio-folder-wrapper--mava .folder-asset-cats {
+  left: 24.09%;
+  top: -0.29%;
+  width: 56.72%;
+  height: 61.51%;
+  z-index: 2;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.25);
+  transform: rotate(11.83deg);
+  transform-origin: center center;
+}
+
+.portfolio-folder-wrapper--mava .folder-asset-cats img {
+  object-fit: cover;
+}
+
+.portfolio-folder-wrapper--mava:hover .folder-asset-cats,
+.portfolio-folder-wrapper--mava:hover .folder-asset-cats--frost {
+  transform: translate(1.83%, -40%) rotate(11.83deg);
+}
+
+.portfolio-folder-wrapper--mava .folder-asset-cats--frost {
+  z-index: 2;
+  box-shadow: none;
+}
+
+.portfolio-folder-wrapper--mava .folder-asset-horse--frost {
+  z-index: 3;
+}
+
+/* Crowned cat — 4× pre-cropped transparent exports, Figma frame sizes */
+.portfolio-folder-wrapper--mava .folder-asset-crowned-cat {
+  left: 33.52%;
+  top: 53.53%;
+  width: 69.54%;
+  height: 41.07%;
+  overflow: visible;
+  filter: drop-shadow(0px 5.072px 16.907px rgba(0, 0, 0, 0.25));
+  transform: rotate(0deg);
+  transform-origin: center center;
+  transition:
+    transform 0.6s cubic-bezier(0.68, -0.6, 0.32, 1.6),
+    left 0.6s cubic-bezier(0.68, -0.6, 0.32, 1.6),
+    top 0.6s cubic-bezier(0.68, -0.6, 0.32, 1.6),
+    width 0.6s cubic-bezier(0.68, -0.6, 0.32, 1.6),
+    height 0.6s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+}
+
+.portfolio-folder-wrapper--mava .folder-asset-crowned-cat img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center center;
+}
+
+.portfolio-folder-wrapper--mava:hover .folder-asset-crowned-cat {
+  left: 28.33%;
+  top: 38.87%;
+  width: 80.18%;
+  height: 63.78%;
+  transform: rotate(0deg);
+}
+
+/* Peanut */
+.portfolio-folder-wrapper--mava .folder-asset-peanut {
+  left: 8.38%;
+  top: 82.91%;
+  width: 17.21%;
+  height: 22.48%;
+  filter: drop-shadow(0px 5.072px 16.907px rgba(0, 0, 0, 0.25));
+}
+
+.portfolio-folder-wrapper--mava .folder-asset-peanut img {
+  object-fit: contain;
+  object-position: bottom center;
+}

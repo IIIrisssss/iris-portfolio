@@ -12,6 +12,9 @@ import { RevealMask } from "./RevealMask";
 import { SectionTitleMark } from "./SectionTitleMark";
 import "./PortfolioFolders.css";
 import "./PortfolioFolders.worldcup.css";
+import "./PortfolioFolders.osechi.css";
+import "./PortfolioFolders.mava.css";
+import "./PortfolioFolders.early-creations.css";
 
 /** Panel-Folder-Back — Figma 441.472 × 333.559 (path normalized to viewBox origin) */
 const FOLDER_BACK_PATH =
@@ -68,10 +71,11 @@ export function PortfolioFolders() {
       </header>
 
       <div className="portfolio-folders-grid" onMouseLeave={() => setHoveredId(null)}>
-        {foldersData.map((folder) => (
+        {foldersData.map((folder, index) => (
           <FolderCard
             key={folder.id}
             data={folder}
+            shiftUp={index < 3}
             isHovered={hoveredId === folder.id}
             isDimmed={hoveredId !== null && hoveredId !== folder.id}
             isPressed={pressedId === folder.id}
@@ -87,6 +91,7 @@ export function PortfolioFolders() {
 
 function FolderCard({
   data,
+  shiftUp,
   isHovered,
   isDimmed,
   isPressed,
@@ -95,6 +100,7 @@ function FolderCard({
   onSelect,
 }: {
   data: FolderData;
+  shiftUp: boolean;
   isHovered: boolean;
   isDimmed: boolean;
   isPressed: boolean;
@@ -113,12 +119,28 @@ function FolderCard({
   } as CSSProperties;
 
   const isWorldcup = data.id === "worldcup-campaign";
-  const assetBase = isWorldcup ? "/folders/worldcup" : "/folders/figma-assets";
+  const isOsechi = data.id === "new-year-osechi";
+  const isMava = data.id === "mava-social-media";
+  const isEarlyCreations = data.id === "early-creations";
+  const assetBase = isWorldcup
+    ? "/folders/worldcup"
+    : isOsechi
+      ? "/folders/osechi"
+      : isMava
+        ? "/folders/mava"
+        : isEarlyCreations
+          ? "/folders/early-creations"
+          : "/folders/figma-assets";
 
   return (
     <motion.button
       type="button"
-      className="portfolio-folder-button"
+      className={[
+        "portfolio-folder-button",
+        shiftUp ? "portfolio-folder-button--shift-up" : "",
+      ]
+        .filter(Boolean)
+        .join(" ")}
       aria-label={`Open ${data.title1} ${data.title2}`}
       onMouseEnter={onHoverStart}
       onMouseLeave={onHoverEnd}
@@ -149,6 +171,10 @@ function FolderCard({
         className={[
           "portfolio-folder-wrapper",
           isWorldcup ? "portfolio-folder-wrapper--worldcup" : "",
+          isOsechi ? "portfolio-folder-wrapper--osechi" : "",
+          isMava ? "portfolio-folder-wrapper--mava" : "",
+          data.id === "mava-social-media" ? "portfolio-folder-wrapper--mava-social-media" : "",
+          data.id === "early-creations" ? "portfolio-folder-wrapper--early-creations" : "",
         ]
           .filter(Boolean)
           .join(" ")}
@@ -172,12 +198,18 @@ function FolderCard({
               <img src={`${assetBase}/kong.png`} alt="" />
             </span>
 
-            <span className="folder-layer folder-asset-cats">
-              <img src={`${assetBase}/cat-stickers.png`} alt="" />
-            </span>
+            {isOsechi ? (
+              <span className="folder-layer folder-asset-paperclip folder-asset-paperclip--osechi-back">
+                <img src={`${assetBase}/paperclip.png`} alt="" />
+              </span>
+            ) : null}
 
             <span className="folder-layer folder-asset-horse">
               <img src={`${assetBase}/horse-rider.png`} alt="" />
+            </span>
+
+            <span className="folder-layer folder-asset-cats">
+              <img src={`${assetBase}/cat-stickers.png`} alt="" />
             </span>
           </span>
 
@@ -206,49 +238,61 @@ function FolderCard({
               <img src="/folders/figma-assets/folder-logo.svg" alt="" aria-hidden="true" />
             </span>
 
-            <span className="folder-asset-paperclip">
+            {data.id !== "mava-social-media" && !isOsechi ? (
+              <span className="folder-asset-paperclip">
+                <img
+                  src={
+                    isWorldcup || isOsechi || isEarlyCreations
+                      ? `${assetBase}/paperclip.png`
+                      : "/folders/paperclip.png?v=3"
+                  }
+                  alt=""
+                />
+              </span>
+            ) : null}
+
+            {isEarlyCreations ? (
+              <span className="folder-layer folder-asset-peanut folder-asset-peanut--front">
+                <img src={`${assetBase}/peanut.png`} alt="" />
+              </span>
+            ) : null}
+          </span>
+
+          {!isEarlyCreations ? (
+            <span className="folder-layer folder-asset-crowned-cat">
               <img
-                src={
-                  isWorldcup
-                    ? `${assetBase}/paperclip.png`
-                    : "/folders/paperclip.png?v=3"
-                }
+                className="folder-crowned-cat-default"
+                src={`${assetBase}/crowned-cat-default.png`}
+                alt=""
+              />
+              <img
+                className="folder-crowned-cat-hover"
+                src={`${assetBase}/crowned-cat-hover.png`}
                 alt=""
               />
             </span>
-          </span>
+          ) : null}
 
-          <span className="folder-layer folder-asset-crowned-cat">
-            <img
-              className="folder-crowned-cat-default"
-              src={`${assetBase}/crowned-cat-default.png`}
-              alt=""
-            />
-            <img
-              className="folder-crowned-cat-hover"
-              src={`${assetBase}/crowned-cat-hover.png`}
-              alt=""
-            />
-          </span>
-
-          <span className="folder-layer folder-asset-peanut">
-            {isWorldcup ? (
-              <>
-                <img
-                  className="folder-peanut-default"
-                  src={`${assetBase}/peanut-default.png`}
-                  alt=""
-                />
-                <img
-                  className="folder-peanut-hover"
-                  src={`${assetBase}/peanut-hover.png`}
-                  alt=""
-                />
-              </>
-            ) : (
-              <img src={`${assetBase}/peanut.png`} alt="" />
-            )}
-          </span>
+          {!isEarlyCreations ? (
+            <span className="folder-layer folder-asset-peanut">
+              {isWorldcup ? (
+                <>
+                  <img
+                    className="folder-peanut-default"
+                    src={`${assetBase}/peanut-default.png`}
+                    alt=""
+                  />
+                  <img
+                    className="folder-peanut-hover"
+                    src={`${assetBase}/peanut-hover.png`}
+                    alt=""
+                  />
+                </>
+              ) : (
+                <img src={`${assetBase}/peanut.png`} alt="" />
+              )}
+            </span>
+          ) : null}
         </span>
       </span>
     </motion.button>

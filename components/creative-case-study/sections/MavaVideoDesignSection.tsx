@@ -10,6 +10,7 @@ import { MavaVideoPlayer } from "./MavaVideoPlayer";
 const SECTION_BG =
   "/creative/mava-social-media/sections/section-6-video-design.webp";
 const VIDEO_SRC = "/creative/mava-social-media/original-video.mp4";
+const VIDEO_POSTER = "/creative/mava-social-media/video-poster.webp";
 
 const DESIGN_W = JP_FLAG_PRESET_MAVA_WIDE.designWidth;
 const DESIGN_H = 1342;
@@ -38,7 +39,7 @@ export function MavaVideoDesignSection() {
         w={1325}
         h={745.313}
       >
-        <MavaVideoPlayer src={VIDEO_SRC} />
+        <MavaVideoPlayer src={VIDEO_SRC} poster={VIDEO_POSTER} />
       </FigmaPlacement>
 
       <CaseStudyJpFlag

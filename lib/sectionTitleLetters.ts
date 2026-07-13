@@ -18,6 +18,8 @@ export type MagneticTitleLetter = {
 export type MagneticTitleConfig = {
   viewBoxWidth: number;
   viewBoxHeight: number;
+  /** Full-title SVG used to slice letter pieces (replaces expired remote asset URLs). */
+  svgSrc?: string;
   letters: MagneticTitleLetter[];
 };
 
@@ -51,6 +53,7 @@ export const sectionTitleLetters = {
   creativeProjects: {
     viewBoxWidth: 494,
     viewBoxHeight: 108,
+    svgSrc: "/icon/headings/creative-projects-title.svg",
     letters: [
       {
         key: "C",
@@ -320,6 +323,7 @@ export const sectionTitleLetters = {
   moreWorks: {
     viewBoxWidth: 564,
     viewBoxHeight: 59,
+    svgSrc: "/icon/headings/more-work-title.svg",
     letters: [
       {
         key: "M",

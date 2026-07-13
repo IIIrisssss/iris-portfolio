@@ -45,6 +45,42 @@ function getResponsiveSettings(width: number) {
   return { radius: 88, maxTranslation: 18, spring: 0.1, damping: 0.14 };
 }
 
+function isInlineTitleAsset(src: string) {
+  return src.startsWith("data:");
+}
+
+function TitlePieceImage({
+  piece,
+  config,
+}: {
+  piece: MagneticTitleConfig["letters"][number]["pieces"][number];
+  config: MagneticTitleConfig;
+}) {
+  if (isInlineTitleAsset(piece.src) || !config.svgSrc) {
+    return (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img src={piece.src} alt="" className="magnetic-scatter-title__image" />
+    );
+  }
+
+  return (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src={config.svgSrc}
+      alt=""
+      className="magnetic-scatter-title__image magnetic-scatter-title__image--slice"
+      style={{
+        position: "absolute",
+        maxWidth: "none",
+        width: `${(config.viewBoxWidth / piece.width) * 100}%`,
+        height: `${(config.viewBoxHeight / piece.height) * 100}%`,
+        left: `${-(piece.x / piece.width) * 100}%`,
+        top: `${-(piece.y / piece.height) * 100}%`,
+      } satisfies CSSProperties}
+    />
+  );
+}
+
 function MagneticLetter({
   letter,
   config,
@@ -83,8 +119,7 @@ function MagneticLetter({
               height: `${(piece.height / letter.height) * 100}%`,
             } satisfies CSSProperties}
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={piece.src} alt="" className="magnetic-scatter-title__image" />
+            <TitlePieceImage piece={piece} config={config} />
           </span>
         ))}
       </span>
