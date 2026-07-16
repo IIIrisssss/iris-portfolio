@@ -232,8 +232,8 @@ export const heroSlides: HeroSlideData[] = [
     description: "AI时代下技术赋能与视觉表达的融合实践探索",
   },
   {
-    type: "image",
-    src: "/hero-media/3-replacement.png",
+    type: "video",
+    src: "/hero-media/3-replacement.mp4",
     title: "A FUTURE",
     subtitle: "CREATIVE.LQB",
     description: "我是陆78，让技术成为放大 imagination 的引擎",
