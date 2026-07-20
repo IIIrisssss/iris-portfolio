@@ -103,7 +103,7 @@ export function SpringDangoCreativeThinkingSection() {
             h={node.h}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={ellipseSrc(true)} alt="" className="sd-s1__ellipse" draggable={false} />
+            <img src={ellipseSrc(true)} alt="" className="sd-s1__ellipse" draggable={false} loading="lazy" decoding="async" />
           </FigmaPlacement>
         ))}
 
@@ -123,7 +123,7 @@ export function SpringDangoCreativeThinkingSection() {
         {MEDIUM_NODES.map((node) => (
           <FigmaPlacement key={node.label} designHeight={DESIGN_H} x={node.x} y={node.y} w={172.427} h={172.427}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={`${ASSET}/ellipse-md.webp`} alt="" className="sd-s1__ellipse" draggable={false} />
+            <img src={`${ASSET}/ellipse-md.webp`} alt="" className="sd-s1__ellipse" draggable={false} loading="lazy" decoding="async" />
           </FigmaPlacement>
         ))}
 

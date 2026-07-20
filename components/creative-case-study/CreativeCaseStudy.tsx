@@ -3,6 +3,8 @@
 import type { CSSProperties } from "react";
 import type { CaseStudyConfig } from "@/lib/creativeCaseStudies";
 import { resolveCaseStudyBody } from "@/lib/creativeCaseStudies/bodyComponents";
+import { OptimizedImage } from "@/components/OptimizedImage";
+import { CASE_STUDY_CONTENT_SIZES } from "@/lib/imageSizes";
 
 import { CreativeCaseStudyBack } from "./CreativeCaseStudyBack";
 import { CreativeCaseStudyNav } from "./CreativeCaseStudyNav";
@@ -41,13 +43,15 @@ export function CreativeCaseStudy({ config }: CreativeCaseStudyProps) {
             .join(" ")}
           aria-label="Project hero"
         >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          <OptimizedImage
             src={config.hero.src}
             alt={config.hero.alt}
+            width={3840}
+            height={2160}
+            sizes={CASE_STUDY_CONTENT_SIZES}
+            priority
+            quality={88}
             className="creative-case-study__hero-image"
-            loading="eager"
-            decoding="async"
           />
         </header>
 

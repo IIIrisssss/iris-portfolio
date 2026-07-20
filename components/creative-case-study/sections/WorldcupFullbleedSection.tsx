@@ -1,5 +1,7 @@
 import type { CSSProperties } from "react";
 
+import { OptimizedImage } from "@/components/OptimizedImage";
+import { CASE_STUDY_CONTENT_SIZES } from "@/lib/imageSizes";
 import {
   CaseStudyJpFlag,
   JP_FLAG_PRESET_STANDARD,
@@ -68,13 +70,13 @@ export function WorldcupFullbleedSection({
           } as CSSProperties
         }
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
+        <OptimizedImage
           src={imageSrc}
           alt={alt}
+          fill
+          sizes={CASE_STUDY_CONTENT_SIZES}
+          quality={85}
           className="wc-fullbleed-section__image"
-          loading="lazy"
-          decoding="async"
         />
       </div>
       {flagProps ? <CaseStudyJpFlag {...flagProps} /> : null}

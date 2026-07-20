@@ -195,21 +195,21 @@ function FolderCard({
             </span>
 
             <span className="folder-layer folder-asset-kong">
-              <img src={`${assetBase}/kong.png`} alt="" />
+              <img src={`${assetBase}/kong.png`} alt="" loading="lazy" decoding="async" />
             </span>
 
             {isOsechi ? (
               <span className="folder-layer folder-asset-paperclip folder-asset-paperclip--osechi-back">
-                <img src={`${assetBase}/paperclip.png`} alt="" />
+                <img src={`${assetBase}/paperclip.png`} alt="" loading="lazy" decoding="async" />
               </span>
             ) : null}
 
             <span className="folder-layer folder-asset-horse">
-              <img src={`${assetBase}/horse-rider.png`} alt="" />
+              <img src={`${assetBase}/horse-rider.png`} alt="" loading="lazy" decoding="async" />
             </span>
 
             <span className="folder-layer folder-asset-cats">
-              <img src={`${assetBase}/cat-stickers.png`} alt="" />
+              <img src={`${assetBase}/cat-stickers.png`} alt="" loading="lazy" decoding="async" />
             </span>
           </span>
 
@@ -217,10 +217,10 @@ function FolderCard({
             <span className="portfolio-folder-front-frost__block" aria-hidden="true" />
             <span className="portfolio-folder-front-frost__scene">
               <span className="folder-layer folder-asset-cats folder-asset-cats--frost">
-                <img src={`${assetBase}/cat-stickers.png`} alt="" />
+                <img src={`${assetBase}/cat-stickers.png`} alt="" loading="lazy" decoding="async" />
               </span>
               <span className="folder-layer folder-asset-horse folder-asset-horse--frost">
-                <img src={`${assetBase}/horse-rider.png`} alt="" />
+                <img src={`${assetBase}/horse-rider.png`} alt="" loading="lazy" decoding="async" />
               </span>
             </span>
             <span className="portfolio-folder-front-frost__tint" aria-hidden="true" />
@@ -247,13 +247,15 @@ function FolderCard({
                       : "/folders/paperclip.png?v=3"
                   }
                   alt=""
+                  loading="lazy"
+                  decoding="async"
                 />
               </span>
             ) : null}
 
             {isEarlyCreations ? (
               <span className="folder-layer folder-asset-peanut folder-asset-peanut--front">
-                <img src={`${assetBase}/peanut.png`} alt="" />
+                <img src={`${assetBase}/peanut.png`} alt="" loading="lazy" decoding="async" />
               </span>
             ) : null}
           </span>
@@ -264,11 +266,15 @@ function FolderCard({
                 className="folder-crowned-cat-default"
                 src={`${assetBase}/crowned-cat-default.png`}
                 alt=""
+                loading="lazy"
+                decoding="async"
               />
               <img
                 className="folder-crowned-cat-hover"
                 src={`${assetBase}/crowned-cat-hover.png`}
                 alt=""
+                loading="lazy"
+                decoding="async"
               />
             </span>
           ) : null}
@@ -281,15 +287,19 @@ function FolderCard({
                     className="folder-peanut-default"
                     src={`${assetBase}/peanut-default.png`}
                     alt=""
+                    loading="lazy"
+                    decoding="async"
                   />
                   <img
                     className="folder-peanut-hover"
                     src={`${assetBase}/peanut-hover.png`}
                     alt=""
+                    loading="lazy"
+                    decoding="async"
                   />
                 </>
               ) : (
-                <img src={`${assetBase}/peanut.png`} alt="" />
+                <img src={`${assetBase}/peanut.png`} alt="" loading="lazy" decoding="async" />
               )}
             </span>
           ) : null}

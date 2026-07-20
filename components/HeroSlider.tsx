@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { OptimizedImage } from "@/components/OptimizedImage";
+import { HERO_SLIDER_SIZES } from "@/lib/imageSizes";
 import { heroSlides } from "@/lib/data";
 import "./HeroSlider.css";
 
@@ -84,18 +86,19 @@ export function HeroSlider() {
               muted
               loop
               playsInline
+              preload="auto"
               className="hero-media"
             />
           ) : (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
+            <OptimizedImage
               key={slide.src}
               src={slide.src}
               alt={slide.title}
+              fill
+              sizes={HERO_SLIDER_SIZES}
+              priority={currentIndex === 0}
+              quality={88}
               className="hero-media"
-              loading={currentIndex === 0 && slide.type === "image" ? "eager" : "lazy"}
-              decoding="async"
-              fetchPriority={currentIndex === 0 ? "high" : undefined}
             />
           )}
         </Link>

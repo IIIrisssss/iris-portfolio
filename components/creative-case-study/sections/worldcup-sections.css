@@ -354,6 +354,14 @@
   overflow: visible;
 }
 
+.wc-fullbleed-section__frame > span,
+.wc-fullbleed-section__frame > img {
+  position: absolute !important;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+}
+
 .wc-fullbleed-section__frame .wc-figma-placement {
   position: absolute;
 }
