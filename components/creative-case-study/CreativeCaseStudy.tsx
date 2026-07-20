@@ -24,7 +24,7 @@ export function CreativeCaseStudy({ config }: CreativeCaseStudyProps) {
       style={
         {
           "--case-body-color": config.theme.body,
-          "--case-margin-color": config.theme.marginColor ?? "#eaeaea",
+          "--case-margin-color": config.theme.marginColor ?? "#ffffff",
           "--case-footer-link-color": config.theme.footerLink ?? "#2c2c2c",
         } as CSSProperties
       }

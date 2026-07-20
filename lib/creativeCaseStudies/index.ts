@@ -1,6 +1,7 @@
 import { creativeProjectDetails, foldersData } from "@/lib/data";
 
 import { earlyCreationsCaseStudy } from "./earlyCreations";
+import { manekinekoMemeCaseStudy } from "./manekinekoMeme";
 import { mavaSocialMediaCaseStudy } from "./mavaSocialMedia";
 import { osechiCaseStudy } from "./osechi";
 import { springDangoCaseStudy } from "./springDango";
@@ -16,6 +17,7 @@ const CUSTOM_CONFIG_BY_SLUG: Partial<Record<string, CaseStudyConfig>> = {
   "spring-dango-points": springDangoCaseStudy,
   "new-year-osechi": osechiCaseStudy,
   "mava-social-media": mavaSocialMediaCaseStudy,
+  "manekineko-meme": manekinekoMemeCaseStudy,
 };
 
 function getFolderColor(slug: string) {
@@ -39,7 +41,7 @@ function buildGenericCaseStudy(slug: string): CaseStudyConfig | null {
     },
     theme: {
       body: folder?.frontColor ?? "#f3ead8",
-      marginColor: "#eaeaea",
+      marginColor: "#ffffff",
       footerLink: "#2c2c2c",
     },
   };

@@ -12,6 +12,7 @@ export const worldcupCaseStudy: CaseStudyConfig = {
   },
   theme: {
     body: "#004DEE",
+    marginColor: "#ffffff",
     footerLink: "#ffffff",
   },
 };

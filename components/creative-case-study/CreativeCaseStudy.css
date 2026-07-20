@@ -3,7 +3,7 @@
   --case-content-width: min(75rem, 72vw);
   --case-gutter: clamp(1rem, 3vw, 1.75rem);
   --case-back-inset: clamp(1.25rem, 2.5vw, 2rem);
-  --case-margin-color: #eaeaea;
+  --case-margin-color: #ffffff;
   --case-back-color: #2c2c2c;
   --case-body-color: #f3ead8;
   display: flex;
@@ -98,6 +98,7 @@
   margin-inline: auto;
   background: var(--case-body-color);
   box-shadow: 0 4px 60px rgba(0, 0, 0, 0.03);
+  overflow: visible;
 }
 
 .creative-case-study__hero {
@@ -119,6 +120,7 @@
   flex: 1 1 auto;
   width: 100%;
   background: var(--case-body-color);
+  overflow: visible;
 }
 
 @media (max-width: 767px) {

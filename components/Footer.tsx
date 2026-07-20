@@ -54,10 +54,7 @@ const contactValues = {
   phone: "17876520519",
 };
 
-const wechatQr = {
-  en: "https://www.figma.com/api/mcp/asset/0b4f9edc-2ecf-40ab-929e-bf0d78eb0a4f",
-  zh: "https://www.figma.com/api/mcp/asset/d55d6271-9ba4-48c8-ba2f-e115e857c2a3",
-} as const;
+const wechatQrSrc = "/contact/wechat-qr.png";
 
 type CopyKey = "email" | "phone";
 
@@ -98,7 +95,7 @@ function CopyableContact({
 export function Footer() {
   const { locale } = useLanguage();
   const copy = footerCopy[locale];
-  const qrSrc = wechatQr[locale];
+  const qrSrc = wechatQrSrc;
   const [copiedKey, setCopiedKey] = useState<CopyKey | null>(null);
   const copiedTimerRef = useRef<number | null>(null);
 

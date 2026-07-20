@@ -10,19 +10,13 @@ const BRAND_CAT_LOGO = "/creative/spring-dango-points/brand-cat-logo.svg";
 const SWIPE_ARROW = "/creative/spring-dango-points/sections/swipe-arrow.webp";
 
 const DESIGN_H = 1824;
-const TAG_H = 47.531;
+const TAG_H = 47.391;
 
 export function SpringDangoManekinekoSection() {
   return (
     <ScaledCanvas designHeight={DESIGN_H} className="sd-s2">
       <div className="sd-s2__canvas" aria-label="Manekineko sticker pack showcase">
-        <FigmaPlacement
-          designHeight={DESIGN_H}
-          x={0}
-          y={418}
-          w={1449}
-          h={1406}
-        >
+        <FigmaPlacement designHeight={DESIGN_H} x={0} y={418} w={1449} h={1406}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={BG_MASK}
@@ -66,22 +60,22 @@ export function SpringDangoManekinekoSection() {
           </div>
         </FigmaPlacement>
 
-        <FigmaPlacement designHeight={DESIGN_H} x={70.37} y={70}>
+        <FigmaPlacement designHeight={DESIGN_H} x={73} y={70}>
           <p className="sd-s2__heading sd-s2__heading--lg">JP PRO - IP</p>
         </FigmaPlacement>
 
-        <FigmaPlacement designHeight={DESIGN_H} x={70.37} y={146.7}>
+        <FigmaPlacement designHeight={DESIGN_H} x={70} y={159} w={380}>
           <p className="sd-s2__heading sd-s2__heading--md">Manekineko</p>
         </FigmaPlacement>
 
-        <FigmaPlacement designHeight={DESIGN_H} x={70} y={237.01} w={355.741}>
+        <FigmaPlacement designHeight={DESIGN_H} x={70} y={219} w={380.513}>
           <p className="sd-s2__description">
             Boost your luck with a Maneki Neko! It&apos;s especially famous as a symbol of
             financial wealth and business success!
           </p>
         </FigmaPlacement>
 
-        <FigmaPlacement designHeight={DESIGN_H} x={1771} y={114} w={79.037} h={48.271}>
+        <FigmaPlacement designHeight={DESIGN_H} x={1771} y={174} w={79.037} h={48.271}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={BRAND_CAT_LOGO}
@@ -93,13 +87,7 @@ export function SpringDangoManekinekoSection() {
           />
         </FigmaPlacement>
 
-        <FigmaPlacement
-          designHeight={DESIGN_H}
-          x={1685.12}
-          y={177}
-          w={164.881}
-          h={38.372}
-        >
+        <FigmaPlacement designHeight={DESIGN_H} x={1681} y={235} w={169} h={38}>
           <p className="sd-s2__credit sd-s2__credit--by">
             DESIGN BY
             <br />
@@ -107,13 +95,7 @@ export function SpringDangoManekinekoSection() {
           </p>
         </FigmaPlacement>
 
-        <FigmaPlacement
-          designHeight={DESIGN_H}
-          x={1685.12}
-          y={220.63}
-          w={164.881}
-          h={38.372}
-        >
+        <FigmaPlacement designHeight={DESIGN_H} x={1681} y={281} w={169} h={38}>
           <p className="sd-s2__credit">UG INCENTIVE</p>
         </FigmaPlacement>
 
@@ -129,7 +111,7 @@ export function SpringDangoManekinekoSection() {
           />
         </FigmaPlacement>
 
-        <FigmaPlacement designHeight={DESIGN_H} x={1288.49} y={683.15} w={382.506} h={116.293}>
+        <FigmaPlacement designHeight={DESIGN_H} x={1288} y={681} w={457} h={116}>
           <p className="sd-s2__swipe-en">
             Swipe for
             <br />
@@ -137,7 +119,7 @@ export function SpringDangoManekinekoSection() {
           </p>
         </FigmaPlacement>
 
-        <FigmaPlacement designHeight={DESIGN_H} x={1288.49} y={812.05} w={382.506} h={76.876}>
+        <FigmaPlacement designHeight={DESIGN_H} x={1288} y={812} w={383} h={39}>
           <p className="sd-s2__swipe-zh">滑动屏幕查看更多表情包</p>
         </FigmaPlacement>
 
@@ -153,25 +135,25 @@ export function SpringDangoManekinekoSection() {
           />
         </FigmaPlacement>
 
-        <FigmaPlacement designHeight={DESIGN_H} x={70} y={1698.61} w={225.739} h={TAG_H}>
+        <FigmaPlacement designHeight={DESIGN_H} x={70} y={1696.61} w={225.739} h={TAG_H}>
           <span className="sd-s2__tag sd-s2__tag--filled">
             <span className="sd-s2__tag-text">INcentive</span>
             <span className="sd-s2__tag-text">Design</span>
           </span>
         </FigmaPlacement>
 
-        <FigmaPlacement designHeight={DESIGN_H} x={305.72} y={1698.61} w={168.785} h={TAG_H}>
+        <FigmaPlacement designHeight={DESIGN_H} x={306} y={1697} w={154} h={47}>
           <span className="sd-s2__tag sd-s2__tag--outline">
             <span className="sd-s2__tag-text sd-s2__tag-text--dark">NEKO</span>
-            <span className="sd-s2__tag-text sd-s2__tag-text--dark">NEKO～</span>
+            <span className="sd-s2__tag-text sd-s2__tag-text--dark">NEKO</span>
           </span>
         </FigmaPlacement>
 
-        <FigmaPlacement designHeight={DESIGN_H} x={1670.55} y={1686} w={37.302} h={43.651}>
+        <FigmaPlacement designHeight={DESIGN_H} x={1640.54} y={1686} w={37.302} h={43.651}>
           <span className="sd-s2__year-hash">#</span>
         </FigmaPlacement>
 
-        <FigmaPlacement designHeight={DESIGN_H} x={1708.38} y={1705.4} w={141.624} h={48.501}>
+        <FigmaPlacement designHeight={DESIGN_H} x={1679} y={1713} w={171} h={41}>
           <span className="sd-s2__year">2026</span>
         </FigmaPlacement>
       </div>

@@ -1,0 +1,11 @@
+/* ── Manekineko Meme — full-bleed sections ── */
+
+.mk-s1 .wc-scaled-canvas__inner,
+.mk-s2 .wc-scaled-canvas__inner,
+.mk-s3 .wc-scaled-canvas__inner,
+.mk-s4 .wc-scaled-canvas__inner,
+.mk-s5 .wc-scaled-canvas__inner,
+.mk-s6 .wc-scaled-canvas__inner,
+.mk-s7 .wc-scaled-canvas__inner {
+  background: #fff;
+}

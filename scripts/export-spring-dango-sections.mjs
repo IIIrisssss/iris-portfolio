@@ -26,7 +26,8 @@ const EXPORT_SCALE = 2;
 /** Refresh URLs via MCP download_assets when expired. */
 const ASSETS = {
   "bg-mask": {
-    url: "https://www.figma.com/api/mcp/asset/6ec19603-efd9-448e-a855-397618e10fd5",
+    // Figma node 38:48337
+    url: "https://www.figma.com/api/mcp/asset/a3ac4e59-c08f-4dd5-97e4-d5fb4a66ee0f",
     quality: 92,
     transparentMask: true,
   },

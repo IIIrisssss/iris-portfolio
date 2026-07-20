@@ -1,7 +1,3 @@
-import {
-  CaseStudyJpFlag,
-  JP_FLAG_PRESET_MAVA_WIDE,
-} from "../CaseStudyJpFlag";
 import { FigmaPlacement } from "../FigmaPlacement";
 import { ScaledCanvas } from "../ScaledCanvas";
 
@@ -12,8 +8,14 @@ const SECTION_BG =
 const VIDEO_SRC = "/creative/mava-social-media/original-video.mp4";
 const VIDEO_POSTER = "/creative/mava-social-media/video-poster.webp";
 
-const DESIGN_W = JP_FLAG_PRESET_MAVA_WIDE.designWidth;
-const DESIGN_H = 1342;
+const DESIGN_W = 1920;
+const DESIGN_H = 1456;
+
+/** Figma node 20:8706 — 视频位置 placeholder (video overlays this rect). */
+const VIDEO_X = 297;
+const VIDEO_Y = 355;
+const VIDEO_W = 1325;
+const VIDEO_H = 745.3125;
 
 export function MavaVideoDesignSection() {
   return (
@@ -34,20 +36,13 @@ export function MavaVideoDesignSection() {
       <FigmaPlacement
         designWidth={DESIGN_W}
         designHeight={DESIGN_H}
-        x={305}
-        y={305}
-        w={1325}
-        h={745.313}
+        x={VIDEO_X}
+        y={VIDEO_Y}
+        w={VIDEO_W}
+        h={VIDEO_H}
       >
         <MavaVideoPlayer src={VIDEO_SRC} poster={VIDEO_POSTER} />
       </FigmaPlacement>
-
-      <CaseStudyJpFlag
-        designHeight={DESIGN_H}
-        designWidth={JP_FLAG_PRESET_MAVA_WIDE.designWidth}
-        pillX={JP_FLAG_PRESET_MAVA_WIDE.pillX}
-        bottomOffset={JP_FLAG_PRESET_MAVA_WIDE.bottomOffset}
-      />
     </ScaledCanvas>
   );
 }

@@ -21,7 +21,7 @@ export function SpringDangoBody() {
       <SpringDangoDynamicFunSection />
       <WorldcupFullbleedSection
         className="sd-s6"
-        designHeight={2579}
+        designHeight={2866}
         imageSrc={SECTION_5}
         alt="表情包展示"
       />

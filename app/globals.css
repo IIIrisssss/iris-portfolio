@@ -11,6 +11,26 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: "TikTok_Sans_18pt_Expanded";
+  src:
+    local("TikTok Sans 18pt Expanded Bold"),
+    url("/fonts/tiktok-sans/TikTokSans_18pt_Expanded-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "TikTok_Sans_18pt_ExtraExpanded";
+  src:
+    local("TikTok Sans 18pt ExtraExpanded Medium"),
+    url("/fonts/tiktok-sans/TikTokSans_18pt_ExtraExpanded-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   /* palette */
   --color-white: #ffffff;

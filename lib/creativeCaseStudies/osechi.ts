@@ -8,11 +8,11 @@ export const osechiCaseStudy: CaseStudyConfig = {
     "A festive illustration system with a celebratory palette and stacked compositions for social sharing.",
   hero: {
     src: "/creative/new-year-osechi/hero.webp",
-    alt: "迎春ごちそう祭 — New Year Osechi Collection hero with festive food and TikTok Lite branding",
+    alt: "NEW YEAR 2025 — TikTok Lite Growth Design hero KV",
   },
   theme: {
     body: "#f5edd6",
-    marginColor: "#FFF4DE",
+    marginColor: "#ffffff",
     footerLink: "#2c2c2c",
   },
 };

@@ -45,7 +45,8 @@ const ASSETS = {
     textHeavy: false,
   },
   "section-6-project-feedback": {
-    url: "https://www.figma.com/api/mcp/asset/69cb1633-ef57-465d-aa09-76b256cc54e0",
+    // Figma KwTi5yTxGxOI6CTaCi8T7y node 1:16652
+    url: "https://www.figma.com/api/mcp/asset/49143460-c8a3-4999-979b-908eb770a131",
     quality: 92,
     textHeavy: true,
   },

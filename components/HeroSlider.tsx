@@ -1,54 +1,85 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { heroSlides } from "@/lib/data";
 import "./HeroSlider.css";
 
 const slides = heroSlides;
+const SLIDE_DURATION_MS = 5000;
+const FLASH_MS = 240;
 
 export function HeroSlider() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [flashActive, setFlashActive] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  const currentIndexRef = useRef(0);
+  const transitioningRef = useRef(false);
+  const reducedMotionRef = useRef(false);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % slides.length);
-    }, 5000);
-
-    return () => clearInterval(timer);
+    currentIndexRef.current = currentIndex;
   }, [currentIndex]);
 
-  const goToSlide = (index: number) => {
-    setCurrentIndex(index);
-  };
+  useEffect(() => {
+    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const update = () => {
+      reducedMotionRef.current = media.matches;
+    };
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
 
-  const goPrev = () => {
-    setCurrentIndex((prev) => (prev - 1 + slides.length) % slides.length);
-  };
+  const transitionTo = useCallback((index: number) => {
+    if (index === currentIndexRef.current || transitioningRef.current) return;
 
-  const goNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % slides.length);
-  };
+    if (reducedMotionRef.current) {
+      currentIndexRef.current = index;
+      setCurrentIndex(index);
+      return;
+    }
+
+    transitioningRef.current = true;
+    setFlashActive(true);
+
+    window.setTimeout(() => {
+      currentIndexRef.current = index;
+      setCurrentIndex(index);
+      setFlashActive(false);
+
+      window.setTimeout(() => {
+        transitioningRef.current = false;
+      }, FLASH_MS);
+    }, FLASH_MS);
+  }, []);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      transitionTo((currentIndexRef.current + 1) % slides.length);
+    }, SLIDE_DURATION_MS);
+
+    return () => window.clearInterval(timer);
+  }, [currentIndex, transitionTo]);
+
+  const slide = slides[currentIndex];
 
   return (
     <section
-      className={`hero-slider${isHovered ? " is-hovered" : ""}`}
+      className={`hero-slider${isHovered ? " is-hovered" : ""}${flashActive ? " is-flashing" : ""}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <AnimatePresence>
-        <motion.div
-          key={currentIndex}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 1 }}
-          className="hero-slide"
+      <div className="hero-slide" aria-live="polite">
+        <Link
+          href={slide.href}
+          className="hero-media-link"
+          aria-label={`View ${slide.title} project`}
         >
-          {slides[currentIndex].type === "video" ? (
+          {slide.type === "video" ? (
             <video
-              src={slides[currentIndex].src}
+              key={slide.src}
+              src={slide.src}
               autoPlay
               muted
               loop
@@ -56,23 +87,29 @@ export function HeroSlider() {
               className="hero-media"
             />
           ) : (
+            // eslint-disable-next-line @next/next/no-img-element
             <img
-              src={slides[currentIndex].src}
-              alt={slides[currentIndex].title}
+              key={slide.src}
+              src={slide.src}
+              alt={slide.title}
               className="hero-media"
+              loading={currentIndex === 0 && slide.type === "image" ? "eager" : "lazy"}
+              decoding="async"
+              fetchPriority={currentIndex === 0 ? "high" : undefined}
             />
           )}
+        </Link>
 
-          <div className="hero-overlay">
-          </div>
-        </motion.div>
-      </AnimatePresence>
+        <div className="hero-overlay" />
+      </div>
+
+      <div className="hero-flash" aria-hidden="true" />
 
       <div className="hero-nav" aria-hidden={!isHovered}>
         <button
           type="button"
           className="hero-nav__btn hero-nav__btn--prev"
-          onClick={goPrev}
+          onClick={() => transitionTo((currentIndexRef.current - 1 + slides.length) % slides.length)}
           aria-label="Previous slide"
         >
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -88,7 +125,7 @@ export function HeroSlider() {
         <button
           type="button"
           className="hero-nav__btn hero-nav__btn--next"
-          onClick={goNext}
+          onClick={() => transitionTo((currentIndexRef.current + 1) % slides.length)}
           aria-label="Next slide"
         >
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -107,12 +144,12 @@ export function HeroSlider() {
         {slides.map((_, index) => (
           <button
             key={index}
-            onClick={() => goToSlide(index)}
+            onClick={() => transitionTo(index)}
             className={`hero-indicator ${index === currentIndex ? "is-active" : ""}`}
             aria-label={`Go to slide ${index + 1}`}
           >
             {index === currentIndex && (
-              <div className="hero-indicator-progress" />
+              <div key={currentIndex} className="hero-indicator-progress" />
             )}
           </button>
         ))}

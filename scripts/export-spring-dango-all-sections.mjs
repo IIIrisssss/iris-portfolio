@@ -12,9 +12,10 @@ const HERO_OUT = "public/creative/spring-dango-points/hero.webp";
 /** Native 2× Figma frame exports */
 const PAGE_SECTIONS = {
   hero: {
-    url: "https://www.figma.com/api/mcp/asset/50926938-eb05-41f7-a878-b69f6947bfb2",
+    // Figma brGxpK5JpT9huzR3Bbylht node 29:22154
+    url: "https://www.figma.com/api/mcp/asset/e0894493-b1e6-40a3-8ef8-4499f896a66b",
     out: HERO_OUT,
-    quality: 92,
+    quality: 94,
     textHeavy: true,
   },
   "section-1-creative-thinking": {
@@ -38,14 +39,16 @@ const PAGE_SECTIONS = {
     textHeavy: true,
   },
   "section-5-sticker-showcase": {
-    url: "https://www.figma.com/api/mcp/asset/031551e2-ba67-45f1-a83c-60be91911bed",
+    // Figma brGxpK5JpT9huzR3Bbylht node 36:47057 (2× PNG export)
+    url: "https://www.figma.com/api/mcp/asset/c5d2d696-4e6c-454a-b3aa-425e46cd1581",
     quality: 92,
     textHeavy: true,
   },
   "section-6-summary": {
-    url: "https://www.figma.com/api/mcp/asset/6df91d22-8144-47f5-bab9-dedda910ec0d",
+    // Figma brGxpK5JpT9huzR3Bbylht node 41:49886
+    url: "https://www.figma.com/api/mcp/asset/9446c74a-ff00-48a1-baa3-728219bf2ded",
     quality: 90,
-    textHeavy: false,
+    textHeavy: true,
   },
 };
 

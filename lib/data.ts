@@ -213,23 +213,33 @@ export type HeroSlideData = {
   title: string;
   subtitle: string;
   description: string;
+  href: string;
 };
+
+/** Hero slide index → foldersData index (slide 1→folder 2, etc.). */
+const HERO_SLIDE_FOLDER_INDEX = [1, 0, 3, 2] as const;
+
+function heroSlideHref(folderIndex: (typeof HERO_SLIDE_FOLDER_INDEX)[number]) {
+  return `/creative/${foldersData[folderIndex].slug}`;
+}
 
 /** Hero carousel slides on the home page. */
 export const heroSlides: HeroSlideData[] = [
   {
     type: "image",
-    src: "/hero-media/1-replacement.png",
+    src: "/hero-media/1-replacement.webp",
     title: "DESIGN",
     subtitle: "CREATIVE.LQB",
     description: "to use AI to explore.\nis one of the design\npursue. Just do it",
+    href: heroSlideHref(HERO_SLIDE_FOLDER_INDEX[0]),
   },
   {
-    type: "image",
-    src: "/hero-media/2-replacement.png",
+    type: "video",
+    src: "/hero-media/2-replacement.mp4",
     title: "WORK",
     subtitle: "CREATIVE.LQB",
     description: "AI时代下技术赋能与视觉表达的融合实践探索",
+    href: heroSlideHref(HERO_SLIDE_FOLDER_INDEX[1]),
   },
   {
     type: "video",
@@ -237,13 +247,15 @@ export const heroSlides: HeroSlideData[] = [
     title: "A FUTURE",
     subtitle: "CREATIVE.LQB",
     description: "我是陆78，让技术成为放大 imagination 的引擎",
+    href: heroSlideHref(HERO_SLIDE_FOLDER_INDEX[2]),
   },
   {
-    type: "image",
-    src: "/hero-media/4-replacement.png",
+    type: "video",
+    src: "/hero-media/4-replacement.mp4",
     title: "EXPLORE",
     subtitle: "CREATIVE.LQB",
     description: "浪潮中思考与判断力愈发不可替代",
+    href: heroSlideHref(HERO_SLIDE_FOLDER_INDEX[3]),
   },
 ];
 

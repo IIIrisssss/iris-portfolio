@@ -1,3 +1,10 @@
+/* ── Mava / Spring Sakura — full-bleed sections ── */
+
+.mava-s5b .wc-scaled-canvas__inner,
+.mava-s7 .wc-scaled-canvas__inner {
+  background: #fff;
+}
+
 /* ── Mava / Spring Sakura — Section 6 video design ── */
 
 .mava-s6 .wc-scaled-canvas__inner {
@@ -22,7 +29,7 @@
 .mava-video-player__surface {
   position: relative;
   overflow: hidden;
-  border-radius: calc(20 / var(--wc-design-w) * 100cqw);
+  border-radius: calc(30 / var(--wc-design-w) * 100cqw);
   background: transparent;
   cursor: pointer;
 }

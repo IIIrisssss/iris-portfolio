@@ -15,37 +15,44 @@ const OUT = "public/creative/new-year-osechi/sections";
 /** Native 2× Figma exports (~3840px wide). Refresh URLs via MCP when expired. */
 const ASSETS = {
   hero: {
-    url: "https://www.figma.com/api/mcp/asset/23ad8682-13db-4031-b56a-307a1910be0b",
-    quality: 94,
-    textHeavy: true,
+    // node 1:8001 — 头图KV
+    url: "https://www.figma.com/api/mcp/asset/cc3441bc-2ba8-4c0e-9142-1aa561c2b0ce",
+    quality: 92,
+    textHeavy: false,
   },
   "section-1-ranking": {
-    url: "https://www.figma.com/api/mcp/asset/03531a6b-484d-45f1-bdd3-5dea5c367f55",
+    // node 1:8025
+    url: "https://www.figma.com/api/mcp/asset/cf334b9d-b40b-41d9-beb8-bd2f0a0d7f2a",
     quality: 90,
     textHeavy: false,
   },
   "section-2-wish-card": {
-    url: "https://www.figma.com/api/mcp/asset/bc97e3d8-b348-4df7-be52-33378442e3f8",
+    // node 1:9091
+    url: "https://www.figma.com/api/mcp/asset/eb815dd2-bf4e-4921-bf1a-39c9e4232b4c",
     quality: 90,
     textHeavy: false,
   },
   "section-3-gameplay": {
-    url: "https://www.figma.com/api/mcp/asset/0789e905-f5fe-42b4-95d2-00e45355c4be",
+    // node 1:12869
+    url: "https://www.figma.com/api/mcp/asset/3de35bd4-1c1c-4cf2-b9c0-fafef26b2c3b",
     quality: 90,
     textHeavy: false,
   },
   "section-4-manekineko-evolution": {
-    url: "https://www.figma.com/api/mcp/asset/661c7816-9e15-4045-be11-5bd2b81f389e",
+    // node 1:12416
+    url: "https://www.figma.com/api/mcp/asset/d92a54f5-2240-434b-a25d-09383db76fd5",
     quality: 92,
     textHeavy: false,
   },
   "section-5-click-battle": {
-    url: "https://www.figma.com/api/mcp/asset/530f28bf-8822-4648-86ca-41979e387ce2",
+    // node 1:12539
+    url: "https://www.figma.com/api/mcp/asset/dd900696-2c20-47e9-b983-e79a265d3be2",
     quality: 90,
     textHeavy: false,
   },
   "section-6-manekineko-popup": {
-    url: "https://www.figma.com/api/mcp/asset/bdcb645e-7415-4a60-83ea-11004dd28600",
+    // node 1:12439
+    url: "https://www.figma.com/api/mcp/asset/40c5754f-9f8f-4156-b3fa-208c3afad8a4",
     quality: 92,
     textHeavy: true,
   },

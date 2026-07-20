@@ -25,47 +25,27 @@
   display: flex;
   flex-direction: column;
   width: 100%;
+  overflow: visible;
 }
 
-/* S1/S2 pair — seam mascot pinned to the boundary between blue + white sections */
+/* S1/S2, S5/S6, S6/S7 — seam mascots straddle section boundaries */
 .wc-section-pair {
   position: relative;
   display: flex;
   flex-direction: column;
   width: 100%;
-}
-
-.wc-section-pair--s1-s2 {
-  --wc-design-w: 1920;
-}
-
-.wc-section-pair__s1 {
-  position: relative;
-  z-index: 2;
-}
-
-.wc-section-pair > .wc-scaled-canvas,
-.wc-section-pair--s1-s2 .wc-s2 {
-  position: relative;
-  z-index: 1;
-}
-
-/* S5→S6→S7: stagger z-index so each seam floats above the next section */
-.wc-section-pair--s5-s7 .wc-section-pair__s1:first-child {
-  z-index: 3;
-}
-
-.wc-section-pair--s5-s7 .wc-section-pair__s1:nth-child(2) {
-  z-index: 2;
+  overflow: visible;
 }
 
 .wc-section-seam {
-  position: absolute;
-  left: 50%;
-  bottom: 0;
+  position: relative;
   z-index: 10;
+  flex: none;
   width: calc(100% / 6);
-  transform: translate(-50%, 50%);
+  align-self: center;
+  /* Square asset — overlap half above / half below the junction */
+  margin-top: calc(-100% / 12 + var(--wc-seam-y, 0px));
+  margin-bottom: calc(-100% / 12 - var(--wc-seam-y, 0px));
   pointer-events: auto;
 }
 
@@ -73,13 +53,35 @@
   pointer-events: auto;
 }
 
-.wc-section-seam--s5-s6 {
-  left: 65%;
+/* Larger square export — nudge up so the face sits on the hero/s1 seam */
+.wc-section-seam--hero-s1 {
+  --wc-seam-y: calc(-100% / 6 * 0.1);
 }
 
-/* S5/S6 + S6/S7 assets are tighter-cropped — scale down to match S1/S2 mascot */
+.wc-section-seam--s5-s6 {
+  align-self: flex-start;
+  margin-left: 65%;
+  transform: translateX(-50%);
+}
+
+/* Tighter-cropped assets — match height from native aspect ratio */
 .wc-section-seam--compact {
   width: calc(100% / 6 * 0.84);
+  margin-top: calc(
+    -100% / 6 * 0.84 * 613 / 640 / 2 + var(--wc-seam-y, 0px)
+  );
+  margin-bottom: calc(
+    -100% / 6 * 0.84 * 613 / 640 / 2 - var(--wc-seam-y, 0px)
+  );
+}
+
+.wc-section-seam--s6-s7.wc-section-seam--compact {
+  margin-top: calc(
+    -100% / 6 * 0.84 * 568 / 640 / 2 + var(--wc-seam-y, 0px)
+  );
+  margin-bottom: calc(
+    -100% / 6 * 0.84 * 568 / 640 / 2 - var(--wc-seam-y, 0px)
+  );
 }
 
 .wc-section-seam__motion {
@@ -294,7 +296,10 @@
 /* ── Section 3: Visual ── */
 
 .wc-s2 .wc-scaled-canvas__inner,
-.wc-s3 .wc-scaled-canvas__inner {
+.wc-s2b .wc-scaled-canvas__inner,
+.wc-s2c .wc-scaled-canvas__inner,
+.wc-s3 .wc-scaled-canvas__inner,
+.wc-s3b .wc-scaled-canvas__inner {
   background: #fff;
 }
 

@@ -243,21 +243,10 @@
 }
 
 .meet-footer__wechat-qr img {
-  position: absolute;
-  max-width: none;
   display: block;
-}
-
-.meet-footer--en .meet-footer__wechat-qr img {
-  inset: -3.84% auto auto -4.7%;
-  width: 109.55%;
-  height: 108.02%;
-}
-
-.meet-footer--zh .meet-footer__wechat-qr img {
-  inset: -4.73% auto auto -3.53%;
-  width: 109.57%;
-  height: 109.38%;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .meet-footer__bottom {

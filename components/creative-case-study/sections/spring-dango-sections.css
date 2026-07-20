@@ -95,18 +95,19 @@
 .sd-s2__heading {
   margin: 0;
   color: #5a3f35;
-  font-family: "TikTok_Sans:Bold", var(--font-headline), sans-serif;
+  font-family: "TikTok_Sans_18pt_Expanded", sans-serif;
   font-weight: 700;
   line-height: normal;
   white-space: nowrap;
 }
 
 .sd-s2__heading--lg {
-  font-size: calc(68.345 / var(--wc-design-w) * 100cqw);
+  font-size: calc(58.819 / var(--wc-design-w) * 100cqw);
 }
 
 .sd-s2__heading--md {
-  font-size: calc(62.966 / var(--wc-design-w) * 100cqw);
+  font-size: calc(47.364 / var(--wc-design-w) * 100cqw);
+  text-transform: uppercase;
 }
 
 .sd-s2__description {
@@ -114,16 +115,16 @@
   color: #5a3f35;
   font-family: "TikTok_Sans:SemiBold", var(--font-headline), sans-serif;
   font-weight: 600;
-  font-size: calc(17.778 / var(--wc-design-w) * 100cqw);
+  font-size: calc(20.348 / var(--wc-design-w) * 100cqw);
   line-height: normal;
 }
 
 .sd-s2__credit {
   margin: 0;
   color: #5a3f35;
-  font-family: "Skia:Bold", Skia, var(--font-headline), sans-serif;
-  font-weight: 700;
-  font-size: calc(21.717 / var(--wc-design-w) * 100cqw);
+  font-family: "TikTok_Sans_18pt_ExtraExpanded", sans-serif;
+  font-weight: 500;
+  font-size: calc(18.288 / var(--wc-design-w) * 100cqw);
   line-height: normal;
   text-align: right;
   text-transform: uppercase;
@@ -136,15 +137,16 @@
 .sd-s2__swipe-en {
   margin: 0;
   color: #5a3f35;
-  font-family: "Skia:Bold", Skia, var(--font-headline), sans-serif;
+  font-family: "TikTok_Sans_18pt_Expanded", sans-serif;
   font-weight: 700;
-  font-size: calc(59.165 / var(--wc-design-w) * 100cqw);
+  font-size: calc(47.364 / var(--wc-design-w) * 100cqw);
   line-height: normal;
+  text-transform: uppercase;
 }
 
 .sd-s2__swipe-zh {
   margin: 0;
-  color: #8b7066;
+  color: #d7cdca;
   font-family: "TikTok_Display:Medium", var(--font-headline), sans-serif;
   font-weight: 500;
   font-size: calc(34.432 / var(--wc-design-w) * 100cqw);
@@ -163,17 +165,17 @@
 }
 
 .sd-s2__tag--filled {
-  background: #5a3f35;
+  background: #ddcb9b;
 }
 
 .sd-s2__tag--outline {
-  border: calc(3.88 / var(--wc-design-w) * 100cqw) solid #5a3f35;
+  border: calc(3.88 / var(--wc-design-w) * 100cqw) solid #ddcb9b;
   background: transparent;
 }
 
 .sd-s2__tag-text {
   display: block;
-  color: #fff;
+  color: #f5edd6;
   font-family: "TikTok_Sans:Bold", var(--font-headline), sans-serif;
   font-weight: 700;
   font-size: calc(19.35 / var(--wc-design-w) * 100cqw);
@@ -183,7 +185,7 @@
 }
 
 .sd-s2__tag-text--dark {
-  color: #5a3f35;
+  color: #ddcb9b;
 }
 
 .sd-s2__year-hash {
@@ -192,7 +194,7 @@
   justify-content: center;
   width: 100%;
   height: 100%;
-  color: #5a3f35;
+  color: #ddcb9b;
   font-family: var(--font-zen-dots);
   font-size: calc(45.408 / var(--wc-design-w) * 100cqw);
   line-height: normal;
@@ -203,10 +205,9 @@
   align-items: center;
   width: 100%;
   height: 100%;
-  color: #5a3f35;
-  font-family: "Skia:Black", Skia, var(--font-headline), sans-serif;
-  font-weight: 900;
-  font-size: calc(55.499 / var(--wc-design-w) * 100cqw);
+  color: #ddcb9b;
+  font-family: var(--font-zen-dots);
+  font-size: calc(45.408 / var(--wc-design-w) * 100cqw);
   line-height: normal;
 }
 
@@ -226,24 +227,17 @@
 .sd-s3__title {
   margin: 0;
   color: #5a3f35;
-  font-family: "Skia:Bold", Skia, var(--font-headline), sans-serif;
+  font-family: "TikTok_Sans_18pt_Expanded", sans-serif;
   font-weight: 700;
-  font-size: calc(58.502 / var(--wc-design-w) * 100cqw);
+  font-size: calc(55 / var(--wc-design-w) * 100cqw);
   line-height: normal;
-}
-
-.sd-s3__subtitle {
-  margin: 0;
-  color: #8b7066;
-  font-family: "TikTok_Display:Medium", var(--font-headline), sans-serif;
-  font-weight: 500;
-  font-size: calc(35.496 / var(--wc-design-w) * 100cqw);
-  line-height: normal;
+  text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .sd-s3__body {
   margin: 0;
-  color: #5a3f35;
+  color: #ddcb9b;
   font-family: "PingFang SC", var(--font-body), sans-serif;
   font-weight: 400;
   font-size: calc(32 / var(--wc-design-w) * 100cqw);
@@ -261,10 +255,10 @@
 
 .sd-s3__credit {
   margin: 0;
-  color: #5a3f35;
-  font-family: "Skia:Bold", Skia, var(--font-headline), sans-serif;
-  font-weight: 700;
-  font-size: calc(21.717 / var(--wc-design-w) * 100cqw);
+  color: #ddcb9b;
+  font-family: "TikTok_Sans_18pt_ExtraExpanded", sans-serif;
+  font-weight: 500;
+  font-size: calc(18.288 / var(--wc-design-w) * 100cqw);
   line-height: normal;
   text-align: right;
   text-transform: uppercase;
@@ -300,6 +294,16 @@
   user-select: none;
 }
 
+.sd-s3__caption {
+  margin: 0;
+  color: #bf9f56;
+  font-family: "PingFang SC", var(--font-body), sans-serif;
+  font-weight: 400;
+  font-size: calc(23 / var(--wc-design-w) * 100cqw);
+  line-height: normal;
+  text-align: center;
+}
+
 .sd-s3__bullet {
   margin: 0;
   padding: 0 0 0 calc(34.5 / var(--wc-design-w) * 100cqw);
@@ -327,17 +331,17 @@
 }
 
 .sd-s3__tag--filled {
-  background: #5a3f35;
+  background: #ddcb9b;
 }
 
 .sd-s3__tag--outline {
-  border: calc(3.88 / var(--wc-design-w) * 100cqw) solid #5a3f35;
+  border: calc(3.88 / var(--wc-design-w) * 100cqw) solid #ddcb9b;
   background: transparent;
 }
 
 .sd-s3__tag-text {
   display: block;
-  color: #fff;
+  color: #f5edd6;
   font-family: "TikTok_Sans:Bold", var(--font-headline), sans-serif;
   font-weight: 700;
   font-size: calc(19.35 / var(--wc-design-w) * 100cqw);
@@ -347,7 +351,7 @@
 }
 
 .sd-s3__tag-text--dark {
-  color: #5a3f35;
+  color: #ddcb9b;
 }
 
 .sd-s3__year-hash {
@@ -356,7 +360,7 @@
   justify-content: center;
   width: 100%;
   height: 100%;
-  color: #5a3f35;
+  color: #ddcb9b;
   font-family: var(--font-zen-dots);
   font-size: calc(45.408 / var(--wc-design-w) * 100cqw);
   line-height: normal;
@@ -367,10 +371,9 @@
   align-items: center;
   width: 100%;
   height: 100%;
-  color: #5a3f35;
-  font-family: "Skia:Black", Skia, var(--font-headline), sans-serif;
-  font-weight: 900;
-  font-size: calc(55.499 / var(--wc-design-w) * 100cqw);
+  color: #ddcb9b;
+  font-family: var(--font-zen-dots);
+  font-size: calc(45.408 / var(--wc-design-w) * 100cqw);
   line-height: normal;
 }
 
@@ -390,26 +393,18 @@
 .sd-s5__title {
   margin: 0;
   color: #5a3f35;
-  font-family: "Skia:Bold", Skia, var(--font-headline), sans-serif;
+  font-family: "TikTok_Sans_18pt_Expanded", sans-serif;
   font-weight: 700;
-  font-size: calc(58.502 / var(--wc-design-w) * 100cqw);
+  font-size: calc(55 / var(--wc-design-w) * 100cqw);
   line-height: normal;
+  text-transform: uppercase;
   white-space: nowrap;
-}
-
-.sd-s5__subtitle {
-  margin: 0;
-  color: #8b7066;
-  font-family: "TikTok_Display:Medium", var(--font-headline), sans-serif;
-  font-weight: 500;
-  font-size: calc(35.496 / var(--wc-design-w) * 100cqw);
-  line-height: normal;
 }
 
 .sd-s5__body {
   margin: 0;
-  color: #5a3f35;
-  font-family: "PingFang SC", var(--font-body), sans-serif;
+  color: #ddcb9b;
+  font-family: "TikTok_Display:Regular", var(--font-headline), sans-serif;
   font-weight: 400;
   font-size: calc(32 / var(--wc-design-w) * 100cqw);
   line-height: normal;
@@ -426,10 +421,10 @@
 
 .sd-s5__credit {
   margin: 0;
-  color: #5a3f35;
-  font-family: "Skia:Bold", Skia, var(--font-headline), sans-serif;
-  font-weight: 700;
-  font-size: calc(21.717 / var(--wc-design-w) * 100cqw);
+  color: #ddcb9b;
+  font-family: "TikTok_Sans_18pt_ExtraExpanded", sans-serif;
+  font-weight: 500;
+  font-size: calc(18.288 / var(--wc-design-w) * 100cqw);
   line-height: normal;
   text-align: right;
   text-transform: uppercase;
@@ -456,19 +451,14 @@
   user-select: none;
 }
 
-.sd-s5__bullet {
+.sd-s5__caption {
   margin: 0;
-  padding: 0 0 0 calc(34.5 / var(--wc-design-w) * 100cqw);
-  color: #5a3f35;
-  font-family: "PingFang SC", var(--font-body), sans-serif;
+  color: #bf9f56;
+  font-family: "TikTok_Display:Regular", var(--font-headline), sans-serif;
   font-weight: 400;
   font-size: calc(23 / var(--wc-design-w) * 100cqw);
   line-height: normal;
-  list-style: disc;
-}
-
-.sd-s5__bullet li {
-  margin: 0;
+  text-align: center;
 }
 
 .sd-s5__tag {
@@ -483,17 +473,17 @@
 }
 
 .sd-s5__tag--filled {
-  background: #5a3f35;
+  background: #ddcb9b;
 }
 
 .sd-s5__tag--outline {
-  border: calc(3.88 / var(--wc-design-w) * 100cqw) solid #5a3f35;
+  border: calc(3.88 / var(--wc-design-w) * 100cqw) solid #ddcb9b;
   background: transparent;
 }
 
 .sd-s5__tag-text {
   display: block;
-  color: #fff;
+  color: #f5edd6;
   font-family: "TikTok_Sans:Bold", var(--font-headline), sans-serif;
   font-weight: 700;
   font-size: calc(19.35 / var(--wc-design-w) * 100cqw);
@@ -503,7 +493,7 @@
 }
 
 .sd-s5__tag-text--dark {
-  color: #5a3f35;
+  color: #ddcb9b;
 }
 
 .sd-s5__year-hash {
@@ -512,7 +502,7 @@
   justify-content: center;
   width: 100%;
   height: 100%;
-  color: #5a3f35;
+  color: #ddcb9b;
   font-family: var(--font-zen-dots);
   font-size: calc(45.408 / var(--wc-design-w) * 100cqw);
   line-height: normal;
@@ -523,32 +513,31 @@
   align-items: center;
   width: 100%;
   height: 100%;
-  color: #5a3f35;
-  font-family: "Skia:Black", Skia, var(--font-headline), sans-serif;
-  font-weight: 900;
-  font-size: calc(55.499 / var(--wc-design-w) * 100cqw);
+  color: #ddcb9b;
+  font-family: var(--font-zen-dots);
+  font-size: calc(45.408 / var(--wc-design-w) * 100cqw);
   line-height: normal;
 }
 
 /* ── Spring Dango · Creative thinking (Figma 36:47446) ── */
 
 .sd-s1 .wc-scaled-canvas__viewport {
-  background: #f5edd6;
+  background: #fff;
 }
 
 .sd-s1__canvas {
   position: absolute;
   inset: 0;
-  background: #f5edd6;
+  background: #fff;
   overflow: hidden;
 }
 
 .sd-s1__title {
   margin: 0;
   color: #5a3f35;
-  font-family: "Skia:Bold", Skia, var(--font-headline), sans-serif;
+  font-family: "TikTok_Sans_18pt_Expanded", sans-serif;
   font-weight: 700;
-  font-size: calc(58.502 / var(--wc-design-w) * 100cqw);
+  font-size: calc(55 / var(--wc-design-w) * 100cqw);
   line-height: normal;
 }
 
@@ -573,10 +562,10 @@
 
 .sd-s1__credit {
   margin: 0;
-  color: #5a3f35;
-  font-family: "Skia:Bold", Skia, var(--font-headline), sans-serif;
-  font-weight: 700;
-  font-size: calc(21.717 / var(--wc-design-w) * 100cqw);
+  color: #ddcb9b;
+  font-family: "TikTok_Sans_18pt_ExtraExpanded", sans-serif;
+  font-weight: 500;
+  font-size: calc(18.288 / var(--wc-design-w) * 100cqw);
   line-height: normal;
   text-align: right;
   text-transform: uppercase;
@@ -597,16 +586,19 @@
 
 .sd-s1__node-label {
   margin: 0;
-  color: #5a3f35;
+  color: #c0941e;
   font-family: "PingFang SC", var(--font-body), sans-serif;
   font-weight: 500;
-  font-size: calc(28.661 / var(--wc-design-w) * 100cqw);
+  font-size: calc(27.154 / var(--wc-design-w) * 100cqw);
   line-height: normal;
   text-align: center;
 }
 
 .sd-s1__node-label--lg {
-  font-size: calc(40 / var(--wc-design-w) * 100cqw);
+  color: #5a3f35;
+  font-family: "TikTok_Display:Bold", var(--font-headline), sans-serif;
+  font-weight: 700;
+  font-size: calc(37.896 / var(--wc-design-w) * 100cqw);
 }
 
 .sd-s1__arrow {
@@ -630,17 +622,17 @@
 }
 
 .sd-s1__tag--filled {
-  background: #5a3f35;
+  background: #ddcb9b;
 }
 
 .sd-s1__tag--outline {
-  border: calc(3.88 / var(--wc-design-w) * 100cqw) solid #5a3f35;
+  border: calc(3.88 / var(--wc-design-w) * 100cqw) solid #ddcb9b;
   background: transparent;
 }
 
 .sd-s1__tag-text {
   display: block;
-  color: #fff;
+  color: #f5edd6;
   font-family: "TikTok_Sans:Bold", var(--font-headline), sans-serif;
   font-weight: 700;
   font-size: calc(19.35 / var(--wc-design-w) * 100cqw);
@@ -650,7 +642,7 @@
 }
 
 .sd-s1__tag-text--dark {
-  color: #5a3f35;
+  color: #ddcb9b;
 }
 
 .sd-s1__year-hash {
@@ -659,7 +651,7 @@
   justify-content: center;
   width: 100%;
   height: 100%;
-  color: #5a3f35;
+  color: #ddcb9b;
   font-family: var(--font-zen-dots);
   font-size: calc(45.408 / var(--wc-design-w) * 100cqw);
   line-height: normal;
@@ -670,23 +662,22 @@
   align-items: center;
   width: 100%;
   height: 100%;
-  color: #5a3f35;
-  font-family: "Skia:Black", Skia, var(--font-headline), sans-serif;
-  font-weight: 900;
-  font-size: calc(55.499 / var(--wc-design-w) * 100cqw);
+  color: #ddcb9b;
+  font-family: var(--font-zen-dots);
+  font-size: calc(45.408 / var(--wc-design-w) * 100cqw);
   line-height: normal;
 }
 
 /* ── Spring Dango · Localized design (Figma 38:49436) ── */
 
 .sd-s4 .wc-scaled-canvas__viewport {
-  background: #f5edd6;
+  background: #fff;
 }
 
 .sd-s4__canvas {
   position: absolute;
   inset: 0;
-  background: #f5edd6;
+  background: #fff;
   overflow: hidden;
 }
 
@@ -702,27 +693,20 @@
 .sd-s4__title {
   margin: 0;
   color: #5a3f35;
-  font-family: "Skia:Bold", Skia, var(--font-headline), sans-serif;
+  font-family: "TikTok_Sans_18pt_Expanded", sans-serif;
   font-weight: 700;
-  font-size: calc(58.502 / var(--wc-design-w) * 100cqw);
+  font-size: calc(55 / var(--wc-design-w) * 100cqw);
   line-height: normal;
-}
-
-.sd-s4__subtitle {
-  margin: 0;
-  color: #8b7066;
-  font-family: "TikTok_Display:Medium", var(--font-headline), sans-serif;
-  font-weight: 500;
-  font-size: calc(35.496 / var(--wc-design-w) * 100cqw);
-  line-height: normal;
+  text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .sd-s4__credit {
   margin: 0;
-  color: #5a3f35;
-  font-family: "Skia:Bold", Skia, var(--font-headline), sans-serif;
-  font-weight: 700;
-  font-size: calc(21.717 / var(--wc-design-w) * 100cqw);
+  color: #ddcb9b;
+  font-family: "TikTok_Sans_18pt_ExtraExpanded", sans-serif;
+  font-weight: 500;
+  font-size: calc(18.288 / var(--wc-design-w) * 100cqw);
   line-height: normal;
   text-align: right;
   text-transform: uppercase;
@@ -769,17 +753,17 @@
 }
 
 .sd-s4__tag--filled {
-  background: #5a3f35;
+  background: #ddcb9b;
 }
 
 .sd-s4__tag--outline {
-  border: calc(3.88 / var(--wc-design-w) * 100cqw) solid #5a3f35;
+  border: calc(3.88 / var(--wc-design-w) * 100cqw) solid #ddcb9b;
   background: transparent;
 }
 
 .sd-s4__tag-text {
   display: block;
-  color: #fff;
+  color: #f5edd6;
   font-family: "TikTok_Sans:Bold", var(--font-headline), sans-serif;
   font-weight: 700;
   font-size: calc(19.35 / var(--wc-design-w) * 100cqw);
@@ -789,7 +773,7 @@
 }
 
 .sd-s4__tag-text--dark {
-  color: #5a3f35;
+  color: #ddcb9b;
 }
 
 .sd-s4__year-hash {
@@ -798,7 +782,7 @@
   justify-content: center;
   width: 100%;
   height: 100%;
-  color: #5a3f35;
+  color: #ddcb9b;
   font-family: var(--font-zen-dots);
   font-size: calc(45.408 / var(--wc-design-w) * 100cqw);
   line-height: normal;
@@ -809,9 +793,8 @@
   align-items: center;
   width: 100%;
   height: 100%;
-  color: #5a3f35;
-  font-family: "Skia:Black", Skia, var(--font-headline), sans-serif;
-  font-weight: 900;
-  font-size: calc(55.499 / var(--wc-design-w) * 100cqw);
+  color: #ddcb9b;
+  font-family: var(--font-zen-dots);
+  font-size: calc(45.408 / var(--wc-design-w) * 100cqw);
   line-height: normal;
 }

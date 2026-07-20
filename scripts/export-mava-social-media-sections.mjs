@@ -13,42 +13,57 @@ const OUT = "public/creative/mava-social-media/sections";
 /** Native 2× Figma exports (~3840px wide). Refresh URLs via MCP when expired. */
 const ASSETS = {
   hero: {
-    url: "https://www.figma.com/api/mcp/asset/bc8c58ec-c4ed-41b9-90d7-727063415b48",
+    // node 1:19280
+    url: "https://www.figma.com/api/mcp/asset/b552e5ac-61f4-4283-bdbb-6de5f58e0b54",
     quality: 94,
     textHeavy: true,
   },
   "section-1-preliminary-analysis": {
-    url: "https://www.figma.com/api/mcp/asset/3d168535-9a05-4097-9982-c3f1480128a4",
+    // node 19:3202
+    url: "https://www.figma.com/api/mcp/asset/fd28ea31-2bd5-4821-954d-cfc98f18cc24",
     quality: 94,
     textHeavy: true,
   },
   "section-2-visual-strategy": {
-    url: "https://www.figma.com/api/mcp/asset/86dab9e8-b0e7-4459-ba79-59e3dfb35b52",
+    // node 1:19049
+    url: "https://www.figma.com/api/mcp/asset/ecd2603d-030c-4d6a-8674-daea4666db74",
     quality: 92,
     textHeavy: true,
   },
   "section-3-aigc-process": {
-    url: "https://www.figma.com/api/mcp/asset/d3f7ffc5-27b2-40d9-83c3-186e90030ca9",
+    // node 20:764
+    url: "https://www.figma.com/api/mcp/asset/ef829edf-c7bd-4c5c-ac07-64e3583441b4",
     quality: 94,
     textHeavy: true,
   },
   "section-4-visual-presentation": {
-    url: "https://www.figma.com/api/mcp/asset/8715df92-8169-4492-8c9e-8259123c9820",
+    // node 1:19323
+    url: "https://www.figma.com/api/mcp/asset/367bbd23-0fc2-48eb-b17d-fdee810cc804",
     quality: 90,
     textHeavy: false,
   },
   "section-5-video-strategy": {
-    url: "https://www.figma.com/api/mcp/asset/f51a1e4b-055e-4672-98b3-30f8cc9c6085",
+    // node 20:8993
+    url: "https://www.figma.com/api/mcp/asset/325bb428-0c79-497e-860b-b1ba142ef553",
     quality: 88,
     textHeavy: true,
   },
+  "section-5-storyboard-design": {
+    // node 20:9091
+    url: "https://www.figma.com/api/mcp/asset/32decb17-fb48-474e-8ba5-bc8e646be718",
+    quality: 88,
+    textHeavy: false,
+  },
   "section-6-video-design": {
-    url: "https://www.figma.com/api/mcp/asset/f6541c1a-8f08-4582-a067-ef94df70622a",
+    // node 20:8655 — post-process to erase 视频位置 rect before WebP
+    url: "https://www.figma.com/api/mcp/asset/a148f552-d5e9-4c7e-8d37-9742c1196a0b",
     quality: 94,
     textHeavy: true,
+    eraseVideoPlaceholder: true,
   },
   "section-7-project-summary": {
-    url: "https://www.figma.com/api/mcp/asset/e0f0a81e-d4f0-44ab-b576-4a085e478a7e",
+    // node 20:734
+    url: "https://www.figma.com/api/mcp/asset/2d8e8480-c6b0-4dc9-b005-067e92d41bfe",
     quality: 94,
     textHeavy: true,
   },
@@ -69,13 +84,33 @@ async function toWebp(buf, quality, textHeavy) {
     .toBuffer();
 }
 
+async function prepareInput(name, cfg, input) {
+  if (!cfg.eraseVideoPlaceholder) return input;
+
+  const meta = await sharp(input).metadata();
+  const scale = meta.width / 1920;
+  const vx = Math.round(297 * scale);
+  const vy = Math.round(355 * scale);
+  const vw = Math.round(1325 * scale);
+  const vh = Math.round(745.3125 * scale);
+  const hole = Buffer.from(
+    `<svg width="${vw}" height="${vh}"><rect width="100%" height="100%" fill="#94e1ff"/></svg>`,
+  );
+
+  return sharp(input)
+    .composite([{ input: hole, left: vx, top: vy }])
+    .png()
+    .toBuffer();
+}
+
 await mkdir(OUT, { recursive: true });
 await mkdir("public/creative/mava-social-media", { recursive: true });
 
 for (const [name, cfg] of Object.entries(ASSETS)) {
   const res = await fetch(cfg.url);
   if (!res.ok) throw new Error(`Failed ${name}: ${res.status}`);
-  const input = Buffer.from(await res.arrayBuffer());
+  const fetched = Buffer.from(await res.arrayBuffer());
+  const input = await prepareInput(name, cfg, fetched);
 
   const out =
     name === "hero"
