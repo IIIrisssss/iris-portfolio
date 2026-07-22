@@ -15,6 +15,7 @@ import "./PortfolioFolders.worldcup.css";
 import "./PortfolioFolders.osechi.css";
 import "./PortfolioFolders.mava.css";
 import "./PortfolioFolders.early-creations.css";
+import "./PortfolioFolders.manekineko-meme.css";
 
 /** Panel-Folder-Back — Figma 441.472 × 333.559 (path normalized to viewBox origin) */
 const FOLDER_BACK_PATH =
@@ -122,6 +123,7 @@ function FolderCard({
   const isOsechi = data.id === "new-year-osechi";
   const isMava = data.id === "mava-social-media";
   const isEarlyCreations = data.id === "early-creations";
+  const isManekinekoMeme = data.id === "manekineko-meme";
   const assetBase = isWorldcup
     ? "/folders/worldcup"
     : isOsechi
@@ -130,7 +132,9 @@ function FolderCard({
         ? "/folders/mava"
         : isEarlyCreations
           ? "/folders/early-creations"
-          : "/folders/figma-assets";
+          : isManekinekoMeme
+            ? "/folders/manekineko-meme"
+            : "/folders/figma-assets";
 
   return (
     <motion.button
@@ -175,6 +179,7 @@ function FolderCard({
           isMava ? "portfolio-folder-wrapper--mava" : "",
           data.id === "mava-social-media" ? "portfolio-folder-wrapper--mava-social-media" : "",
           data.id === "early-creations" ? "portfolio-folder-wrapper--early-creations" : "",
+          isManekinekoMeme ? "portfolio-folder-wrapper--manekineko-meme" : "",
         ]
           .filter(Boolean)
           .join(" ")}
@@ -244,7 +249,9 @@ function FolderCard({
                   src={
                     isWorldcup || isOsechi || isEarlyCreations
                       ? `${assetBase}/paperclip.png`
-                      : "/folders/paperclip.png?v=3"
+                      : isManekinekoMeme
+                        ? "/folders/early-creations/paperclip.png"
+                        : "/folders/paperclip.png?v=3"
                   }
                   alt=""
                   loading="lazy"
@@ -260,7 +267,7 @@ function FolderCard({
             ) : null}
           </span>
 
-          {!isEarlyCreations ? (
+          {!isEarlyCreations && !isManekinekoMeme ? (
             <span className="folder-layer folder-asset-crowned-cat">
               <img
                 className="folder-crowned-cat-default"
@@ -281,7 +288,7 @@ function FolderCard({
 
           {!isEarlyCreations ? (
             <span className="folder-layer folder-asset-peanut">
-              {isWorldcup ? (
+              {isWorldcup || isManekinekoMeme ? (
                 <>
                   <img
                     className="folder-peanut-default"

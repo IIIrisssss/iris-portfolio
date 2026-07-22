@@ -148,7 +148,14 @@ export const foldersData: FolderData[] = [
     frontColor: "#00CAEA",
     backColor: "#11AFE3",
   },
-  { id: "manekineko-meme", slug: "manekineko-meme", title1: "AI WORKFLOW", title2: "DESIGN" },
+  {
+    id: "manekineko-meme",
+    slug: "manekineko-meme",
+    title1: "AI WORKFLOW",
+    title2: "DESIGN",
+    frontColor: "#CFF171",
+    backColor: "#A5D82D",
+  },
   {
     id: "early-creations",
     slug: "early-creations",

@@ -1,0 +1,142 @@
+/* AI WORKFLOW folder — Figma 68:1846 (default) / 73:1952 (hover)
+   Positions use pre-rotation inner boxes, origin X0=216 Y0=411.44 W=441.472 H=333.559 */
+
+/* Logo — left-align with titles */
+.portfolio-folder-wrapper--manekineko-meme .portfolio-folder-logo {
+  left: 4.76%;
+}
+
+.portfolio-folder-wrapper--manekineko-meme .folder-asset-crowned-cat {
+  display: none;
+}
+
+.portfolio-folder-wrapper--manekineko-meme .folder-asset-kong {
+  left: -1.07%;
+  top: -6.04%;
+  width: 64.21%;
+  height: 84.98%;
+  z-index: 2;
+  overflow: hidden;
+  border-radius: 2.265cqw;
+  box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.25);
+  transform: rotate(-17.65deg);
+  transform-origin: center center;
+}
+
+.portfolio-folder-wrapper--manekineko-meme .folder-asset-kong img {
+  object-fit: cover;
+}
+
+.portfolio-folder-wrapper--manekineko-meme:hover .folder-asset-kong {
+  transform: translate(-6.56%, -17.69%) rotate(-17.65deg);
+}
+
+.portfolio-folder-wrapper--manekineko-meme .folder-asset-cats {
+  left: 36.14%;
+  top: -17.19%;
+  width: 43.72%;
+  height: 92.04%;
+  z-index: 3;
+  overflow: hidden;
+  border-radius: 2.265cqw;
+  box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.25);
+  transform: rotate(9.73deg);
+  transform-origin: center center;
+}
+
+.portfolio-folder-wrapper--manekineko-meme .folder-asset-cats img {
+  object-fit: cover;
+}
+
+.portfolio-folder-wrapper--manekineko-meme:hover .folder-asset-cats,
+.portfolio-folder-wrapper--manekineko-meme:hover .folder-asset-cats--frost {
+  transform: translate(3.62%, -29.08%) rotate(9.73deg);
+}
+
+.portfolio-folder-wrapper--manekineko-meme .folder-asset-horse {
+  left: 65.03%;
+  top: -0.28%;
+  width: 40.79%;
+  height: 86.92%;
+  z-index: 4;
+  overflow: hidden;
+  border-radius: 2.265cqw;
+  box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.25);
+  filter: none;
+  transform: rotate(25.15deg);
+  transform-origin: center center;
+}
+
+.portfolio-folder-wrapper--manekineko-meme .folder-asset-horse img {
+  object-fit: cover;
+  object-position: bottom center;
+}
+
+.portfolio-folder-wrapper--manekineko-meme:hover .folder-asset-horse,
+.portfolio-folder-wrapper--manekineko-meme:hover .folder-asset-horse--frost {
+  transform: translate(3.62%, -15.58%) rotate(25.15deg);
+}
+
+.portfolio-folder-wrapper--manekineko-meme .portfolio-folder-front-glass .folder-asset-paperclip {
+  position: absolute;
+  left: 24.47%;
+  top: -24%;
+  width: 15.17%;
+  height: 42%;
+  z-index: 12;
+  overflow: visible;
+  transform: none;
+  transition: none;
+}
+
+.portfolio-folder-wrapper--manekineko-meme .folder-asset-paperclip img {
+  position: static;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.portfolio-folder-wrapper--manekineko-meme .folder-asset-peanut {
+  left: 60.6%;
+  top: 32.11%;
+  width: 49.59%;
+  height: 65.63%;
+  z-index: 32;
+  filter: drop-shadow(0px 5.072px 16.907px rgba(0, 0, 0, 0.25));
+  transform: rotate(-8.24deg);
+  transform-origin: center center;
+  transition:
+    transform 0.6s cubic-bezier(0.68, -0.6, 0.32, 1.6),
+    left 0.6s cubic-bezier(0.68, -0.6, 0.32, 1.6),
+    top 0.6s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+}
+
+.portfolio-folder-wrapper--manekineko-meme:hover .folder-asset-peanut {
+  left: 63.55%;
+  top: 33.31%;
+  transform: rotate(10.05deg);
+}
+
+.portfolio-folder-wrapper--manekineko-meme .folder-peanut-default {
+  opacity: 1;
+}
+
+.portfolio-folder-wrapper--manekineko-meme .folder-peanut-hover {
+  opacity: 0;
+}
+
+.portfolio-folder-wrapper--manekineko-meme:hover .folder-peanut-default {
+  opacity: 0;
+}
+
+.portfolio-folder-wrapper--manekineko-meme:hover .folder-peanut-hover {
+  opacity: 1;
+}
+
+.portfolio-folder-wrapper--manekineko-meme .folder-asset-peanut img {
+  position: absolute;
+  inset: 0;
+  object-fit: contain;
+  transition: opacity 0.22s ease;
+}
