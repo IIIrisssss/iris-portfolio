@@ -86,7 +86,7 @@ const aboutPageData: Record<Locale, AboutPageData> = {
       {
         id: "bytedance",
         company: "字节跳动",
-        role: "TikTok-Ug-创意设计师",
+        role: "TikTok-Ug-创意设计师（外包）",
         period: "2025.10-至今",
         skills: ["AIGC 提效", "本地化设计", "AI动态", "AI WORKFLOW"],
         projects: [
@@ -161,7 +161,7 @@ const aboutPageData: Record<Locale, AboutPageData> = {
       {
         id: "bytedance",
         company: "ByteDance",
-        role: "TikTok UG Creative Designer",
+        role: "TikTok UG Creative Designer (Contract)",
         period: "Oct 2025 – Present",
         skills: ["AIGC Efficiency", "Localization Design", "AI Motion", "AI WORKFLOW"],
         projects: [
