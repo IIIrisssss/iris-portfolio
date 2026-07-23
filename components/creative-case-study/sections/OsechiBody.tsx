@@ -20,7 +20,7 @@ export function OsechiBody() {
         className="osechi-s1"
         designHeight={2060}
         imageSrc={SECTION_1_IMAGE}
-        alt="1 · New Year Ranking — mobile screens, reward dialogs, and festive Lucky cat"
+        alt="1 · New Year Ranking — mobile screens, reward dialogs, and festive lucky cat"
       />
       <WorldcupFullbleedSection
         className="osechi-s2"

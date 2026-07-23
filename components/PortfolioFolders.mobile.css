@@ -1,0 +1,21 @@
+/* Loaded last — tame folder pop-outs on touch screens to avoid overlap */
+@media (max-width: 767px) and (hover: none) {
+  .portfolio-folder-wrapper:is(:hover, :focus-within) .folder-layer {
+    transform: none !important;
+  }
+
+  .portfolio-folder-wrapper:is(:hover, :focus-within) .portfolio-folder-front-frost,
+  .portfolio-folder-wrapper:is(:hover, :focus-within) .portfolio-folder-front-glass {
+    transform: none !important;
+  }
+
+  .portfolio-folder-wrapper:is(:hover, :focus-within) .folder-crowned-cat-default,
+  .portfolio-folder-wrapper:is(:hover, :focus-within) .folder-peanut-default {
+    opacity: 1 !important;
+  }
+
+  .portfolio-folder-wrapper:is(:hover, :focus-within) .folder-crowned-cat-hover,
+  .portfolio-folder-wrapper:is(:hover, :focus-within) .folder-peanut-hover {
+    opacity: 0 !important;
+  }
+}

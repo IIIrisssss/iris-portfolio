@@ -21,7 +21,7 @@ type LetterState = {
 
 const prefersReducedMotionQuery = "(prefers-reduced-motion: reduce)";
 
-const titleWidth = "min(100%, clamp(480px, 116vw, 56rem))";
+const titleWidth = "min(100%, clamp(17rem, 116vw, 56rem))";
 
 function clamp(value: number, min: number, max: number) {
   return Math.min(max, Math.max(min, value));

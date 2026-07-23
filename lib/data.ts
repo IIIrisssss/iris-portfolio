@@ -195,13 +195,13 @@ export const creativeProjectDetails: Record<string, CreativeProjectDetail> = {
       "A compact social kit designed for quick updates, clear hierarchy, and bright branded moments.",
   },
   "worldcup-campaign": {
-    title: "Worldcup Campaign",
+    title: "World Cup Campaign",
     date: "2026.5–2026.6",
     description:
       "A high-energy campaign set with bold color, layered motion, and strong sports-event contrast.",
   },
   "manekineko-meme": {
-    title: "Manekineko Meme",
+    title: "Maneki-neko Meme",
     date: "2026.1–2026.2",
     description:
       "A mascot-driven sticker pack that balances humor, gesture, and a loud, collectible composition.",
@@ -237,7 +237,7 @@ export const heroSlides: HeroSlideData[] = [
     src: "/hero-media/1-replacement.webp",
     title: "DESIGN",
     subtitle: "CREATIVE.LQB",
-    description: "to use AI to explore.\nis one of the design\npursue. Just do it",
+    description: "Use AI to explore design.\nJust do it.",
     href: heroSlideHref(HERO_SLIDE_FOLDER_INDEX[0]),
   },
   {
@@ -463,7 +463,7 @@ export type ProjectListItem = {
 export const projectsList: ProjectListItem[] = [
   { title: "Brompton", slug: "brompton", image: "/works/brompton.jpg?v=1" },
   { title: "260 Collins", slug: "260-collins", image: "/works/collins.jpg?v=1" },
-  { title: "ShakeShack", slug: "shakeshack", image: "/works/shakeshack.png?v=1" },
+  { title: "Shake Shack", slug: "shakeshack", image: "/works/shakeshack.png?v=1" },
   {
     title: "Caulfield Cup",
     slug: "caulfield-cup",
@@ -476,8 +476,8 @@ export const about = {
   title: "about",
   bio: [
     "Spencer Gabor is an illustrator, designer and muralist based in Brooklyn, New York.",
-    "His work is headlined by bold and zaney characters, abstract shapes and bright colors.",
-    "Clients include Apple, Amazon, Adobe, NPR, Lululemon, The New York Times, Harvard Business Review, Twilio, ShakeShack, Jagermeister, SkullCandy, & Others",
+    "His work is headlined by bold and zany characters, abstract shapes and bright colors.",
+    "Clients include Apple, Amazon, Adobe, NPR, Lululemon, The New York Times, Harvard Business Review, Twilio, Shake Shack, Jagermeister, Skullcandy, & Others",
   ],
 };
 

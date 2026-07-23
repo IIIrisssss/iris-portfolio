@@ -105,7 +105,7 @@ export function getFooterCopy(locale: Locale): FooterCopy {
       body: "热衷于跨文化美学 🌍、动态 IP 孵化 👾 以及重塑独特的视觉体验 ✨",
       bodyLineBreakAfter: "随时准备好迎接下一个创意谜题🧩",
       ctaLabel: "在此捕捉我 ➡️",
-      connectLabel: "or connect through..",
+      connectLabel: "or connect through:",
       credit: "由全球化审美、奶茶和打破常规的渴望驱动。保持好奇！🧋",
     };
   }
@@ -119,7 +119,7 @@ export function getFooterCopy(locale: Locale): FooterCopy {
     bodyLineBreakAfter:
       "and shaping unique visual experiences ✨. Always ready for a new creative puzzle. 🧩",
     ctaLabel: "Catch Me Here ➡️",
-    connectLabel: "or connect through..",
+    connectLabel: "or connect through:",
     credit:
       "Fueled by global aesthetics, milk tea, and the desire to break the mold. Stay curious! 🧋",
   };

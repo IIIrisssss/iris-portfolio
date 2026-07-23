@@ -199,6 +199,10 @@ a {
   pointer-events: none;
 }
 
+.magnetic-scatter-title__image--slice {
+  object-fit: fill;
+}
+
 .section-subtitle {
   font-family: "Zen Dots", var(--font-zen-dots);
   font-weight: 400;

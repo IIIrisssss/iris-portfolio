@@ -100,7 +100,7 @@ export function SpringDangoLocalizedDesignSection() {
 
         <FigmaPlacement designHeight={DESIGN_H} x={70} y={1343.61} w={225.739} h={TAG_H}>
           <span className="sd-s4__tag sd-s4__tag--filled">
-            <span className="sd-s4__tag-text">INcentive</span>
+            <span className="sd-s4__tag-text">Incentive</span>
             <span className="sd-s4__tag-text">Design</span>
           </span>
         </FigmaPlacement>

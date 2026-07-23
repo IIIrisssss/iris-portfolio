@@ -8,7 +8,7 @@ export const mavaSocialMediaCaseStudy: CaseStudyConfig = {
     "A compact social kit designed for quick updates, clear hierarchy, and bright branded moments.",
   hero: {
     src: "/creative/mava-social-media/hero.webp",
-    alt: "Spring Sakura × Shiratama — TikTok JP seasonal skin collection hero",
+    alt: "Mava social media templates — hero cover",
   },
   theme: {
     body: "#ffffff",

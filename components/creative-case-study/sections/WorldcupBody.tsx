@@ -113,7 +113,7 @@ export function WorldcupBody() {
           className="wc-s6"
           designHeight={2655}
           imageSrc={SECTION_7_IMAGE}
-          alt="Ranking 榜单与奖励视觉设计"
+          alt="Ranking leaderboard and reward visual design"
         />
         <SectionSeam
           src={SEAM_MASCOT_S6_S7}

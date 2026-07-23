@@ -514,7 +514,7 @@ export const creativeCards: CreativeCard[] = [
   {
     id: "meme",
     href: "/creative/manekineko-meme",
-    alt: "Manekineko meme sticker set",
+    alt: "Maneki-neko meme sticker set",
     image: "/creative-projects/manekineko-meme.png?v=1",
     zIndex: 5,
     placeholderColor: "#ffe8d6",

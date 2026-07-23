@@ -37,7 +37,7 @@ export function SpringDangoFestiveIncentiveSection() {
     <ScaledCanvas designHeight={DESIGN_H} className="sd-s3">
       <div className="sd-s3__canvas" aria-label="节庆激励视觉">
         <FigmaPlacement designHeight={DESIGN_H} x={70} y={70} w={598} h={72}>
-          <h2 className="sd-s3__title">Horse Year &amp; Coins</h2>
+          <h2 className="sd-s3__title">Year of the Horse &amp; Coins</h2>
         </FigmaPlacement>
 
         <FigmaPlacement designHeight={DESIGN_H} x={70} y={189} w={1032} h={108}>
@@ -108,7 +108,7 @@ export function SpringDangoFestiveIncentiveSection() {
 
         <FigmaPlacement designHeight={DESIGN_H} x={70} y={1312.61} w={225.739} h={TAG_H}>
           <span className="sd-s3__tag sd-s3__tag--filled">
-            <span className="sd-s3__tag-text">INcentive</span>
+            <span className="sd-s3__tag-text">Incentive</span>
             <span className="sd-s3__tag-text">Design</span>
           </span>
         </FigmaPlacement>

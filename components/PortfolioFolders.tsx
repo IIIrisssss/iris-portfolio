@@ -16,6 +16,7 @@ import "./PortfolioFolders.osechi.css";
 import "./PortfolioFolders.mava.css";
 import "./PortfolioFolders.early-creations.css";
 import "./PortfolioFolders.manekineko-meme.css";
+import "./PortfolioFolders.mobile.css";
 
 /** Panel-Folder-Back — Figma 441.472 × 333.559 (path normalized to viewBox origin) */
 const FOLDER_BACK_PATH =

@@ -15,7 +15,7 @@ const TAG_H = 47.391;
 export function SpringDangoManekinekoSection() {
   return (
     <ScaledCanvas designHeight={DESIGN_H} className="sd-s2">
-      <div className="sd-s2__canvas" aria-label="Manekineko sticker pack showcase">
+      <div className="sd-s2__canvas" aria-label="Maneki-neko sticker pack showcase">
         <FigmaPlacement designHeight={DESIGN_H} x={0} y={418} w={1449} h={1406}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
@@ -65,7 +65,7 @@ export function SpringDangoManekinekoSection() {
         </FigmaPlacement>
 
         <FigmaPlacement designHeight={DESIGN_H} x={70} y={159} w={380}>
-          <p className="sd-s2__heading sd-s2__heading--md">Manekineko</p>
+          <p className="sd-s2__heading sd-s2__heading--md">Maneki-neko</p>
         </FigmaPlacement>
 
         <FigmaPlacement designHeight={DESIGN_H} x={70} y={219} w={380.513}>
@@ -137,7 +137,7 @@ export function SpringDangoManekinekoSection() {
 
         <FigmaPlacement designHeight={DESIGN_H} x={70} y={1696.61} w={225.739} h={TAG_H}>
           <span className="sd-s2__tag sd-s2__tag--filled">
-            <span className="sd-s2__tag-text">INcentive</span>
+            <span className="sd-s2__tag-text">Incentive</span>
             <span className="sd-s2__tag-text">Design</span>
           </span>
         </FigmaPlacement>

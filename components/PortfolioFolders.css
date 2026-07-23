@@ -1,7 +1,7 @@
 .portfolio-folders-section {
   --portfolio-content-max: min(100%, clamp(1440px, 92vw, 1960px));
   --portfolio-folder-max: min(100%, 18rem);
-  --portfolio-title-max: clamp(480px, 116vw, 56rem);
+  --portfolio-title-max: min(100%, clamp(17rem, 116vw, 56rem));
   --portfolio-title-scale: 1.155;
   width: 100%;
   max-width: var(--portfolio-content-max);
@@ -14,7 +14,7 @@
 @media (min-width: 1280px) {
   .portfolio-folders-section {
     --portfolio-folder-max: min(100%, clamp(18rem, 14vw, 22rem));
-    --portfolio-title-max: clamp(480px, 62vw, 68rem);
+    --portfolio-title-max: min(100%, clamp(17rem, 62vw, 68rem));
     --portfolio-title-scale: clamp(1.155, calc(1.155 + (100vw - 1280px) * 0.000266), 1.406);
   }
 }
@@ -23,7 +23,7 @@
   .portfolio-folders-section {
     --portfolio-content-max: min(100%, clamp(1560px, 94vw, 2100px));
     --portfolio-folder-max: min(100%, clamp(20rem, 13vw, 26rem));
-    --portfolio-title-max: clamp(520px, 58vw, 76rem);
+    --portfolio-title-max: min(100%, clamp(18rem, 58vw, 76rem));
     --portfolio-title-scale: clamp(1.254, calc(1.254 + (100vw - 1600px) * 0.00019), 1.52);
   }
 }
@@ -66,7 +66,7 @@
 .section-title-mark-creative {
   display: block;
   width: min(100%, calc(var(--portfolio-title-max) * 0.76));
-  aspect-ratio: 494 / 108;
+  aspect-ratio: 492 / 108;
   margin-inline: auto;
   overflow: visible;
 }
@@ -118,9 +118,67 @@
 }
 
 @media (max-width: 767px) {
+  .portfolio-folders-section {
+    --portfolio-folder-size: min(100%, 10.75rem);
+    --portfolio-folder-max: var(--portfolio-folder-size);
+    --portfolio-folder-height: calc(var(--portfolio-folder-size) * 333.559 / 441.472);
+    /* Room above wrapper for stickers; front panel stays on a shared baseline */
+    --portfolio-folder-protrusion: calc(var(--portfolio-folder-size) * 0.42);
+    --portfolio-folder-slot-height: calc(var(--portfolio-folder-height) + var(--portfolio-folder-protrusion));
+    --portfolio-folder-gap: clamp(1.75rem, 7vw, 2.5rem);
+  }
+
+  .portfolio-folders-header {
+    margin-bottom: clamp(3.5rem, 12vw, 4.5rem);
+    gap: 1.75rem;
+  }
+
   .portfolio-folders-grid {
-    gap: clamp(4.5rem, 14vw, 6rem) clamp(0.75rem, 2.8vw, 1.25rem);
-    padding-top: clamp(3.25rem, 9vw, 4.5rem);
+    box-sizing: border-box;
+    width: min(100%, calc(var(--portfolio-folder-size) * 2 + var(--portfolio-folder-gap)));
+    margin-inline: auto;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: end;
+    column-gap: var(--portfolio-folder-gap);
+    row-gap: clamp(7rem, 22vw, 9rem);
+    padding-top: clamp(2rem, 7vw, 3rem);
+  }
+
+  .portfolio-folder-button {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    width: 100%;
+    height: var(--portfolio-folder-slot-height);
+    padding: 0;
+    text-align: center;
+    transform-origin: center bottom;
+  }
+
+  .portfolio-folder-button--shift-up {
+    margin-top: 0;
+  }
+
+  .portfolio-folder-wrapper {
+    position: relative;
+    flex: 0 0 auto;
+    width: var(--portfolio-folder-size);
+    max-width: 100%;
+    margin: 0;
+    transform: none;
+    transform-origin: center bottom;
+  }
+}
+
+@media (max-width: 420px) {
+  .portfolio-folders-section {
+    --portfolio-folder-size: min(100%, 11.25rem);
+  }
+
+  .portfolio-folders-grid {
+    width: min(100%, var(--portfolio-folder-size));
+    grid-template-columns: 1fr;
+    row-gap: clamp(6.5rem, 18vw, 8rem);
   }
 }
 
@@ -163,12 +221,6 @@
   overflow: visible;
   z-index: 1;
   transform-origin: center center;
-}
-
-@media (max-width: 767px) {
-  .portfolio-folder-wrapper {
-    max-width: min(100%, 14.25rem);
-  }
 }
 
 /* Invisible hover area to prevent flickering when elements pop out */

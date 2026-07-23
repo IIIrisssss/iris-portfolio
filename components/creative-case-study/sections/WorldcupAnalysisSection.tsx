@@ -41,13 +41,13 @@ export function WorldcupAnalysisSection() {
 
       <FigmaPlacement designHeight={DESIGN_H} x={60} y={233} w={492} h={44}>
         <ScrollRevealMask delay={0.05}>
-          <p className="wc-s2__subtitle">Background Supplement</p>
+          <p className="wc-s2__subtitle">Background Overview</p>
         </ScrollRevealMask>
       </FigmaPlacement>
 
       <FigmaPlacement designHeight={DESIGN_H} x={61} y={295} w={687}>
         <p className="wc-s2__body" data-wc-stagger-item>
-          TikTokb布局少量轻量激励玩法，TikTok
+          TikTok 布局少量轻量激励玩法，TikTok
           Lite则聚焦海外‘网赚爆破’，作为核心增长引擎，具备更多样的玩法。它通过现金直兑的强诱因，驱动用户邀请多名新用户及召回流失用户以解锁巨额积分。
         </p>
       </FigmaPlacement>

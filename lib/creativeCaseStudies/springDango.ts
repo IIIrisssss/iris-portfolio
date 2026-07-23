@@ -8,7 +8,7 @@ export const springDangoCaseStudy: CaseStudyConfig = {
     "A playful seasonal set built around bright motion, soft character poses, and a light collectible feel.",
   hero: {
     src: "/creative/spring-dango-points/hero.webp",
-    alt: "JP PRO - IP Manekineko — 马年动态表情包头图",
+    alt: "JP PRO - IP Maneki-neko — 马年动态表情包头图",
   },
   theme: {
     body: "#FE6358",

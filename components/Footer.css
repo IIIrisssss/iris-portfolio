@@ -296,96 +296,104 @@
   opacity: 0.75;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 767px) {
   .meet-footer__top {
-    --meet-footer-gutter-min: clamp(1rem, 5vw, 1.75rem);
+    --meet-footer-gutter-min: var(--padding);
   }
 
   .meet-footer--en .meet-footer__top,
   .meet-footer--zh .meet-footer__top {
-    padding: 2rem 0 1.5rem;
+    padding: clamp(2.75rem, 8vw, 3.5rem) 0 clamp(2.25rem, 6vw, 3rem);
   }
 
   .meet-footer__grid {
-    grid-template-columns:
-      minmax(var(--meet-footer-gutter-min), 1fr)
-      minmax(0, 1.15fr)
-      minmax(var(--meet-footer-gutter-min), 1fr)
-      minmax(0, 0.85fr)
-      minmax(var(--meet-footer-gutter-min), 1fr);
-    row-gap: 1.1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: clamp(2.25rem, 7vw, 3rem);
+    padding-inline: var(--padding);
   }
 
-  .meet-footer__column--about {
-    grid-column: 1 / -1;
-    padding-inline: var(--meet-footer-gutter-min);
+  .meet-footer__column--about,
+  .meet-footer__column--expertise,
+  .meet-footer__column--contact {
+    grid-column: unset;
+    width: 100%;
+    max-width: none;
+    padding-inline: 0;
     justify-self: stretch;
   }
 
-  .meet-footer__column--expertise {
-    grid-column: 2;
-    justify-self: start;
-  }
-
-  .meet-footer__column--contact {
-    grid-column: 4;
-    justify-self: end;
-    width: min(100%, 10.5rem);
-    padding-left: 0;
-  }
-
   .meet-footer__section-title {
-    margin-bottom: 0.25rem;
-    font-size: 0.49rem;
-    white-space: nowrap;
+    margin-bottom: 0.65rem;
+    font-size: clamp(0.72rem, 2.8vw, 0.82rem);
+    white-space: normal;
   }
 
   .meet-footer--zh .meet-footer__section-title {
-    font-size: 0.49rem;
+    font-size: clamp(0.72rem, 2.8vw, 0.82rem);
   }
 
   .meet-footer--en .meet-footer__about-body,
   .meet-footer--zh .meet-footer__about-body {
-    font-size: 0.48rem;
-    line-height: 1.55;
-    max-width: 100%;
+    font-size: clamp(0.8125rem, 3.4vw, 0.9375rem);
+    line-height: 1.65;
+    max-width: 36rem;
   }
 
   .meet-footer__label,
-  .meet-footer__contact-label,
+  .meet-footer__contact-label {
+    font-size: clamp(0.625rem, 2.4vw, 0.6875rem);
+  }
+
   .meet-footer__value,
   .copy-able__text {
-    font-size: 0.49rem;
+    font-size: clamp(0.8125rem, 3.2vw, 0.9375rem);
   }
 
   .meet-footer__value--single-line {
-    font-size: 0.49rem;
+    white-space: normal;
   }
 
   .meet-footer__info-stack {
-    gap: 0.67rem;
+    gap: 1rem;
+  }
+
+  .meet-footer__info-block {
+    gap: 0.2rem;
   }
 
   .meet-footer__contact-stack {
-    gap: 0.47rem;
+    gap: 1rem;
+  }
+
+  .meet-footer__contact-item--qr {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.65rem;
+    padding-top: 0.35rem;
   }
 
   .meet-footer__wechat-qr {
-    width: 3rem;
-    height: 3rem;
+    width: clamp(4.25rem, 18vw, 5.25rem);
+    height: clamp(4.25rem, 18vw, 5.25rem);
   }
 
   .meet-footer__bottom {
-    padding: 1rem 0.9rem 1.25rem;
+    padding: 1.25rem var(--padding) calc(1.5rem + env(safe-area-inset-bottom));
   }
 
   .meet-footer__bar {
     flex-direction: column;
     justify-content: center;
     text-align: center;
+    gap: 0.75rem;
   }
 
   .meet-footer__credit {
-    margin-bottom: 0.8rem;
+    margin-bottom: 1rem;
+    font-size: clamp(0.625rem, 2.8vw, 0.75rem);
+    line-height: 1.65;
   }
 }

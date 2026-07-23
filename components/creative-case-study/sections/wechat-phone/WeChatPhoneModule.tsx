@@ -77,7 +77,7 @@ export function WeChatPhoneModule({ variant = "standalone" }: WeChatPhoneModuleP
                       />
                     </svg>
                   </button>
-                  <h2 className="wechat-phone__nav-title">Manekineko🐈</h2>
+                  <h2 className="wechat-phone__nav-title">Maneki-neko🐈</h2>
                   <button type="button" className="wechat-phone__nav-more" aria-label="More">
                     <svg viewBox="0 0 20 4" aria-hidden="true">
                       <circle cx="2" cy="2" r="1.6" fill="currentColor" />
