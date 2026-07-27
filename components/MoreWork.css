@@ -1,10 +1,51 @@
 .more-work {
   --more-work-card-radius: 14px;
+  --more-work-title-max: min(100%, clamp(17rem, 92vw, 56rem));
+  /* More Work SVG is very wide (560×57); scale up so mobile height matches Creative Projects */
+  --more-work-title-scale: 1.1;
 }
 
 .more-work-title {
   margin: 0;
-  width: fit-content;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.section-title-mark-more-work {
+  display: block;
+  width: min(100%, var(--more-work-title-max));
+  aspect-ratio: 560 / 57;
+  margin-inline: auto;
+  overflow: visible;
+}
+
+.section-title-mark-more-work .magnetic-scatter-title[data-title="moreWorks"] {
+  width: calc(100% / var(--more-work-title-scale)) !important;
+  margin-inline: auto;
+  padding: clamp(8px, 1.5vw, 17px);
+  transform: scale(var(--more-work-title-scale));
+  transform-origin: center top;
+}
+
+@media (max-width: 767px) {
+  .more-work {
+    --more-work-title-scale: 1.72;
+    --more-work-title-max: min(100%, clamp(17rem, 96vw, 56rem));
+  }
+
+  .section-title-mark-more-work {
+    width: min(100%, var(--more-work-title-max));
+    min-height: clamp(3.25rem, 15vw, 4.75rem);
+    aspect-ratio: auto;
+    height: clamp(3.25rem, 15vw, 4.75rem);
+  }
+}
+
+@media (max-width: 420px) {
+  .more-work {
+    --more-work-title-scale: 1.58;
+  }
 }
 
 .more-work-grid {

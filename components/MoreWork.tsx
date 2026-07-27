@@ -79,7 +79,9 @@ export function MoreWork() {
       <RevealMask className="reveal-mask--title" delay={0.82}>
         <header className="flex w-full flex-col items-center gap-8 px-[var(--padding)] text-center">
           <h2 className="more-work-title">
-            <SectionTitleMark title="moreWorks" alt={copy.title} />
+            <span className="section-title-mark-more-work">
+              <SectionTitleMark title="moreWorks" alt={copy.title} />
+            </span>
           </h2>
           <p className="section-subtitle section-subtitle--more-work max-w-[24em] leading-[1.3] text-[var(--color-on-primary)]/70">
             {copy.subtitle}
