@@ -119,13 +119,16 @@
 
 @media (max-width: 767px) {
   .portfolio-folders-section {
-    --portfolio-folder-size: min(100%, 10.75rem);
+    --portfolio-folder-gap: clamp(1.75rem, 7vw, 2.5rem);
+    --portfolio-folder-size: min(
+      10.75rem,
+      calc((100vw - 2 * var(--padding) - var(--portfolio-folder-gap)) / 2)
+    );
     --portfolio-folder-max: var(--portfolio-folder-size);
     --portfolio-folder-height: calc(var(--portfolio-folder-size) * 333.559 / 441.472);
     /* Room above wrapper for stickers; front panel stays on a shared baseline */
     --portfolio-folder-protrusion: calc(var(--portfolio-folder-size) * 0.42);
     --portfolio-folder-slot-height: calc(var(--portfolio-folder-height) + var(--portfolio-folder-protrusion));
-    --portfolio-folder-gap: clamp(1.75rem, 7vw, 2.5rem);
   }
 
   .portfolio-folders-header {
@@ -172,13 +175,32 @@
 
 @media (max-width: 420px) {
   .portfolio-folders-section {
-    --portfolio-folder-size: min(100%, 11.25rem);
+    --portfolio-folder-gap: clamp(1.375rem, 9vw, 2.25rem);
+    --portfolio-folder-size: min(
+      8.75rem,
+      calc(
+        ((100vw - 2 * var(--padding) - var(--portfolio-folder-gap)) / 2) * 0.82
+      )
+    );
   }
 
   .portfolio-folders-grid {
-    width: min(100%, var(--portfolio-folder-size));
-    grid-template-columns: 1fr;
-    row-gap: clamp(6.5rem, 18vw, 8rem);
+    width: 100%;
+    max-width: none;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: clamp(6rem, 16vw, 7.5rem);
+  }
+}
+
+@media (max-width: 360px) {
+  .portfolio-folders-section {
+    --portfolio-folder-gap: clamp(1.25rem, 8.5vw, 2rem);
+    --portfolio-folder-size: min(
+      7.875rem,
+      calc(
+        ((100vw - 2 * var(--padding) - var(--portfolio-folder-gap)) / 2) * 0.78
+      )
+    );
   }
 }
 
