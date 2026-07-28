@@ -12,78 +12,78 @@ const OUT = "public/creative/spring-dango-points/sections/s1";
 /** Layered assets from Figma MCP get_design_context (36:47446). */
 const ASSETS = {
   "ellipse-lg": {
-    url: "https://www.figma.com/api/mcp/asset/35fc30e4-0715-4d0e-9542-f4f4614afb6c",
+    url: "https://www.figma.com/api/mcp/asset/41d0dd32-9e12-41ed-af1a-20b0748d480e",
     quality: 90,
   },
   "ellipse-md": {
-    url: "https://www.figma.com/api/mcp/asset/8cae7a0c-aee1-4e19-af2e-ce10712a1d21",
+    url: "https://www.figma.com/api/mcp/asset/da6d0cd2-ba7d-475d-b3f8-6466b2c20e17",
     quality: 90,
   },
   "ellipse-sm": {
-    url: "https://www.figma.com/api/mcp/asset/b8116680-a2e4-49a8-929c-8dce0500385b",
+    url: "https://www.figma.com/api/mcp/asset/dfee7d60-c855-40fd-81fd-003319269b98",
     quality: 90,
   },
   "ellipse-sm-alt": {
-    url: "https://www.figma.com/api/mcp/asset/24d141ba-56b5-45eb-904a-1203016cd330",
+    url: "https://www.figma.com/api/mcp/asset/15523d0a-a617-46ce-82c4-357292281f1f",
     quality: 90,
   },
   "arrow-2": {
-    url: "https://www.figma.com/api/mcp/asset/29334ab8-bafd-4656-a6fb-889253360324",
+    url: "https://www.figma.com/api/mcp/asset/2d2f33fe-8efe-49e6-af71-f9427877a11d",
     quality: 92,
     textHeavy: true,
   },
   "arrow-3": {
-    url: "https://www.figma.com/api/mcp/asset/6413725b-e13d-4b98-b503-43edc299ae9c",
+    url: "https://www.figma.com/api/mcp/asset/3d550396-6fa8-4a71-8f50-58c1e36196f8",
     quality: 92,
     textHeavy: true,
   },
   "arrow-4": {
-    url: "https://www.figma.com/api/mcp/asset/bfe465eb-717b-4eb7-8c8f-e1f5717f9f37",
+    url: "https://www.figma.com/api/mcp/asset/fe24678c-f46c-405c-9dc0-c0ab179a1107",
     quality: 92,
     textHeavy: true,
   },
   "arrow-5": {
-    url: "https://www.figma.com/api/mcp/asset/ee5e02ad-23ac-4582-b4bc-dd40ac76b9f5",
+    url: "https://www.figma.com/api/mcp/asset/0350c2db-d696-4b52-97f3-595ca4b62df6",
     quality: 92,
     textHeavy: true,
   },
   "arrow-7": {
-    url: "https://www.figma.com/api/mcp/asset/ef11fc64-e5b1-4bf7-949a-4309d84b58ea",
+    url: "https://www.figma.com/api/mcp/asset/6aad0e06-fdff-4382-8ec1-dcf50d195c8f",
     quality: 92,
     textHeavy: true,
   },
   "arrow-9": {
-    url: "https://www.figma.com/api/mcp/asset/bcb9b101-b2e5-4474-9053-2a95007ef07f",
+    url: "https://www.figma.com/api/mcp/asset/cfb030a9-d951-479b-b272-07048236a642",
     quality: 92,
     textHeavy: true,
   },
   "arrow-10": {
-    url: "https://www.figma.com/api/mcp/asset/ff39bc43-1b4c-44fe-830a-4eccebeba433",
+    url: "https://www.figma.com/api/mcp/asset/9716b462-4668-4c38-ab63-1c43f6d37234",
     quality: 92,
     textHeavy: true,
   },
   "arrow-11": {
-    url: "https://www.figma.com/api/mcp/asset/e8a3996e-7d20-40ba-948f-3aa504c3659e",
+    url: "https://www.figma.com/api/mcp/asset/bef35657-fe54-45f8-a627-914b85ec6268",
     quality: 92,
     textHeavy: true,
   },
   "arrow-12": {
-    url: "https://www.figma.com/api/mcp/asset/ec6a3bcf-db8e-4152-aa98-e22428afb08a",
+    url: "https://www.figma.com/api/mcp/asset/06755e26-b325-4162-a55d-dca32b3b745d",
     quality: 92,
     textHeavy: true,
   },
   "arrow-13": {
-    url: "https://www.figma.com/api/mcp/asset/2be51a64-c06b-438f-87c7-0877eb3d0016",
+    url: "https://www.figma.com/api/mcp/asset/0552bb3f-c903-421e-b1bb-6fb19b5d32c9",
     quality: 92,
     textHeavy: true,
   },
   "arrow-14": {
-    url: "https://www.figma.com/api/mcp/asset/e32c79f7-ea80-4557-9a8b-bd3f74e08282",
+    url: "https://www.figma.com/api/mcp/asset/ecd61b1c-527c-4136-b15a-bd96013202b2",
     quality: 92,
     textHeavy: true,
   },
   "arrow-15": {
-    url: "https://www.figma.com/api/mcp/asset/46941264-68f5-460e-9146-2c10fce26dde",
+    url: "https://www.figma.com/api/mcp/asset/6f04798d-225a-42c3-aaf7-69050df66408",
     quality: 92,
     textHeavy: true,
   },

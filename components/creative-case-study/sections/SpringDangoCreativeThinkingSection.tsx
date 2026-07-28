@@ -32,23 +32,23 @@ const SMALL_ELLIPSES = [
 ] as const;
 
 const TEXT_ONLY_NODES = [
-  { label: "马年祝福", lx: 719.22, ly: 731.45, lw: 109.724, lh: 38.613 },
+  { label: "马年祝福", lx: 719.22, ly: 730.17, lw: 109.724, lh: 38.613 },
   { label: "好运祈愿", lx: 912.76, ly: 729.08, lw: 109.294, lh: 37.337 },
 ] as const;
 
 const ARROWS = [
-  { x: 530.85, y: 757.28, w: 142.11, h: 12, src: "arrow-5", rotate: 0 },
-  { x: 1068.98, y: 757.28, w: 151.584, h: 12, src: "arrow-13", rotate: 180 },
-  { x: 424.74, y: 536.53, w: 38.843, h: 61.581, src: "arrow-3", rotate: -57.76 },
-  { x: 424.74, y: 910.76, w: 50.212, h: 73.897, src: "arrow-11", rotate: 55.8 },
-  { x: 660.65, y: 1056.66, w: 53.055, h: 7.438, src: "arrow-12", rotate: 172.02 },
-  { x: 1030.13, y: 540.32, w: 41.686, h: 8.527, src: "arrow-9", rotate: -11.56 },
-  { x: 1250.88, y: 598.11, w: 39.791, h: 29.369, src: "arrow-10", rotate: -143.57 },
-  { x: 1534.15, y: 639.8, w: 29.526, h: 22.938, src: "arrow-15", rotate: -37.84 },
-  { x: 637.91, y: 448.42, w: 70.134, h: 18.418, src: "arrow-4", rotate: -165.29 },
-  { x: 1050.03, y: 1016.87, w: 92.342, h: 29.711, src: "arrow-2", rotate: 17.84 },
-  { x: 1406.25, y: 551.69, w: 6.632, h: 37.896, src: "arrow-7", rotate: -80.07 },
-  { x: 1417.62, y: 913.6, w: 10.421, h: 66.318, src: "arrow-14", rotate: 81.07 },
+  { x: 530.85, y: 757.28, w: 142.11, h: 12, src: "arrow-5", rotate: 0, lineW: 142.11 },
+  { x: 1068.98, y: 757.28, w: 151.584, h: 12, src: "arrow-13", rotate: 180, lineW: 151.584 },
+  { x: 424.74, y: 536.53, w: 38.843, h: 61.581, src: "arrow-3", rotate: -57.76, lineW: 72.808 },
+  { x: 424.74, y: 910.76, w: 50.212, h: 73.897, src: "arrow-11", rotate: 55.8, lineW: 89.343 },
+  { x: 660.65, y: 1056.66, w: 53.055, h: 7.438, src: "arrow-12", rotate: 172.02, lineW: 53.573 },
+  { x: 1030.13, y: 540.32, w: 41.686, h: 8.527, src: "arrow-9", rotate: -11.56, lineW: 42.549 },
+  { x: 1250.88, y: 598.11, w: 39.791, h: 29.369, src: "arrow-10", rotate: -143.57, lineW: 49.456 },
+  { x: 1534.15, y: 639.8, w: 29.526, h: 22.938, src: "arrow-15", rotate: -37.84, lineW: 37.389 },
+  { x: 637.91, y: 448.42, w: 70.134, h: 18.418, src: "arrow-4", rotate: -165.29, lineW: 72.512 },
+  { x: 1050.03, y: 1016.87, w: 92.342, h: 29.711, src: "arrow-2", rotate: 17.84, lineW: 97.004 },
+  { x: 1406.25, y: 551.69, w: 6.632, h: 37.896, src: "arrow-7", rotate: -80.07, lineW: 38.472 },
+  { x: 1417.62, y: 913.6, w: 10.421, h: 66.318, src: "arrow-14", rotate: 81.07, lineW: 67.132 },
 ] as const;
 
 function ellipseSrc(large: boolean, alt?: boolean) {
@@ -187,14 +187,23 @@ export function SpringDangoCreativeThinkingSection() {
             w={arrow.w}
             h={arrow.h}
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={`${ASSET}/${arrow.src}.webp`}
-              alt=""
-              className="sd-s1__arrow"
-              style={{ transform: `rotate(${arrow.rotate}deg)` }}
-              draggable={false}
-            />
+            <div className="sd-s1__arrow-wrap">
+              <div
+                className="sd-s1__arrow-rotate"
+                style={{
+                  transform: `rotate(${arrow.rotate}deg)`,
+                  width: `calc(${arrow.lineW} / var(--wc-design-w) * 100cqw)`,
+                }}
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={`${ASSET}/${arrow.src}.webp`}
+                  alt=""
+                  className="sd-s1__arrow"
+                  draggable={false}
+                />
+              </div>
+            </div>
           </FigmaPlacement>
         ))}
 

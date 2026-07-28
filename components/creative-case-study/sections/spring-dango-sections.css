@@ -601,11 +601,24 @@
   font-size: calc(37.896 / var(--wc-design-w) * 100cqw);
 }
 
+.sd-s1__arrow-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.sd-s1__arrow-rotate {
+  flex: none;
+  line-height: 0;
+}
+
 .sd-s1__arrow {
   display: block;
   width: 100%;
-  height: 100%;
-  object-fit: contain;
+  height: auto;
+  object-fit: fill;
   pointer-events: none;
   user-select: none;
 }
